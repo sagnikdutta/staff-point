@@ -1,0 +1,299 @@
+html {
+    color: #444751;
+}
+
+body {
+    background: #EEEEE9 url(../i/bgr.gif) repeat-x scroll center top;
+    font: 100% "Trebuchet MS", Tahoma, Arial, sans-serif;
+    line-height: 1.125em;
+}
+
+a, a:visited {
+    border-bottom: 1px solid #D7E1E9;
+    color: #4b8bbf;
+    text-decoration: none;
+}
+
+li, td, p {
+    font: 0.75em / 1.5em Tahoma, "Trebuchet MS", Arial, sans-serif;
+}
+
+li {
+    line-height: 1.1em;
+}
+
+h1 {
+    font: 2em 'Constantia', 'palatino linotype', palatino, Georgia, sans-serif;
+    letter-spacing: -0.05em;
+    margin-top: 0.5em;
+    display: block;
+}
+
+.top {
+    margin-top: 0 !important;
+}
+
+h2 {
+    font: 1.5em Georgia, Helvetica, "Lucida Sans Unicode", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+}
+
+h2 a {
+    color: #EA4A53;
+    border-bottom: 1px dashed #EA4A53;
+}
+
+h3 {
+    font-size: 1.125em;
+}
+
+h4 {
+    font-size: 0.875em;
+}
+
+span.position {
+    font-variant: small-caps;
+}
+
+span.position .activity {
+    color: #999999;
+    border-bottom: 1px dashed #ff0000;
+}
+
+ul {
+    padding-bottom: 0.5em;
+}
+
+ul li {
+    margin-top: 0.5em;
+}
+
+input {
+    border: 1px solid #ccc;
+    font: 1em "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+}
+
+input[type=submit] {
+    background-color: #fff;
+    color: #000;
+}
+
+th {
+    font-weight: normal;
+}
+
+/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.header, .footer, .box {
+    margin: 0 auto;
+    background-color: #fff;
+    width: 64em;
+    padding: 1em 2em 1em 2em;
+    border: 1px solid #ccc;
+    border-bottom-width: 3px;
+    position: relative;
+}
+
+.header {
+    margin-top: 4px;
+    border-top-width: 0;
+}
+
+.header div.form {
+    position: absolute;
+    top: 0.5em;
+    right: 1em;
+    width: 25em;
+    text-align: right;
+}
+
+.header div.form input {
+    border: 1px #ddd solid;
+    color: #ccc;
+    font: 0.9em "Tahoma", "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
+    vertical-align: middle;
+    padding: 3px;
+}
+
+.header label {
+    position: absolute;
+    right: -16em;
+    width: 15em;
+}
+
+.header label a {
+    background-color: #bbb;
+    font-size: x-small;
+    padding: 0 1em;
+    color: #ffffff;
+}
+
+.header span {
+    font-size: 0.8em;
+}
+
+.header span a {
+    border-bottom: 1px solid #ccc;
+}
+
+.box {
+    margin-top: 2em;
+    width: 60em;
+    padding: 1em 4em 1em 4em;
+}
+
+.box.lefty {
+    width: 50em;
+    padding-right: 14em;
+}
+
+.box.lefty img {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 2em;
+}
+
+.footer {
+    margin-top: 1em;
+}
+
+.hidden {
+    display: none;
+}
+
+.clear {
+    clear: both;
+}
+
+a.more {
+    padding: 3px 5px 4px 5px;
+    background-color: #999;
+    width: 8em;
+    text-align: center;
+    border: 0;
+    color: #fff;
+    font: 0.8em "Tahoma", "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
+}
+
+a.more:hover {
+    background-color: #f00;
+}
+
+.control, .control li {
+    display: inline;
+    margin: 0 2px
+}
+
+.control li a {
+    border-bottom-style: dashed;
+}
+
+a.user, th a.user {
+    color: #336600;
+    border-bottom: 1px dashed #336600
+}
+
+/*//////*/
+
+.tip {
+    left: 0;
+    position: absolute;
+    width: 30px;
+    height: 60px;
+}
+
+.red {
+/*background: transparent url(../i/aside_4.gif) no-repeat scroll 0 0;*/
+    background-color: #99ccff;
+}
+
+.blue {
+/*background: transparent url(../i/aside_4.gif) no-repeat scroll 0 0;*/
+    background-color: #99ccff;
+}
+
+.green {
+/*background: transparent url(../i/still_fresh.gif) no-repeat scroll 0 0;*/
+/*height: 140px;*/
+    background-color: #99ccff;
+}
+
+/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+table {
+    margin-left: 1em;
+    width: 100%;
+}
+
+table th {
+    font-weight: bold;
+    color: #aaa;
+    text-align: left;
+    vertical-align: text-top;
+    width: 15em;
+}
+
+table.contacts {
+    margin-bottom: 1em;
+}
+
+table.contacts td {
+    padding-left: 1em;
+    padding-top: 3px;
+}
+
+table.contacts td input {
+    width: 30em;
+}
+
+.datepick {
+    width: 60em;
+    margin: 0 auto;
+}
+
+.datepick .row {
+    color: #444;
+}
+
+.datepick .row .column {
+    width: 9.8em;
+    border-bottom: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+    float: left;
+    height: 2em;
+    position: relative;
+    text-align: center;
+    padding-top: 5px;
+}
+
+.datepick .days .column {
+    font-weight: bold;
+    background-color: #F7F7F7;
+}
+
+.datepick .column.highlight {
+    background-color: #ffff99 !important;
+    cursor: pointer;
+}
+
+/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+a.reply {
+    color: #ccc;
+    border-bottom: 1px dashed #ddd;
+}
+
+#board {
+    margin-top: 2em;
+    line-height: 1.5em;
+}
+
+#board td {
+    color: #333;
+}
+
+#board span {
+    font: 0.7em "Tahoma", "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
+    color: #ccc;
+}
