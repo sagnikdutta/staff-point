@@ -10,7 +10,7 @@
         <span>
             <a href="/">Главная</a>
         </span>
-    <@search />
+    <@search/>
     <@loginForm session=session/>
 </div>
 <div class="contol">

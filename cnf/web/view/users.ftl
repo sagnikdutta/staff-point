@@ -9,7 +9,7 @@
         <span>
             <a href="/">Главная</a> &rarr; Поиск
         </span>
-    <@search/>
+<@search/>
     <@loginForm session=session/>
 </div>
 <div class="contol">
@@ -22,10 +22,10 @@
         <span class="position">По вашему запросу найдено ${users?size} людей</span>
 		<div id="subnav">
 			<ul>
-        <li><a href="#">По алфавиту</a></li>
+				<li><a href="#">По алфавиту</a></li>
 				<li><a href="#">По роли</a></li>
 				<li><a href="#">По проектам</a></li>
-    </ul>
+			</ul>
 		</div>
 	</div>
 

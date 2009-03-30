@@ -11,7 +11,7 @@
             <a href="/">Главная</a> &rarr;
             <@projectRef project=project />
         </span>
-    <@search />
+    <@search/>
     <@loginForm session=session/>
 </div>
 <div class="contol">

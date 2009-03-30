@@ -5,24 +5,31 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 			http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
-    <!--<bean id="qmsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">-->
-    <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"/>-->
-    <!--<property name="url" value="jdbc:mysql://localhost/qms"/>-->
-    <!--<property name="username" value="root"/>-->
-    <!--<property name="password" value="root"/>-->
-    <!--</bean>-->
+    <bean id="localDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost/point"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+    </bean>
 
-    <bean id="qmsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <bean id="hsqlDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
         <property name="url" value="jdbc:hsqldb:file:/web/db/point;type=cached;shutdown=true"/>
         <property name="username" value="sa"/>
         <property name="password" value=""/>
     </bean>
 
+    <!--<bean id="qmsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">-->
+    <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"/>-->
+    <!--<property name="url" value="jdbc:mysql://localhost/qms"/>-->
+    <!--<property name="username" value="sedovmik"/>-->
+    <!--<property name="password" value="Strannik3792"/>-->
+    <!--</bean>-->
+
     <bean id="hibernateProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="properties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.show_sql">false</prop>
@@ -37,7 +44,7 @@
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <property name="dataSource" ref="qmsDataSource"/>
+        <property name="dataSource" ref="localDataSource"/>
         <property name="hibernateProperties" ref="hibernateProperties"/>
         <property name="annotatedClasses">
             <list>
