@@ -1,15 +1,13 @@
 package ru.point.model;
 
 import javax.persistence.*;
-import java.util.Calendar;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * @author: Mikhail Sedov [12.01.2009]
  */
 @Entity
-@Table(name = "activity_")
+@Table(name = "activity")
 public class Activity {
 
     @Id
@@ -17,8 +15,8 @@ public class Activity {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "name")
-    private String name;
+    @ManyToOne
+    private Role role;
 
     @ManyToOne
     private User user;
@@ -41,6 +39,9 @@ public class Activity {
     @Column(name = "isMain")
     private boolean isMain;
 
+    @OneToMany(mappedBy = "reportForActivity", fetch = FetchType.LAZY)
+    private List<Report> reports = new LinkedList<Report>();
+
     public Activity() {
     }
 
@@ -52,12 +53,12 @@ public class Activity {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Role getRole() {
+        return role;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public User getUser() {
@@ -116,8 +117,12 @@ public class Activity {
         isMain = main;
     }
 
+    public List<Report> getReports() {
+        return reports;
+    }
+
     @Override
     public String toString() {
-        return name;
+        return role.getName() + "#" + id;
     }
 }

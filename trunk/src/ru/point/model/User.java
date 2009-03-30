@@ -9,7 +9,7 @@ import java.util.TreeSet;
  * @author: Mikhail Sedov [09.01.2009]
  */
 @Entity
-@Table(name = "user_", uniqueConstraints = {
+@Table(name = "user", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"login"})
 })
 public class User {
@@ -33,6 +33,9 @@ public class User {
 
     @Column(name = "hireDay")
     private Calendar hireDay;
+
+    @Column(name = "sex")
+    private boolean sex;
 
     public User() {
     }
@@ -83,6 +86,14 @@ public class User {
 
     public void setHireDay(Calendar hireDay) {
         this.hireDay = hireDay;
+    }
+
+    public boolean isSex() {
+        return sex;
+    }
+
+    public void setSex(boolean sex) {
+        this.sex = sex;
     }
 
     public Activity getMainActivity() {

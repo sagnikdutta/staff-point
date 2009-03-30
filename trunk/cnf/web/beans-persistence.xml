@@ -43,6 +43,7 @@
             <list>
                 <value>ru.point.model.User</value>
                 <value>ru.point.model.Activity</value>
+                <value>ru.point.model.Role</value>
                 <value>ru.point.model.Project</value>
                 <value>ru.point.model.Report</value>
                 <value>ru.point.model.Session</value>

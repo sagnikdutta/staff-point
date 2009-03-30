@@ -1,15 +1,18 @@
 package ru.point.model;
 
-import ru.point.utils.Utils;
+import org.hibernate.annotations.CollectionOfElements;
 
 import javax.persistence.*;
+import java.util.Set;
+import java.util.Collection;
 import java.util.Calendar;
+import java.util.TreeSet;
 
 /**
  * @author: Mikhail Sedov [06.03.2009]
  */
 @Entity
-@Table(name = "report_")
+@Table(name = "report")
 public class Report {
 
     @Id
@@ -20,14 +23,11 @@ public class Report {
     @ManyToOne
     private Activity reportForActivity;
 
-    @Column(name = "reportPeriodStart")
-    private Calendar reportPeriodStart;
-
-    @Column(name = "reportPeriodEnd")
-    private Calendar reportPeriodEnd;
-
     @Column(name = "text")
     private String text;
+
+    @CollectionOfElements(fetch = FetchType.EAGER)
+    private Collection<Calendar> reportPeriodDays = new TreeSet<Calendar>();
 
     public Report() {
     }
@@ -40,28 +40,12 @@ public class Report {
         this.id = id;
     }
 
-    public Activity getReportForPosition() {
+    public Activity getReportForActivity() {
         return reportForActivity;
     }
 
-    public void setReportForActivity(Activity reportForActivity) {
-        this.reportForActivity = reportForActivity;
-    }
-
-    public Calendar getReportPeriodStart() {
-        return reportPeriodStart;
-    }
-
-    public void setReportPeriodStart(Calendar reportPeriodStart) {
-        this.reportPeriodStart = reportPeriodStart;
-    }
-
-    public Calendar getReportPeriodEnd() {
-        return reportPeriodEnd;
-    }
-
-    public void setReportPeriodEnd(Calendar reportPeriodEnd) {
-        this.reportPeriodEnd = reportPeriodEnd;
+    public void setReportForActivity(Activity reportForPosition) {
+        this.reportForActivity = reportForPosition;
     }
 
     public String getText() {
@@ -72,8 +56,11 @@ public class Report {
         this.text = text;
     }
 
-    @Override
-    public String toString() {
-        return Utils.formatCalendar(reportPeriodStart) + " - " + Utils.formatCalendar(reportPeriodEnd) + " > " + getText();
+    public Collection<Calendar> getReportPeriodDays() {
+        return reportPeriodDays;
+    }
+
+    public void addReportPeriodDays(Calendar dayCal) {
+        reportPeriodDays.add(dayCal);
     }
 }

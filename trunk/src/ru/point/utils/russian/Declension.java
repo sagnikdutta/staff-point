@@ -86,6 +86,15 @@ public enum Declension {
         return name;
     }
 
+    static Declension byIdx(int idx) {
+        for (Declension declension : values()) {
+            if (declension.getIdx() == idx) {
+                return declension;
+            }
+        }
+        return null;
+    }
+
     private int idx;
 
     Declension(int idx) {

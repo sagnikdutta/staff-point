@@ -11,22 +11,15 @@
             <a href="/">Главная</a>
         </span>
     <@search />
+    <@loginForm session=session/>
+</div>
+<div class="contol">
     <@inout session=session/>
 </div>
 <div id="info" class="box">
-    <div class="info">
-        <h1 class="top">Проекты</h1>
-        <ul>
-            <#list projects?sort_by("id") as project>
-            <li><@projectRef project=project /></li>
-            </#list>
-        </ul>
-    </div>
-    <div class="content">
-        <h1 class="top">Что на <a href="/board">форуме</a></h1>
-    </div>
-
-    <div class="clear">&nbsp;</div>
+    <h1 class="top">Проекты<span class="tip blue"></span></h1>
+    <@projectTree projects=projects />
+    <h1><a href="/user">Все люди компании</a><span class="tip blue"></span></h1>
 </div>
 <@foot />
 </body>

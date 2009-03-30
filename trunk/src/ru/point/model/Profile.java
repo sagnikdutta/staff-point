@@ -15,6 +15,22 @@ import java.util.Map;
 @Embeddable
 public class Profile {
 
+    public static final String[] CONTACT_KEYS = {
+            "Мобильный телефон",
+            "Домашний телефон",
+            "e-mail",
+            "Skype",
+            "ICQ",
+            "GTalk",
+    };
+
+    public static final String[] SOCIAL_KEYS = {
+            "ВКонтакте",
+            "LinkedIn",
+            "Last.fm",
+            "FriendFeed",
+    };
+
     @Column(name = "firstName")
     private String firstName;
 
@@ -26,6 +42,9 @@ public class Profile {
 
     @CollectionOfElements(fetch = FetchType.LAZY)
     private Map<String, String> contacts = new HashMap<String, String>();
+
+    @CollectionOfElements(fetch = FetchType.LAZY)
+    private Map<String, String> social = new HashMap<String, String>();
 
     public String getFirstName() {
         return firstName;
@@ -57,6 +76,10 @@ public class Profile {
 
     public void setBirthDay(Calendar birthDay) {
         this.birthDay = birthDay;
+    }
+
+    public Map<String, String> getSocial() {
+        return social;
     }
 
     @Override

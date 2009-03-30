@@ -8,7 +8,7 @@ import java.util.TreeSet;
  * @author: Mikhail Sedov [12.01.2009]
  */
 @Entity
-@Table(name = "project_")
+@Table(name = "project")
 public class Project {
 
     @Id
@@ -22,7 +22,11 @@ public class Project {
     @ManyToOne
     private Project parent;
 
+    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
+    private Set<Project> children = new TreeSet<Project>();
+
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
+    @OrderBy
     private Set<Activity> activities = new TreeSet<Activity>();
 
     public Project() {
@@ -54,5 +58,9 @@ public class Project {
 
     public Set<Activity> getActivities() {
         return activities;
+    }
+
+    public Set<Project> getChildren() {
+        return children;
     }
 }
