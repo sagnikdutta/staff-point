@@ -1,60 +1,33 @@
 package ru.point.control;
 
 import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.point.dao.SmartDao;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import ru.point.model.*;
 import ru.point.utils.Utils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 /**
  * @author: Mikhail Sedov [12.03.2009]
  */
 @Controller
 @Transactional
-public class PeopleController {
+public class PeopleController extends AbstractController {
 
     private static String LOGIN = "from User where login = ':login' and password = ':password'";
 
     private static String SEARCH_USERS = "from User where profile.firstName like ':query%' or " +
             "profile.secondName like ':query%' order by id";
-
-    private static String ACTIVITY_REPORTS = "from Report where reportForActivity = :activity";
-
-    private static String ACTIVITY_REPORTS_BY_DATE = "from Report where reportForActivity = ':activity' and " +
-            "((reportPeriodStart between ':start' and ':end') or (reportPeriodEnd between ':start' and ':end'))";
-
-    private static String PROJECT_REPORTS = "from Report where reportForActivity = ':activity' and " +
-            "((reportPeriodStart between ':start' and ':end') or (reportPeriodEnd between ':start' and ':end'))";
-
-    @Autowired
-    private SmartDao dao;
-
-    @RequestMapping("/")
-    public ModelAndView index(@CookieValue(required = false) Cookie session,
-                              ModelMap model) {
-        model.put("projects", dao.findAll(Project.class));
-        putCookie(session, model);
-        return new ModelAndView("index", model);
-    }
-
-    @RequestMapping("/error")
-    public ModelAndView error(Exception ex, ModelMap model) {
-        model.put("exception", ex);
-        return new ModelAndView("error", model);
-    }
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Sign up, Session
@@ -65,10 +38,10 @@ public class PeopleController {
                                   @RequestParam("password") String password,
                                   ModelMap map) {
         // check session
-        Map<String, String> userPass = new HashMap<String, String>();
-        userPass.put("login", login);
-        userPass.put("password", Utils.md5(password));
-        // User user = dao.findUniqueObject(User.class, LOGIN, userPass);
+        Map<String, Object> userPass = new HashMap<String, Object>();
+//        userPass.put("login", login);
+//        userPass.put("password", Utils.md5(password));
+//        User user = dao.findUniqueObject(User.class, LOGIN, userPass);
         User user = dao.findUniqueObject(User.class, "from User where login = '" + login +
                 "' and password = '" + Utils.md5(password) + "'", userPass);
         if (user == null) {
@@ -114,7 +87,7 @@ public class PeopleController {
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public ModelAndView filterUsers(@CookieValue(required = false) Cookie session, @RequestParam("query") String query, ModelMap model) {
-        Map<String, String> args = new HashMap<String, String>();
+        Map<String, Object> args = new HashMap<String, Object>();
         args.put("query", query);
         List<User> users = dao.filter(User.class, SEARCH_USERS, args);
         for (User user : users) {
@@ -128,45 +101,97 @@ public class PeopleController {
     @RequestMapping("/user/{userId}")
     public ModelAndView getUser(@CookieValue(required = false) Cookie session, @PathVariable("userId") long userId, ModelMap model) {
         User user = dao.get(User.class, userId);
-        Hibernate.initialize(user.getActivities());
-        for (Activity activity : user.getActivities()) {
-            Hibernate.initialize(activity.getReportFrom());
-        }
+        Hibernate.initialize(user.getMainActivity());
         Hibernate.initialize(user.getProfile().getContacts());
+        Hibernate.initialize(user.getProfile().getSocial());
         model.put("user", user);
         // session
         putCookie(session, model);
-        return new ModelAndView("user", model);
+        return new ModelAndView("user-info", model);
     }
 
-    @RequestMapping(value = "/user/edit/{userId}", method = RequestMethod.GET)
-    public ModelAndView editUser(@CookieValue(required = false) Cookie session, @PathVariable("userId") long userId, ModelMap model) {
+    @RequestMapping("/user/team/{userId}")
+    public ModelAndView getUserTeam(@CookieValue(required = false) Cookie session, @PathVariable("userId") long userId, ModelMap model) {
         User user = dao.get(User.class, userId);
         Hibernate.initialize(user.getActivities());
         for (Activity activity : user.getActivities()) {
             Hibernate.initialize(activity.getReportFrom());
         }
-        Hibernate.initialize(user.getProfile().getContacts());
         model.put("user", user);
+        // session
+        putCookie(session, model);
+        return new ModelAndView("user-team", model);
+    }
+
+    @RequestMapping("/user/edit/{userId}")
+    public ModelAndView editUser(@CookieValue(required = false) Cookie session, @PathVariable("userId") long userId, ModelMap model) {
+
+        User user = dao.get(User.class, userId);
+        Hibernate.initialize(user.getMainActivity());
+        Hibernate.initialize(user.getProfile().getContacts());
+        Hibernate.initialize(user.getProfile().getSocial());
+
+        if (!isAllowedForCurrentUser(session, user)) {
+            model.put("user", user);
+            return new ModelAndView("user-info", model);
+        }
+
+        model.put("user", user);
+        model.put("contactKeys", merge(Profile.CONTACT_KEYS, user.getProfile().getContacts().keySet()));
+        model.put("socialKeys", merge(Profile.SOCIAL_KEYS, user.getProfile().getSocial().keySet()));
         // session
         putCookie(session, model);
         return new ModelAndView("user-edit", model);
     }
-
-    @RequestMapping(value = "/user/edit/{userId}", method = RequestMethod.POST)
-    public String updateUser(@CookieValue(required = false) Cookie session, @PathVariable("userId") long userId, ModelMap model) {
-        System.out.println("PeopleController.updateUser");
-        return "redirect:/user/" + userId;
+    
+    private String[] merge(String[] one, Collection<String> two) {
+        Set<String> result = new TreeSet<String>();
+        result.addAll(Arrays.asList(one));
+        result.addAll(two);
+        return result.toArray(new String[result.size()]);
     }
 
-    private void putCookie(Cookie sessionCookie, ModelMap model) {
-        if (sessionCookie != null) {
-            Session session = dao.get(Session.class, sessionCookie.getValue());
-            if (session != null) {
-                Hibernate.initialize(session.getUser());
-                model.put("session", session);
+    @RequestMapping(value = "/user/edit/{userId}", method = RequestMethod.POST)
+    public String saveUser(@CookieValue(required = false) Cookie session, @PathVariable("userId") long userId,
+                           HttpServletRequest request, ModelMap model) throws UnsupportedEncodingException {
+        // russian
+        request.setCharacterEncoding("CP1251");
+        User user = dao.get(User.class, userId);
+        // 
+        Map<String, String[]> m = request.getParameterMap();
+        for (String key : m.keySet()) {
+            String value = m.get(key)[0];
+            if (key.equals("firstName")) {
+                user.getProfile().setFirstName(value);
+            } else if (key.equals("secondName")) {
+                user.getProfile().setSecondName(value);
+            } else if (key.equals("sex")) {
+                user.setSex(Boolean.parseBoolean(value));
+            } else if (key.equals("birthday")) {
+                try {
+                    Calendar birthday = Calendar.getInstance();
+                    birthday.setTime(new SimpleDateFormat("dd.MM.yy").parse(value));
+                    user.getProfile().setBirthDay(birthday);
+                } catch (ParseException e) {
+                    // todo: message
+                }
+            } else if (key.startsWith("contacts.")) {
+                if (value.length() > 0) {
+                    user.getProfile().getContacts().put(key.substring("contacts.".length()), value);
+                } else {
+                    user.getProfile().getContacts().remove(key.substring("contacts.".length()));
+                }
+            } else if (key.startsWith("social.")) {
+                if (value.length() > 0) {
+                    user.getProfile().getSocial().put(key.substring("social.".length()), value);
+                } else {
+                    user.getProfile().getSocial().remove(key.substring("social.".length()));
+                }
             }
         }
+
+        dao.save(user);
+        return "redirect:/user/" + userId;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -187,112 +212,5 @@ public class PeopleController {
         return new ModelAndView("project", model);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Reports
 
-    @RequestMapping("/report/activity/{activityId}")
-    public ModelAndView listActivityReport(@CookieValue(required = false) Cookie session,
-                                           @PathVariable long activityId,
-                                           ModelMap model) {
-        model.put("reports", dao.getReportsForActivityId(activityId));
-        model.put("activity", dao.get(Activity.class, activityId));
-        model.put("title", "&rarr; Activity");
-        putCookie(session, model);
-        return new ModelAndView("reports", model);
-    }
-
-    @RequestMapping("/report/activity/{activityId}/year/{year}/week/{week}")
-    public ModelAndView listActivityReport(@CookieValue(required = false) Cookie session,
-                                           @PathVariable long activityId,
-                                           @PathVariable int year,
-                                           @PathVariable int weekNo,
-                                           ModelMap model) {
-        Calendar start = Utils.getStartOfWeek(year, weekNo);
-        Calendar end = Utils.getEndOfWeek(start);
-        // return it
-        return listActivityReport(session, activityId, start, end, model);
-    }
-
-    @RequestMapping("/report/activity/{activityId}/start/{start}/end/{end}")
-    public ModelAndView listActivityReport(@CookieValue(required = false) Cookie session,
-                                           @PathVariable long activityId,
-                                           @PathVariable Calendar start,
-                                           @PathVariable Calendar end,
-                                           ModelMap model) {
-        Map<String, String> args = new HashMap<String, String>();
-        args.put("activity", String.valueOf(activityId));
-        args.put("start", Utils.formatCalendar(start));
-        args.put("end", Utils.formatCalendar(end));
-
-        model.addAttribute("reports", dao.filter(Report.class, ACTIVITY_REPORTS_BY_DATE, args));
-        putCookie(session, model);
-        return new ModelAndView("reports", model);
-    }
-
-    @RequestMapping("/report/project/{projectId}/year/{year}/week/{week}")
-    public ModelAndView listProjectReports(@CookieValue(required = false) Cookie session,
-                                           @PathVariable long projectId,
-                                           @PathVariable int year,
-                                           @PathVariable int weekNo,
-                                           ModelMap model) {
-        Calendar start = Utils.getStartOfWeek(year, weekNo);
-        Calendar end = Utils.getEndOfWeek(start);
-        // return it
-        return listProjectReports(session, projectId, start, end, model);
-    }
-
-    @RequestMapping("/report/project/{projectId}/start/{start}/end/{end}")
-    public ModelAndView listProjectReports(@CookieValue(required = false) Cookie session,
-                                           @PathVariable long projectId,
-                                           @PathVariable Calendar start,
-                                           @PathVariable Calendar end,
-                                           ModelMap model) {
-
-        Map<String, String> args = new HashMap<String, String>();
-        args.put("project", String.valueOf(projectId));
-        args.put("start", Utils.formatCalendar(start));
-        args.put("end", Utils.formatCalendar(end));
-
-        model.addAttribute("reports", dao.filter(Report.class, PROJECT_REPORTS, args));
-        putCookie(session, model);
-        return new ModelAndView("reports", model);
-
-    }
-
-    @RequestMapping(value = "/report/activity/{activityId}/year/{year}/week/{weekNo}", method = RequestMethod.POST)
-    public String postActivityReport(@CookieValue(required = false) Cookie session,
-                                     @PathVariable long activityId,
-                                     @PathVariable int year,
-                                     @PathVariable int weekNo,
-                                     @RequestParam String reportText) {
-        Calendar start = Utils.getStartOfWeek(year, weekNo);
-        Calendar end = Utils.getEndOfWeek(start);
-        // save it
-        return postActivityReport(session, activityId, start, end, reportText);
-    }
-
-    @RequestMapping(value = "/report/activity/{activityId}/start/{start}/end/{end}", method = RequestMethod.POST)
-    public String postActivityReport(@CookieValue(required = false) Cookie session,
-                                     @PathVariable long activityId,
-                                     @PathVariable Calendar start,
-                                     @PathVariable Calendar end,
-                                     @RequestParam String reportText) {
-
-        Report report = new Report();
-        report.setReportPeriodStart(start);
-        report.setReportPeriodEnd(end);
-        report.setText(reportText);
-        report.setReportForActivity(dao.get(Activity.class, activityId));
-
-        dao.save(report);
-
-        return "redirect:/report/activity/" + activityId;
-    }
-
-    @RequestMapping(value = "/report/{reportId}", method = RequestMethod.DELETE)
-    public String deleteReport(@CookieValue(required = false) Cookie session,
-                               @PathVariable long reportId) {
-        dao.delete(Report.class, reportId);
-        return "redirect:/";
-    }
 }

@@ -34,15 +34,19 @@
 </#macro>
 
 <#macro login>
+<label><a id="searchToggle" href="#">Войти</a></label>
+</#macro>
+
+<#macro loginForm session="">
+<#if !session?has_content>
 <div id="login" class="form hidden">
     <form action="/login" method="post">
-        <input class="cleanOnFocus" type="text" value="логин" name="login">&nbsp;<input class="cleanOnFocus"
-                                                                                        type="password" value="пароль"
-                                                                                        name="password">&nbsp;<input
-            type="submit" value="&rarr;" name="go">
+        <input class="cleanOnFocus" type="text" value="логин" name="login">&nbsp;
+        <input class="cleanOnFocus" type="password" value="пароль" name="password">&nbsp;
+        <input type="submit" value="&rarr;" name="go">
     </form>
 </div>
-<label><a id="searchToggle" href="#">Войти</a></label>
+</#if>
 </#macro>
 
 <#macro logout session>
@@ -56,3 +60,18 @@
 <#macro projectRef project>
 <a href="/project/${project.id}">${project.name}</a>
         </#macro>
+
+<#macro projectTree projects>
+    <#if projects?? && projects?has_content>
+        <ul>
+            <#list projects as project>
+                <li>
+                <@projectRef project=project />
+                <@projectTree projects=project.children/>
+                </li>
+            </#list>
+        </ul>
+    </#if>
+</#macro>
+
+<#assign gen = "ru.point.utils.russian.DeclensionFreeMarkerDirective"?new(0)/>

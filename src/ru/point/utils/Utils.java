@@ -3,10 +3,10 @@ package ru.point.utils;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * @author: Mikhail Sedov [06.03.2009]
@@ -36,7 +36,7 @@ public class Utils {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Date Formatting, Parsing
 
-    public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 
     public static String formatCalendar(Calendar cal) {
         return dateFormat.format(cal.getTime());

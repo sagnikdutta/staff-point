@@ -14,18 +14,18 @@ a, a:visited {
     text-decoration: none;
 }
 
-li, td, p {
+td, p {
     font: 0.75em / 1.5em Tahoma, "Trebuchet MS", Arial, sans-serif;
 }
 
 li {
-    line-height: 1.1em;
+    line-height: 1.5em;
 }
 
 h1 {
     font: 2em 'Constantia', 'palatino linotype', palatino, Georgia, sans-serif;
-    letter-spacing: -0.05em;
     margin-top: 0.5em;
+    letter-spacing: -0.05em;
     display: block;
 }
 
@@ -54,17 +54,8 @@ span.position {
     font-variant: small-caps;
 }
 
-span.position .activity {
-    color: #999999;
-    border-bottom: 1px dashed #ff0000;
-}
-
 ul {
-    padding-bottom: 0.5em;
-}
-
-ul li {
-    margin-top: 0.5em;
+    margin-left: 1em;
 }
 
 input {
@@ -84,11 +75,41 @@ th {
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
+#boxheader {
+    border-bottom: 1px solid #EEEEEE;
+    height: 71px;
+}
+
+#subnav {
+    position: absolute;
+    right: 4em;
+    top: 29px;
+}
+
+#subnav ul li {
+    display: inline;
+    float: left;
+    padding: 4px 0 0 15px;
+}
+
+#subnav ul li a {
+    background: transparent url(/i/tag_left.gif) no-repeat scroll 0 0;
+    color: #FFFFFF;
+    float: left;
+    letter-spacing: 0.4px;
+    margin: 0 5px 4px 0;
+    padding: 0 7px 0 13px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font: 0.7em "Lucida Grande","Lucida Sans", Tahoma, "Trebuchet MS", Arial, sans-serif;
+    border-bottom: 0;
+}
+
 .header, .footer, .box {
     margin: 0 auto;
     background-color: #fff;
     width: 64em;
-    padding: 1em 2em 1em 2em;
+    padding: 1em 2em;
     border: 1px solid #ccc;
     border-bottom-width: 3px;
     position: relative;
@@ -97,6 +118,18 @@ th {
 .header {
     margin-top: 4px;
     border-top-width: 0;
+}
+
+.contol {
+    margin: 0 auto;
+    text-align: right;
+    width: 68em;
+    padding: 0;
+}
+
+.contol a {
+    font: 0.8em Tahoma, "Trebuchet MS", Arial, sans-serif;
+    color: #333 !important;
 }
 
 .header div.form {
@@ -115,19 +148,6 @@ th {
     padding: 3px;
 }
 
-.header label {
-    position: absolute;
-    right: -16em;
-    width: 15em;
-}
-
-.header label a {
-    background-color: #bbb;
-    font-size: x-small;
-    padding: 0 1em;
-    color: #ffffff;
-}
-
 .header span {
     font-size: 0.8em;
 }
@@ -139,19 +159,7 @@ th {
 .box {
     margin-top: 2em;
     width: 60em;
-    padding: 1em 4em 1em 4em;
-}
-
-.box.lefty {
-    width: 50em;
-    padding-right: 14em;
-}
-
-.box.lefty img {
-    position: absolute;
-    right: 0;
-    top: 0;
-    padding: 2em;
+    padding: 1em 4em 4em 4em;
 }
 
 .footer {
@@ -197,7 +205,7 @@ a.user, th a.user {
 /*//////*/
 
 .tip {
-    left: 0;
+    left: -10px;
     position: absolute;
     width: 30px;
     height: 60px;
@@ -219,6 +227,9 @@ a.user, th a.user {
     background-color: #99ccff;
 }
 
+ul.users li {
+    font-size: 0.8em;
+}
 /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 table {
@@ -244,15 +255,20 @@ table.contacts td {
 }
 
 table.contacts td input {
-    width: 30em;
+    width: 36em;
 }
 
 .datepick {
     width: 60em;
-    margin: 0 auto;
+    margin: 2em auto;
+}
+
+datepick .row div {
+    cursor: pointer;
 }
 
 .datepick .row {
+    font-family: "Lucida Sans", helvetica, arial, "Tahoma", sans-serif;
     color: #444;
 }
 
@@ -272,9 +288,18 @@ table.contacts td input {
     background-color: #F7F7F7;
 }
 
-.datepick .column.highlight {
-    background-color: #ffff99 !important;
-    cursor: pointer;
+.datepick .column.day.highlight {
+    background-color: #ffffed !important;
+}
+
+.datepick .column.day.selected {
+    background-color: #ccffcc !important;
+}
+
+.datepick textarea {
+    margin-top: 2em;
+    width: 98%;
+    max-width: 98%;
 }
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/

@@ -11,18 +11,32 @@
             <a href="/">Главная</a> &rarr;
             <@projectRef project=project />
         </span>
-
     <@search />
+    <@loginForm session=session/>
+</div>
+<div class="contol">
     <@inout session=session/>
 </div>
 <div class="box one">
-    <h1 class="top">Все люди проекта:</h1>
+    <div id="boxheader">
+        <h1 class="top">${project.name}<span class="tip red"></span></h1>
+        <span class="position">В проекте трудятся ${project.activities?size} человек</span>
+        <div id="subnav">
+            <ul>
+                <li><a href="/report/activity/">Активности</a></li>
+                <li><a href="/team">Команды</a></li>
+                <li><a href="/edit">Редактировать</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <h1 class="top">Люди проекта<span class="tip red"></span></h1>
     <table id="people-list">
-        <#list project.activities?sort_by("id") as activity>
+        <#list project.activities?sort_by("id") as position>
         <tr>
-            <th><@userRef user=activity.user/></th>
+            <td style="width: 15em; "><@userRef user=position.user/></td>
             <td>
-            ${activity.name}
+            ${position.role.name}
             <td>
         </tr>
         </#list>

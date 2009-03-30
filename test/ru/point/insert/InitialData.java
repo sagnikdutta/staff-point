@@ -8,15 +8,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import ru.point.dao.SmartDao;
-import ru.point.model.Activity;
-import ru.point.model.Profile;
-import ru.point.model.Project;
-import ru.point.model.User;
+import ru.point.model.*;
 import ru.point.utils.Utils;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 /**
  * @author: Mikhail Sedov [09.01.2009]
@@ -33,119 +29,206 @@ public class InitialData {
     @Test
     public void insertFake() throws NoSuchAlgorithmException {
 
+        Project java = new Project();
+        java.setName("Java Team");
+        dao.save(java);
 
-        Project[] ps = new Project[PROJECT.length];
-        for (int i = 0; i < ps.length; i++) {
-            ps[i] = new Project();
-            ps[i].setName(PROJECT[i]);
+        Project web = new Project();
+        web.setName("Web Development");
+        web.setParent(java);
+        dao.save(web);
 
-            dao.save(ps[i]);
-        }
+        Project acs = new Project();
+        acs.setName("Affiliated Computer Services");
+        acs.setParent(web);
+        dao.save(acs);
 
-        for (String person : NAMES) {
-            String[] parts = person.split(" ");
+        Project hines = new Project();
+        hines.setName("Hines");
+        hines.setParent(java);
+        dao.save(hines);
 
-            User user = new User();
-            user.setHireDay(new GregorianCalendar(1990 + (int) (Math.random() * 20), (int) (Math.random() * 13), (int) (Math.random() * 29)));
+        Project subHines = new Project();
+        subHines.setName("Hines tiger");
+        subHines.setParent(hines);
+        dao.save(subHines);
 
-            Profile profile = new Profile();
-            profile.setBirthDay(new GregorianCalendar(1930 + (int) (Math.random() * 20), (int) (Math.random() * 13), (int) (Math.random() * 29)));
-            profile.setFirstName(parts[1]);
-            profile.setSecondName(parts[0]);
+        Project net = new Project();
+        net.setName(".NET Division");
+        dao.save(net);
 
-            String mail = (Translit.toTranslit(parts[0]) + "." + Translit.toTranslit(parts[1]) + "@devetel.com").toLowerCase();
-            mail = mail.replaceAll("\'", "");
-            profile.getContacts().put("e-mail", mail);
-            profile.getContacts().put("Мобильный телефон", "+79" + String.valueOf((int) (Math.random() * 1000000000)));
+        Project atp = new Project();
+        atp.setName("ATP");
+        atp.setParent(net);
+        dao.save(atp);
 
-            user.setLogin(mail);
-            user.setPassword(Utils.md5("123"));
+        Role seo = new Role();
+        seo.setName("SEO");
+        seo.setGroupPolicy(GroupPolicy.SEO);
+        dao.save(seo);
 
-            if ((Math.random() * 10) > 3) {
-                profile.getContacts().put("Skype", (Translit.toTranslit(parts[1]) + "." + Translit.toTranslit(parts[0])).toLowerCase());
+        Role sd = new Role();
+        sd.setName("Software Designer");
+        sd.setGroupPolicy(GroupPolicy.DESIGNER);
+        dao.save(sd);
+
+        Role ssd = new Role();
+        ssd.setName("Senior Software Designer");
+        ssd.setGroupPolicy(GroupPolicy.DESIGNER);
+        dao.save(ssd);
+
+        Role jsd = new Role();
+        jsd.setName("Java Software Designer");
+        jsd.setGroupPolicy(GroupPolicy.DESIGNER);
+        dao.save(jsd);
+
+        Role nsd = new Role();
+        nsd.setName(".NET Software Designer");
+        nsd.setGroupPolicy(GroupPolicy.DESIGNER);
+        dao.save(nsd);
+
+        Role pm = new Role();
+        pm.setName("Project Manager");
+        pm.setGroupPolicy(GroupPolicy.DESIGNER);
+        dao.save(pm);
+
+        Role sm = new Role();
+        sm.setName("Senior Manager");
+        sm.setGroupPolicy(GroupPolicy.MANAGER);
+        dao.save(sm);
+
+        Role st = new Role();
+        st.setName("Software Tester");
+        st.setGroupPolicy(GroupPolicy.DESIGNER);
+        dao.save(st);
+
+        Role sst = new Role();
+        sst.setName("Senior Software Tester");
+        sst.setGroupPolicy(GroupPolicy.DESIGNER);
+        dao.save(sst);
+
+        Role tl = new Role();
+        tl.setName("Test Leader");
+        tl.setGroupPolicy(GroupPolicy.DESIGNER);
+        dao.save(tl);
+
+        Role tml = new Role();
+        tml.setName("Team Leader");
+        tml.setGroupPolicy(GroupPolicy.DESIGNER);
+        dao.save(tml);
+
+        Role tc = new Role();
+        tc.setName("Technical Coordinator");
+        tc.setGroupPolicy(GroupPolicy.DESIGNER);
+        dao.save(tc);
+
+        Role pa = new Role();
+        pa.setName("Project Assistant");
+        pa.setGroupPolicy(GroupPolicy.DESIGNER);
+        dao.save(pa);
+
+        int idx = 0;
+
+        User seoUser = getUser(idx++);
+        Activity seoAct = getActivity(seoUser, seo, null, null);
+
+        for (Project p : new Project[]{java, acs, atp, hines, net, subHines, web}) {
+
+            User pmUser = getUser(idx++);
+            Activity pmActivity = getActivity(pmUser, pm, p, seoAct);
+
+            User u;
+            // software designers
+            for (int i = 0; i < 5 + (int) (Math.random() * 15); i++) {
+                u = getUser(idx++);
+                getActivity(u, sd, p, pmActivity);
             }
-
-            if ((Math.random() * 10) > 2) {
-                profile.getContacts().put("ICQ", String.valueOf((int) (Math.random() * 1000000000)));
+            // software testers
+            for (int i = 0; i < 5 + (int) (Math.random() * 5); i++) {
+                u = getUser(idx++);
+                getActivity(u, st, p, pmActivity);
             }
-
-            if (Math.random() * 10 > 3) {
-                profile.getContacts().put("Домашний телефон", "(831)" + String.valueOf((int) (Math.random() * 10000000)));
+            // java software designers
+            for (int i = 0; i < (int) (Math.random() * 15); i++) {
+                u = getUser(idx++);
+                getActivity(u, jsd, p, pmActivity);
             }
-
-            user.setProfile(profile);
-
-            User dublicate = dao.findUniqueObject(User.class, "from User where login = '" + user.getLogin() + "'");
-            if (dublicate != null) {
-                mail = Translit.toTranslit(parts[0]) + "." + Translit.toTranslit(parts[2].substring(0, 1)) + "." + Translit.toTranslit(parts[1]) + "@devetel.com";
-                user.setLogin(mail.toLowerCase());
-                profile.getContacts().put("e-mail", mail);
+            // net software designers
+            for (int i = 0; i < (int) (Math.random() * 10); i++) {
+                u = getUser(idx++);
+                getActivity(u, nsd, p, pmActivity);
             }
-
-            dao.save(user);
-
-            for (int i = 0; i < 1 + (int) (Math.random() * 10 / 8); i++) {
-
-                Activity pos = new Activity();
-                pos.setName(POSITION[(int) (Math.random() * POSITION.length)]);
-                pos.setProject(ps[(int) (Math.random() * ps.length)]);
-                pos.setUser(user);
-
-                if (i == 0) {
-                    pos.setMain(true);
-                }
-
-                pos.setStart(new GregorianCalendar(1995 + (int) (Math.random() * 18), (int) (Math.random() * 13), (int) (Math.random() * 29)));
-
-                List<Activity> poses = dao.filter(Activity.class, "from Activity where project_id = " + pos.getProject().getId());
-                if (poses.size() > 0) {
-                    pos.setReportTo(poses.get((int) (poses.size() / 3 * Math.random())));
-                }
-                dao.save(pos);
-
+            // software designers
+            for (int i = 0; i < 1 + (int) (Math.random() * 2); i++) {
+                u = getUser(idx++);
+                getActivity(u, tl, p, pmActivity);
             }
-
-
-            // projectDao.save(pos.getProject());
+            // software designers
+            for (int i = 0; i < 1 + (int) (Math.random() * 2); i++) {
+                u = getUser(idx++);
+                getActivity(u, sst, p, pmActivity);
+            }
         }
     }
 
+    private Activity getActivity(User user, Role role, Project p, Activity report) {
+        Activity activity = new Activity();
+        activity.setRole(role);
+        activity.setUser(user);
+        activity.setProject(p);
+        activity.setMain(true);
+        activity.setReportTo(report);
+        activity.setStart(new GregorianCalendar(1995 + (int) (Math.random() * 18), (int) (Math.random() * 13), (int) (Math.random() * 29)));
+        dao.save(activity);
+        return activity;
+    }
 
-    private static final String[] POSITION = {
-            "Врач-офтальмолог",
-            "Специалист по качеству продукции",
-            "Ассистент бухгалтера",
-            "Оператор ПК",
-            "Специалист по работе с персоналом",
-            "Старший бухгалтер",
-            "Слесарь КИП и А",
-            "Директор по продажам",
-            "Руководитель Service Desk",
-            "Технический писатель",
-            "Администратор тестового центра",
-            "Ведущий консультант по внедрению SAP",
-            "Сервис-инженер источников бесперебойного питания",
-            "Старший системный администратор",
-            "Сетевой инженер Cisco",
-    };
+    private User getUser(int idx) {
 
-    private static final String[] PROJECT = {
-            "X5 RETAIL GROUP",
-            "Альфа-Банк",
-            "Новая Заря, ЗАО",
-            "Тройка Диалог",
-            "R-Style Group",
-            "HUAWEI Technologies",
-            "L'Oreal",
-            "Miele",
-            "Volkswagen Group Finanz",
-            "Евросеть, Торговый Дом",
-            "Новартис Фарма",
-            "Ernst & Young",
-            "КапиталЪ, ИФД",
-            "Zepter International",
-            "SUP Fabrik",
-    };
+        String[] parts = NAMES[idx].split(" ");
+
+        User user = new User();
+        user.setHireDay(new GregorianCalendar(1990 + (int) (Math.random() * 20), (int) (Math.random() * 13), (int) (Math.random() * 29)));
+
+        Profile profile = new Profile();
+        profile.setBirthDay(new GregorianCalendar(1930 + (int) (Math.random() * 20), (int) (Math.random() * 13), (int) (Math.random() * 29)));
+        profile.setFirstName(parts[1]);
+        profile.setSecondName(parts[0]);
+
+        String mail = (Translit.toTranslit(parts[0]) + "." + Translit.toTranslit(parts[1]) + "@devetel.com").toLowerCase();
+        mail = mail.replaceAll("\'", "");
+        profile.getContacts().put("e-mail", mail);
+        profile.getContacts().put("Мобильный телефон", "+79" + String.valueOf((int) (Math.random() * 1000000000)));
+
+        user.setLogin(mail);
+        user.setPassword(Utils.md5("123"));
+
+        if ((Math.random() * 10) > 3) {
+            profile.getContacts().put("Skype", (Translit.toTranslit(parts[1]) + "." + Translit.toTranslit(parts[0])).toLowerCase());
+        }
+
+        if ((Math.random() * 10) > 2) {
+            profile.getContacts().put("ICQ", String.valueOf((int) (Math.random() * 1000000000)));
+        }
+
+        if (Math.random() * 10 > 3) {
+            profile.getContacts().put("Домашний телефон", "(831)" + String.valueOf((int) (Math.random() * 10000000)));
+        }
+
+        user.setProfile(profile);
+
+        User dublicate = dao.findUniqueObject(User.class, "from User where login = '" + user.getLogin() + "'");
+        if (dublicate != null) {
+            mail = Translit.toTranslit(parts[0]) + "." + Translit.toTranslit(parts[2].substring(0, 1)) + "." + Translit.toTranslit(parts[1]) + "@devetel.com";
+            user.setLogin(mail.toLowerCase());
+            profile.getContacts().put("e-mail", mail);
+        }
+
+        dao.save(user);
+
+        return user;
+    }
+
 
     private static final String[] NAMES = {
             "Абишев Артур Айдарович",

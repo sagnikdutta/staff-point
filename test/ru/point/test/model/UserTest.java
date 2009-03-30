@@ -7,10 +7,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-import ru.point.control.PeopleController;
 import ru.point.dao.SmartDao;
-import ru.point.model.Activity;
 import ru.point.model.User;
+import ru.point.model.Activity;
+import ru.point.control.PeopleController;
 
 import java.util.List;
 
@@ -37,8 +37,8 @@ public class UserTest {
 //                userManager.loginUser(user.getLogin(), user.getLogin() + "123", new ModelMap());
 
 //                Assert.assertTrue(s.getUser().getId() == user.getId());
-//                Set<Activity> lp = user.getActivities();
-//                for (Activity position : lp) {
+//                Set<Position> lp = user.getActivities();
+//                for (Position position : lp) {
 //                    Assert.assertTrue(position.getUser().getId() == user.getId());
 //                }
 
@@ -53,8 +53,8 @@ public class UserTest {
     public void settingReport() {
         List<User> persons = dao.findAll(User.class);
         for (User person : persons) {
-            for (Activity activity : person.getActivities()) {
-                // userManager.saveReport(activity, 2009, 5, "user " + person.getFullName() + " did nothing at " + activity.getName());
+            for (Activity position : person.getActivities()) {
+                // userManager.saveReport(position, 2009, 5, "user " + person.getFullName() + " did nothing at " + position.getName());
             }
         }
     }
@@ -63,8 +63,8 @@ public class UserTest {
     public void gettingReports() {
         List<User> persons = dao.findAll(User.class);
         for (User person : persons) {
-            for (Activity activity : person.getActivities()) {
-//                List<Report> lr = userManager.generateReport(activity, 2009, 5);
+            for (Activity position : person.getActivities()) {
+//                List<Report> lr = userManager.generateReport(position, 2009, 5);
 //                for (Report report : lr) {
 //                    System.out.println(report);
 //                }

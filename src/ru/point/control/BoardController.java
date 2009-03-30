@@ -1,7 +1,5 @@
 package ru.point.control;
 
-import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -10,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ru.point.dao.SmartDao;
+import org.springframework.transaction.annotation.Transactional;
 import ru.point.model.Session;
 import ru.point.model.User;
 import ru.point.model.board.Option;
@@ -18,46 +16,31 @@ import ru.point.model.board.Post;
 import ru.point.model.board.Topic;
 import ru.point.model.board.Vote;
 
-import javax.servlet.http.Cookie;
 import java.util.*;
 
 /**
  * @author: Mikhail Sedov [12.03.2009]
  */
 @Controller
-public class BoardController {
+@Transactional
+public class BoardController extends AbstractController {
 
     private static final String PREV_VOTE = "from Vote where user = :user and topic = :topic";
     private static final String GET_TOPIC = "from Post where topic = :topic order by time";
     private static final String VOTE_STAT = "select option.description, sum(*) from Vote where topic = :topic group by option";
 
-    @Autowired
-    private SmartDao dao;
-
-    private void putCookie(Cookie sessionCookie, ModelMap model) {
-        if (sessionCookie != null) {
-            Session session = dao.get(Session.class, sessionCookie.getValue());
-            if (session != null) {
-                Hibernate.initialize(session.getUser());
-                model.put("session", session);
-            }
-        }
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Read-only actions
 
     @RequestMapping("/board")
-    public ModelAndView listTopics(@CookieValue(required = false) Cookie session,
-                                   ModelMap model) {
+    public ModelAndView listTopics(ModelMap model) {
         model.put("topics", dao.findAll(Topic.class));
-        putCookie(session, model);
         return new ModelAndView("board/topics", model);
     }
 
     @RequestMapping("/board/topic/{topicId}")
     public ModelAndView getTopic(@PathVariable("topicId") long topicId, ModelMap model) {
-        Map<String, String> args = new HashMap<String, String>();
+        Map<String, Object> args = new HashMap<String, Object>();
         args.put("topic", String.valueOf(topicId));
 
         model.put("posts", dao.filter(Post.class, GET_TOPIC, args));
@@ -72,7 +55,7 @@ public class BoardController {
 
     @RequestMapping("/board/topic/{topicId}/vote")
     public ModelAndView getVoteResult(@PathVariable("topicId") long topicId, ModelMap model) {
-        Map<String, String> args = new HashMap<String, String>();
+        Map<String, Object> args = new HashMap<String, Object>();
         args.put("topic", String.valueOf(topicId));
 
         model.put("votes", dao.filter(Post.class, VOTE_STAT, args));
@@ -223,7 +206,7 @@ public class BoardController {
         Option option = dao.get(Option.class, optionId);
         User user = session.getUser();
 
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, Object> map = new HashMap<String, Object>();
         map.put("user", String.valueOf(user.getId()));
         map.put("topic", String.valueOf(topic.getId()));
 

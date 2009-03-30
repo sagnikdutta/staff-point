@@ -14,7 +14,7 @@ public class Session {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     @Column(name = "id")
     private String id;
 

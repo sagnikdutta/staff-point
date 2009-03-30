@@ -1,9 +1,9 @@
 package ru.point.model.board;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.ManyToOne;
 
 /**
  * @author: Mikhail Sedov [06.03.2009]
