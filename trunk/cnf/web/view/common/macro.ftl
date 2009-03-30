@@ -27,10 +27,10 @@
 
 <#macro inout session="">
 <#if session?has_content>
-<@logout session/>
-<#else>
-<@login />
-</#if>
+    <@logout session/>
+ <#else>
+    <@login />
+ </#if>
 </#macro>
 
 <#macro login>
@@ -50,7 +50,7 @@
 </#macro>
 
 <#macro logout session>
-<label><@userRef user=session.user />&bull;&nbsp;<a href="/logout">Выйти</a></label>
+    <label><@userRef user=session.user />&bull;&nbsp;<a href="/logout">Выйти</a></label>
 </#macro>
 
 <#macro userRef user>

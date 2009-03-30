@@ -31,10 +31,10 @@
         </tr>
         </#list>
         <#if user??>
-        <tr id="reply">
-            <th><@userRef user=user/></th>
-            <td><textarea rows="7" cols="80">Мой ответ чемберлену</textarea><input type="submit" value="post"></td>
-        </tr>
+            <tr id="reply">
+                <th><@userRef user=user/></th>
+                <td><textarea rows="7" cols="80">Мой ответ чемберлену</textarea><input type="submit" value="post"></td>
+            </tr>
         </#if>
     </table>
 </div>
