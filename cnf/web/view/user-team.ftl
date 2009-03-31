@@ -24,21 +24,25 @@
 <div class="box">
 
     <div id="boxheader">
-		<h1 class="top"><#if session?? && user.id = session.user.id>Я, </#if>${user.fullName}<span class="tip red"></span></h1>
+        <h1 class="top"><#if session?? && user.id = session.user.id>Я, </#if>${user.fullName}<span
+                class="tip red"></span></h1>
         <span class="position">${user.mainActivity.role.name}
             <#if user.mainActivity.project??>
             в <@projectRef project=user.mainActivity.project/>
             </#if>
         </span>
-		<div id="subnav">
-			<ul>
-				<li><a href="/user/${user.id}">Инфомация</a></li>
-				<li><a href="/user/report/${user.id}">Активности</a></li>
-				<li><a href="/user/team/${user.id}">Команда</a></li>
-				<#if session?? && user.id = session.user.id><li><a href="/user/edit/${user.id}">Редактировать</a></li></#if>
-			</ul>
-		</div>
-	</div>
+
+        <div id="subnav">
+            <ul>
+                <li><a href="/user/${user.id}">Инфомация</a></li>
+                <li><a href="/user/report/${user.id}">Активности</a></li>
+                <li><a class="selected" href="/user/team/${user.id}">Команда</a></li>
+                <#if session?? && user.id = session.user.id>
+                <li><a href="/user/edit/${user.id}">Редактировать</a></li>
+                </#if>
+            </ul>
+        </div>
+    </div>
 
     <h1>С кем работает<span class="tip green"></span></h1>
 
@@ -46,7 +50,8 @@
     <#if activity.reportTo?has_content>
     <p>
         В проекте <@projectRef project=activity.project/> работает под началом
-        <a class="user" href="/user/team/${activity.reportTo.user.id}"><@gen sex=activity.reportTo.user.sex>${activity.reportTo.user.fullName}</@gen></a>
+        <a class="user"
+           href="/user/team/${activity.reportTo.user.id}"><@gen sex=activity.reportTo.user.sex>${activity.reportTo.user.fullName}</@gen></a>
     </p>
     </#if>
 
@@ -57,7 +62,8 @@
 
     <ul class="users">
         <#list activity.reportFrom as reporter>
-        <li><a class="user" href="/user/team/${reporter.user.id}">${reporter.user.fullName}</a>, <em>${reporter.role.name}</em></li>
+        <li><a class="user" href="/user/team/${reporter.user.id}">${reporter.user.fullName}</a>,
+            <em>${reporter.role.name}</em></li>
         </#list>
     </ul>
     </#if>

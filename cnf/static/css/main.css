@@ -24,13 +24,13 @@ li {
 
 h1 {
     font: 2em 'Constantia', 'palatino linotype', palatino, Georgia, sans-serif;
-    margin-top: 0.5em;
+    margin-top: 1em;
     letter-spacing: -0.05em;
     display: block;
 }
 
 .top {
-    margin-top: 0 !important;
+    margin-top: 0.5em !important;
 }
 
 h2 {
@@ -58,10 +58,10 @@ ul {
     margin-left: 1em;
 }
 
-input {
+input, select {
     border: 1px solid #ccc;
     font: 1em "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
-    padding: 0.2em 0.5em 0.2em 0.5em;
+    padding: 0.2em;
 }
 
 input[type=submit] {
@@ -83,7 +83,7 @@ th {
 #subnav {
     position: absolute;
     right: 4em;
-    top: 29px;
+    top: 3em;
 }
 
 #subnav ul li {
@@ -93,16 +93,33 @@ th {
 }
 
 #subnav ul li a {
-    background: transparent url(/i/tag_left.gif) no-repeat scroll 0 0;
-    color: #FFFFFF;
+    color: #333;
     float: left;
     letter-spacing: 0.4px;
     margin: 0 5px 4px 0;
-    padding: 0 7px 0 13px;
     text-decoration: none;
     text-transform: uppercase;
-    font: 0.7em "Lucida Grande","Lucida Sans", Tahoma, "Trebuchet MS", Arial, sans-serif;
+    font: 0.8em "Lucida Grande", "Lucida Sans", Tahoma, "Trebuchet MS", Arial, sans-serif;
     border-bottom: 0;
+}
+
+#subnav ul li a:hover {
+    border-bottom: 2px solid #DDDDDD;
+    color: #666666;
+}
+
+#subnav ul li a.selected {
+    border-bottom: 2px solid #1A7ECA;
+    color: #0865AC;
+}
+
+#subnav ul li.selected a:hover {
+    border-bottom: 2px solid #DDDDDD;
+}
+
+#subnav ul li a:hover {
+    border-bottom: 2px solid #DDDDDD;
+    color: #666666;
 }
 
 .header, .footer, .box {
@@ -230,6 +247,7 @@ a.user, th a.user {
 ul.users li {
     font-size: 0.8em;
 }
+
 /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 table {

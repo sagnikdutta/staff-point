@@ -22,17 +22,20 @@
 <div class="box">
 
     <div id="boxheader">
-		<h1 class="top">Время &mdash; Деньги<span class="tip red"></span></h1>
+        <h1 class="top">Время &mdash; Деньги<span class="tip red"></span></h1>
         <span class="position">Конструктор отчётов</span>
+
         <div id="subnav">
-			<ul>
-				<li><a href="/user/${user.id}">Инфомация</a></li>
-				<li><a href="/user/report/${user.id}">Активности</a></li>
-				<li><a href="/user/team/${user.id}">Команда</a></li>
-				<#if session?? && user.id = session.user.id><li><a href="/user/edit/${user.id}">Редактировать</a></li></#if>
-			</ul>
-		</div>
-	</div>
+            <ul>
+                <li><a href="/user/${user.id}">Инфомация</a></li>
+                <li><a class="selected" href="/user/report/${user.id}">Активности</a></li>
+                <li><a href="/user/team/${user.id}">Команда</a></li>
+                <#if session?? && user.id = session.user.id>
+                <li><a href="/user/edit/${user.id}">Редактировать</a></li>
+                </#if>
+            </ul>
+        </div>
+    </div>
 
     <#if session?? && user.id = session.user.id>
     <h1>Выбор периода<span class="tip red"></span></h1>
@@ -73,7 +76,7 @@
 
     <ul>
         <#list reports as report>
-            <li>${report.text}</li>
+        <li>${report.text}</li>
         </#list>
     </ul>
 </div>
