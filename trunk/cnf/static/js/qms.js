@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    Cufon.replace('#subnav ul li a', { fontFamily: 'AZGillSansC' });
+
     $(".toggle").click(function() {
         $("#" + $(this).attr("rel")).toggle();
     });
@@ -40,9 +42,9 @@ $(document).ready(function() {
     $('#reportSubmit').click(function() {
 
         var ids = new Array();
-		$('.selected').each(function() {
-			ids.push(this.id);
-		});
+        $('.selected').each(function() {
+            ids.push(this.id);
+        });
 
         $.post('/report/activity/' + $(this).attr("rel"),
         {

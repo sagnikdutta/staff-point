@@ -3,6 +3,9 @@
 <link type="text/css" rel="stylesheet" href="/css/reset.css"/>
 <link type="text/css" rel="stylesheet" href="/css/main.css"/>
 <script type="text/javascript" src="/js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="/js/cufon.js"></script>
+<script type="text/javascript" src="/js/AZGillSansC_400.font.js"></script>
+<script type="text/javascript" src="/js/Artemius_SN_Light_200.font.js"></script>
 <script type="text/javascript" src="/js/qms.js"></script>
 </#macro>
 
@@ -27,10 +30,10 @@
 
 <#macro inout session="">
 <#if session?has_content>
-    <@logout session/>
- <#else>
-    <@login />
- </#if>
+<@logout session/>
+<#else>
+<@login />
+</#if>
 </#macro>
 
 <#macro login>
@@ -50,7 +53,7 @@
 </#macro>
 
 <#macro logout session>
-    <label><@userRef user=session.user />&bull;&nbsp;<a href="/logout">Выйти</a></label>
+<label><@userRef user=session.user />&bull;&nbsp;<a href="/logout">Выйти</a></label>
 </#macro>
 
 <#macro userRef user>
@@ -59,19 +62,19 @@
 
 <#macro projectRef project>
 <a href="/project/${project.id}">${project.name}</a>
-        </#macro>
-
-<#macro projectTree projects>
-    <#if projects?? && projects?has_content>
-        <ul>
-            <#list projects as project>
-                <li>
-                <@projectRef project=project />
-                <@projectTree projects=project.children/>
-                </li>
-            </#list>
-        </ul>
-    </#if>
 </#macro>
 
-<#assign gen = "ru.point.utils.russian.DeclensionFreeMarkerDirective"?new(0)/>
+<#macro projectTree projects>
+<#if projects?? && projects?has_content>
+<ul>
+    <#list projects as project>
+    <li>
+        <@projectRef project=project />
+        <@projectTree projects=project.children/>
+    </li>
+    </#list>
+</ul>
+</#if>
+</#macro>
+
+        <#assign gen = "ru.point.utils.russian.DeclensionFreeMarkerDirective"?new(0)/>

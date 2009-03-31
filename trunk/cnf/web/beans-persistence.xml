@@ -29,7 +29,7 @@
     <bean id="hibernateProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="properties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
 
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.show_sql">false</prop>
@@ -44,7 +44,7 @@
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <property name="dataSource" ref="localDataSource"/>
+        <property name="dataSource" ref="hsqlDataSource"/>
         <property name="hibernateProperties" ref="hibernateProperties"/>
         <property name="annotatedClasses">
             <list>
