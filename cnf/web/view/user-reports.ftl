@@ -49,37 +49,37 @@
             <div class="column">Thursday</div>
             <div class="column">Friday</div>
         </div>
-        <div class="row">
-            <div class="column week">W29/2009</div>
-            <div id="d20090302" class="column day">2 марта</div>
-            <div id="d20090303" class="column day">3 марта</div>
-            <div id="d20090304" class="column day">4 марта</div>
-            <div id="d20090305" class="column day">5 марта</div>
-            <div id="d20090306" class="column day">6 марта</div>
-        </div>
-        <div class="row">
-            <div class="column week">W28/2009</div>
-            <div id="d20090309" class="column day">9 марта</div>
-            <div id="d20090310" class="column day">10 марта</div>
-            <div id="d20090311" class="column day">11 марта</div>
-            <div id="d20090312" class="column day">12 марта</div>
-            <div id="d20090313" class="column day">13 марта</div>
-        </div>
-        <div class="clear"></div>
-        <textarea id="reportText" cols="60" rows="10" class="cleanOnFocus">текст нового отчета</textarea>
-        <a id="reportSubmit" rel="${user.mainActivity.id}" href="#past">Добавить</a>
+    </div>
+    <a id="newWeek" class="action right" href="#">Ещё неделя &darr;</a>
+
+    <div class="reportText">
+        <textarea id="reportText" cols="60" rows="10"></textarea>
+        <select>
+            <option value="${user.mainActivity.id}">${user.mainActivity.role.name} в ${user.mainActivity.project.name}</option>
+            <#if (user.activities?size > 1) >
+            <optgroup label="Все активности">
+                <#list user.activities as activity>
+                <option value="${activity.id}">${activity.role.name} в ${activity.project.name}</option>
+                </#list>
+            </optgroup>
+            </#if>
+        </select>
+        <a id="reportSubmit" class="action right" href="#past" rel="${user.mainActivity.id}">Отправить</a>
     </div>
 
     </#if>
 
-    <h1 id="past">Прошлые отчёты<span class="tip red"></span></h1>
+    <div>
 
-    <ul>
-        <#list reports as report>
-        <li>${report.text}</li>
-        </#list>
-    </ul>
-</div>
-<@foot/>
+        <h1 id="past">Прошлые отчёты<span class="tip red"></span></h1>
+
+        <ul id="reportList">
+            <#list reports as report>
+            <li>${report.start.time?date} ~ ${report.end.time?date}:<br/>
+                ${report.text?html?replace("\n", "<br/>")} </li>
+            </#list>
+        </ul>
+    </div>
+    <@foot/>
 </body>
 </html>

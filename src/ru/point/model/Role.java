@@ -6,8 +6,13 @@ import javax.persistence.*;
  * @author: Mikhail Sedov [25.03.2009]
  */
 @Entity
-@Table(name = "role")
+@Table(name = "role_")
 public class Role {
+
+    public static int DESIGNER_POLICY = 1;
+    public static int MANAGER_POLICY = 2;
+    public static int SEO_POLICY = 3;
+    public static int HR_POLICY = 4;
 
     @Id
     @GeneratedValue
@@ -18,7 +23,7 @@ public class Role {
     private String name;
 
     @Column(name = "groupPolicy")
-    private GroupPolicy groupPolicy;
+    private int groupPolicy;
 
     public Role() {
     }
@@ -43,11 +48,11 @@ public class Role {
         this.name = name;
     }
 
-    public GroupPolicy getGroupPolicy() {
+    public int getGroupPolicy() {
         return groupPolicy;
     }
 
-    public void setGroupPolicy(GroupPolicy groupPolicy) {
+    public void setGroupPolicy(int groupPolicy) {
         this.groupPolicy = groupPolicy;
     }
 }

@@ -44,35 +44,39 @@
     </div>
 
     <h1>Информация<span class="tip blue"></span></h1>
-    <table class="contacts">
-        <tr>
-            <th>День рожденья:</th>
-            <td>${user.profile.birthDay.time?date?string.long}<span> (до него еще 292 дня)</span></td>
-        </tr>
-        <tr>
-            <th>E-Mail:</th>
-            <td>${user.profile.contacts["e-mail"]}</td>
-        </tr>
-    </table>
 
-    <table class="contacts">
-        <#list user.profile.contacts?keys as key >
-        <tr>
-            <th>${key}:</th>
-            <td>${user.profile.contacts[key]}</td>
-        </tr>
-        </#list>
-    </table>
+    <div class="left">
+        <table class="contacts">
+            <tr>
+                <th>День рожденья:</th>
+                <td>${user.profile.birthDay.time?date?string.long}<span>(до него еще ${user.profile.daysTillBirthday} дня)</span></td>
+            </tr>
+            <tr>
+                <th>E-Mail:</th>
+                <td>${user.profile.contacts["e-mail"]}</td>
+            </tr>
+        </table>
 
-    <table class="contacts">
-        <#list user.profile.social?keys as key >
-        <tr>
-            <th>${key}:</th>
-            <td>${user.profile.social[key]}</td>
-        </tr>
-        </#list>
-    </table>
+        <table class="contacts">
+            <#list user.profile.contacts?keys as key >
+            <tr>
+                <th>${key}:</th>
+                <td>${user.profile.contacts[key]}</td>
+            </tr>
+            </#list>
+        </table>
 
+        <table class="contacts">
+            <#list user.profile.social?keys as key >
+            <tr>
+                <th>${key}:</th>
+                <td>${user.profile.social[key]}</td>
+            </tr>
+            </#list>
+        </table>
+    </div>
+
+    <div class="right"><img src="/user/image/${user.id}"/></div>
 </div>
 <@foot/>
 </body>

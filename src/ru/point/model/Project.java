@@ -8,7 +8,7 @@ import java.util.TreeSet;
  * @author: Mikhail Sedov [12.01.2009]
  */
 @Entity
-@Table(name = "project")
+@Table(name = "project_")
 public class Project {
 
     @Id

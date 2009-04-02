@@ -9,7 +9,7 @@ import java.util.TreeSet;
  * @author: Mikhail Sedov [09.01.2009]
  */
 @Entity
-@Table(name = "user", uniqueConstraints = {
+@Table(name = "user_", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"login"})
 })
 public class User {

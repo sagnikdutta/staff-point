@@ -7,7 +7,7 @@ import java.util.*;
  * @author: Mikhail Sedov [12.01.2009]
  */
 @Entity
-@Table(name = "activity")
+@Table(name = "activity_")
 public class Activity {
 
     @Id

@@ -1,24 +1,41 @@
-$(document).ready(function() {
+var activityStart = new Date();
 
-    Cufon.replace('#subnav ul li a', { fontFamily: 'AZGillSansC' });
+function addRowToDatepick() {
+    var row = $("<div class='row'></div");
+    $("<div class='column week'>&rarr;</div>").appendTo(row);
+    for (var i = 0; i < 5; i++) {
+        addDayToRow(activityStart, row);
+        activityStart.setDate(activityStart.getDate() + 1);
+    }
+    row.appendTo('.datepick');
 
-    $(".toggle").click(function() {
-        $("#" + $(this).attr("rel")).toggle();
-    });
+    activityStart.setDate(activityStart.getDate() - 12);
+}
 
-    $(".cleanOnFocus").focus(function () {
-        $(this).attr("value", "");
-        $(this).css("color", "black");
-        $(this).removeClass('cleanOnFocus');
-    });
+function addDayToRow(date, row) {
+    $(" <div id='" + date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + "' class='column day'>" + getDateString(date) + " </div>").appendTo(row);
+}
 
-    $("#searchToggle").click(function() {
-        $("#login").toggle();
-        $("#search").toggle();
-    });
+function getDateString(date) {
+    var result = date.getDate() + " ";
+    switch (date.getMonth()) {
+        case 0: result += " Января"; break;
+        case 1: result += " Февраля"; break;
+        case 2: result += " Марта"; break;
+        case 3: result += " Апреля"; break;
+        case 4: result += " Мая"; break;
+        case 5: result += " Июня"; break;
+        case 6: result += " Июля"; break;
+        case 7: result += " Августа"; break;
+        case 8: result += " Сентября"; break;
+        case 9: result += " Октября"; break;
+        case 10: result += " Ноября"; break;
+        case 11: result += " Декабря"; break;
+    }
+    return result;
+}
 
-    // datepick
-
+function updateDatepickHighlight() {
     $('.day').hover(function() {
         $(this).addClass('highlight');
     }, function() {
@@ -38,6 +55,47 @@ $(document).ready(function() {
     $('.week').click(function() {
         $(this).parent().find(".day").toggleClass('selected');
     });
+}
+
+$(document).ready(function() {
+
+    activityStart.setDate(activityStart.getDate() + 7);
+    while (activityStart.getDay() != 1) {
+        activityStart.setDate(activityStart.getDate() - 1);
+    }
+
+    $(".toggle").click(function() {
+        $("#" + $(this).attr("rel")).toggle();
+    });
+
+    $(".cleanOnFocus").focus(function () {
+        $(this).attr("value", "");
+        $(this).css("color", "black");
+        $(this).removeClass('cleanOnFocus');
+    });
+
+    $("#searchToggle").click(function() {
+        $("#login").toggle();
+        $("#search").toggle();
+    });
+
+    $(".submit").click(function() {
+        $(this).parent().submit();
+    });
+
+    // datepick
+
+    addRowToDatepick();
+    addRowToDatepick();
+    addRowToDatepick();
+    addRowToDatepick();
+
+    updateDatepickHighlight();
+
+    $('#newWeek').click(function() {
+        addRowToDatepick();
+        updateDatepickHighlight();
+    });
 
     $('#reportSubmit').click(function() {
 
@@ -46,14 +104,18 @@ $(document).ready(function() {
             ids.push(this.id);
         });
 
-        $.post('/report/activity/' + $(this).attr("rel"),
-        {
-            text : $('#reportText').val(),
-            selected : ids
-        },
-                function(data) {
-                    alert(data)
-                }, 'json');
-    });
+        $('#reportSubmit').text("Сохраняем...");
+        $('#reportSubmit').attr("href", "");
 
+        $.ajax({
+            type: "POST",
+            url: '/report/activity/' + $(this).attr("rel"),
+            data: { text : $('#reportText').val(), selected : ids},
+            success: function(data) {
+                    $('#reportSubmit').text("Ещё?");
+                    $('#reportSubmit').attr("href", "#");
+                    $('#reportList').prepend(data);
+                }
+        });
+    });
 });

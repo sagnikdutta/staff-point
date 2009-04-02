@@ -4,29 +4,33 @@ html {
 
 body {
     background: #EEEEE9 url(../i/bgr.gif) repeat-x scroll center top;
-    font: 100% "Trebuchet MS", Tahoma, Arial, sans-serif;
-    line-height: 1.125em;
+    font: 1em / 1.125em "Trebuchet MS", Tahoma, Arial, sans-serif;
 }
 
 a, a:visited {
     border-bottom: 1px solid #D7E1E9;
-    color: #4b8bbf;
+    color: #0061A6;
     text-decoration: none;
 }
 
 td, p {
     font: 0.75em / 1.5em Tahoma, "Trebuchet MS", Arial, sans-serif;
+    padding-bottom: 0.2em;
 }
 
 li {
     line-height: 1.5em;
 }
 
+.squared li {
+    background: url("/i/square.png") no-repeat 0 0.6em;
+    padding-left: 1.3em;
+}
+
 h1 {
     font: 2em 'Constantia', 'palatino linotype', palatino, Georgia, sans-serif;
     margin-top: 1em;
     letter-spacing: -0.05em;
-    display: block;
 }
 
 .top {
@@ -73,11 +77,15 @@ th {
     font-weight: normal;
 }
 
+.right {
+    float: right;
+}
+
 /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 #boxheader {
     border-bottom: 1px solid #EEEEEE;
-    height: 71px;
+    padding-bottom: 1em;
 }
 
 #subnav {
@@ -87,6 +95,7 @@ th {
 }
 
 #subnav ul li {
+    background: none;
     display: inline;
     float: left;
     padding: 4px 0 0 15px;
@@ -99,7 +108,7 @@ th {
     margin: 0 5px 4px 0;
     text-decoration: none;
     text-transform: uppercase;
-    font: 0.8em "Lucida Grande", "Lucida Sans", Tahoma, "Trebuchet MS", Arial, sans-serif;
+    font: 0.8em "Gill Sans MT", "Trebuchet MS", Arial, sans-serif;
     border-bottom: 0;
 }
 
@@ -176,7 +185,18 @@ th {
 .box {
     margin-top: 2em;
     width: 60em;
-    padding: 1em 4em 4em 4em;
+    padding: 0 4em 4em 4em;
+    overflow: hidden;
+}
+
+.box div.left {
+    width: 40em;
+    float: left;
+}
+
+.box div.right {
+    width: 15em;
+    float: right;
 }
 
 .footer {
@@ -191,20 +211,6 @@ th {
     clear: both;
 }
 
-a.more {
-    padding: 3px 5px 4px 5px;
-    background-color: #999;
-    width: 8em;
-    text-align: center;
-    border: 0;
-    color: #fff;
-    font: 0.8em "Tahoma", "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
-}
-
-a.more:hover {
-    background-color: #f00;
-}
-
 .control, .control li {
     display: inline;
     margin: 0 2px
@@ -212,11 +218,6 @@ a.more:hover {
 
 .control li a {
     border-bottom-style: dashed;
-}
-
-a.user, th a.user {
-    color: #336600;
-    border-bottom: 1px dashed #336600
 }
 
 /*//////*/
@@ -252,7 +253,6 @@ ul.users li {
 
 table {
     margin-left: 1em;
-    width: 100%;
 }
 
 table th {
@@ -278,20 +278,17 @@ table.contacts td input {
 
 .datepick {
     width: 60em;
-    margin: 2em auto;
-}
-
-datepick .row div {
-    cursor: pointer;
+    margin: 2em auto 1em auto;
 }
 
 .datepick .row {
-    font-family: "Lucida Sans", helvetica, arial, "Tahoma", sans-serif;
+    overflow: hidden;
+    font: 0.7em Tahoma, "Lucida Sans", helvetica, arial, "Tahoma", sans-serif;
     color: #444;
 }
 
 .datepick .row .column {
-    width: 9.8em;
+    width: 14em;
     border-bottom: 1px solid #CCCCCC;
     border-right: 1px solid #CCCCCC;
     float: left;
@@ -299,6 +296,7 @@ datepick .row div {
     position: relative;
     text-align: center;
     padding-top: 5px;
+    cursor: pointer;
 }
 
 .datepick .days .column {
@@ -314,13 +312,50 @@ datepick .row div {
     background-color: #ccffcc !important;
 }
 
-.datepick textarea {
-    margin-top: 2em;
+.reportText {
+    width: 60em;
+    margin: 4em auto;
+}
+
+.reportText textarea {
     width: 98%;
     max-width: 98%;
+    margin-bottom: 1em;
+}
+
+.reportText select {
+    font: 0.7333em "Lucida Grande", "Lucida Sans Unicode", Verdana, sans-serif;
+    width: 20em;
+}
+
+.justAdded {
+    background-color: #ffff99 !important;
 }
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+a.action {
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    font: 0.7333em "Lucida Grande", "Lucida Sans Unicode", Verdana, sans-serif;
+    padding: 0.3em 0.7em;
+    background-color: #E1E3E5;
+}
+
+div.message {
+    width: 50em;
+    background-color: #ffcc99;
+    padding: 2em 5em;
+}
+
+div.message.success {
+    background-color: #ccffcc;
+}
+
+a.action:hover {
+    background-color: #F29500;
+    color: #FFFFFF;
+}
 
 a.reply {
     color: #ccc;
@@ -339,4 +374,10 @@ a.reply {
 #board span {
     font: 0.7em "Tahoma", "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
     color: #ccc;
+}
+
+td a, td a:visited {
+    border-bottom: 1px solid #D7E1E9;
+    color: #0061A6;
+    text-decoration: none;
 }
