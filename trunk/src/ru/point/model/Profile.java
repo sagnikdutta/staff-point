@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Date;
 
 /**
  * @author: Mikhail Sedov [12.01.2009]
@@ -39,6 +40,9 @@ public class Profile {
 
     @Column(name = "birthDay")
     private Calendar birthDay;
+
+    @Column(name = "facePath")
+    private String facePath;
 
     @CollectionOfElements(fetch = FetchType.LAZY)
     private Map<String, String> contacts = new HashMap<String, String>();
@@ -80,6 +84,27 @@ public class Profile {
 
     public Map<String, String> getSocial() {
         return social;
+    }
+
+    public String getFacePath() {
+        return facePath;
+    }
+
+    public void setFacePath(String facePath) {
+        this.facePath = facePath;
+    }
+
+    public String getDaysTillBirthday() {
+
+        Date today = new Date();
+
+        Calendar nextBirthday = Calendar.getInstance();
+        nextBirthday.set(Calendar.DATE, birthDay.get(Calendar.DATE));
+        nextBirthday.set(Calendar.MONTH, birthDay.get(Calendar.MONTH));
+        if (today.compareTo(nextBirthday.getTime()) >= 0) {
+            nextBirthday.add(Calendar.YEAR, 1);
+        }
+        return String.valueOf((nextBirthday.getTimeInMillis() - System.currentTimeMillis()) / 1000 / 60 / 60 / 24);
     }
 
     @Override

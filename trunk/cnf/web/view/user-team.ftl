@@ -60,7 +60,7 @@
         <strong>В команде <@gen sex=user.sex>${user.profile.firstName}</@gen> работают:</strong>
     </p>
 
-    <ul class="users">
+    <ul class="users squared">
         <#list activity.reportFrom as reporter>
         <li><a class="user" href="/user/team/${reporter.user.id}">${reporter.user.fullName}</a>,
             <em>${reporter.role.name}</em></li>

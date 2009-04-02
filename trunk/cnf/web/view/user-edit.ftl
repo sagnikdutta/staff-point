@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="message" type="ru.point.view.Message" -->
 <#-- @ftlvariable name="contactKeys" type="String[]" -->
 <#-- @ftlvariable name="socialKeys" type="String[]" -->
 <#-- @ftlvariable name="session" type="ru.point.model.Session" -->
@@ -45,7 +46,18 @@
         </div>
     </div>
 
-    <h1>Редактировать<span class="tip blue"></span></h1>
+    <#if message?? && message.text?has_content>
+        <div class="message <#if message.success>success</#if>">
+            ${message.text}
+            <ul>
+                <#list message.list as line>
+                    <li>${line}</li>
+                </#list>
+            </ul>
+        </div>
+    </#if>
+
+    <h1>Имя, контакты<span class="tip blue"></span></h1>
 
     <form action="/user/edit/${user.id}" method="post">
         <table class="contacts">
@@ -66,6 +78,7 @@
                     </select>
                 </td>
             </tr>
+
             <tr>
                 <th>День рожденья (дд/мм/гггг):</th>
                 <td><input name="birthday" type="text" value="${user.profile.birthDay.time?date?string.short}"/></td>
@@ -90,7 +103,43 @@
             </#list>
         </table>
 
-        <input type="submit" value="Сохранить">
+        <a class="action submit" href="#">Сохранить</a>
+    </form>
+
+    <h1>Фотография<span class="tip blue"></span></h1>
+
+    <form action="/user/image/${user.id}" method="post" enctype="multipart/form-data">
+        <table class="contacts">
+            <tr>
+                <th>Новое лицо:</th>
+                <td><input name="image" type="file"/></td>
+            </tr>
+        </table>
+
+         <a class="action submit" href="#">Обновить фото</a>
+    </form>
+
+    <h1>Пароль<span class="tip blue"></span></h1>
+
+    <form action="/user/edit/password/${user.id}" method="post">
+
+        <table class="contacts">
+            <tr>
+                <th>Старый пароль:</th>
+                <td><input name="old" type="password" value="${user.password}"/></td>
+            </tr>
+            <tr>
+                <th>Новый:</th>
+                <td><input name="new" type="password"/></td>
+            </tr>
+            <tr>
+                <th>Ещё разок:</th>
+                <td><input name="again" type="password"/></td>
+            </tr>
+        </table>
+
+         <a class="action submit" href="#">Сохранить новый пароль</a>
+
     </form>
 
 </div>

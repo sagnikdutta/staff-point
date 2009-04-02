@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.point.dao.SmartDao;
 import ru.point.model.Session;
 import ru.point.model.User;
-import ru.point.model.GroupPolicy;
+import ru.point.model.Role;
 
 import javax.servlet.http.Cookie;
 
@@ -35,7 +35,7 @@ public class AbstractController {
              if (session != null) {
                  if (session.getUser().getId() == user.getId()) { // seft edit
                      return true;
-                 } else if (session.getUser().getMainActivity().getRole().getGroupPolicy() == GroupPolicy.SEO) {
+                 } else if (session.getUser().getMainActivity().getRole().getGroupPolicy() == Role.SEO_POLICY) {
                      return true;
                  }
              }

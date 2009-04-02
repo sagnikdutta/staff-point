@@ -9,7 +9,7 @@ import java.util.Date;
  * @author: Mikhail Sedov [06.03.2009]
  */
 @Entity
-@Table(name = "session")
+@Table(name = "session_")
 public class Session {
 
     @Id

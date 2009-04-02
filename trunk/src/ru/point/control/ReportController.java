@@ -9,14 +9,12 @@ import org.hibernate.Hibernate;
 import ru.point.model.Activity;
 import ru.point.model.Report;
 import ru.point.model.User;
+import ru.point.model.Project;
 import ru.point.utils.Utils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Date;
+import java.util.*;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
@@ -38,7 +36,7 @@ public class ReportController extends AbstractController {
 
 
     @RequestMapping("/user/report/{userId}")
-    public ModelAndView listActivityReport(@CookieValue(required = false) Cookie session,
+    public ModelAndView listUserActivityReport(@CookieValue(required = false) Cookie session,
                                            @PathVariable long userId,
                                            ModelMap model) {
 
@@ -51,6 +49,23 @@ public class ReportController extends AbstractController {
         putCookie(session, model);
         return new ModelAndView("user-reports", model);
     }
+
+    @RequestMapping("/project/report/{projectId}")
+    public ModelAndView listProjectActivityReport(@CookieValue(required = false) Cookie session,
+                                           @PathVariable long projectId,
+                                           ModelMap model) {
+
+        Project project = dao.get(Project.class, projectId);
+        Hibernate.initialize(project.getActivities());
+        for (Activity activity : project.getActivities()) {
+            Hibernate.initialize(activity.getReports());
+        }
+        model.put("project", project);
+
+        putCookie(session, model);
+        return new ModelAndView("project-reports", model);
+    }
+
 
     @RequestMapping("/report/activity/{activityId}/year/{year}/week/{week}")
     public ModelAndView listActivityReport(@CookieValue(required = false) Cookie session,
@@ -110,12 +125,13 @@ public class ReportController extends AbstractController {
 
     }
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("'d'yyyyMMdd");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     @RequestMapping(value = "/report/activity/{activityId}", method = RequestMethod.POST)
-    public String postActivityReport(@CookieValue(required = false) Cookie session,
+    public ModelAndView postActivityReport(@CookieValue(required = false) Cookie session,
                                      @PathVariable long activityId,
-                                     HttpServletRequest request) throws UnsupportedEncodingException, ParseException {
+                                     HttpServletRequest request,
+                                     ModelMap model) throws UnsupportedEncodingException, ParseException {
 
         request.setCharacterEncoding("UTF8");
 
@@ -128,13 +144,22 @@ public class ReportController extends AbstractController {
             r.setText(text);
             r.setReportForActivity(dao.get(Activity.class, activityId));
             for (String day : days) {
-                Calendar dayCal = Calendar.getInstance();
-                dayCal.setTime(DATE_FORMAT.parse(day));
-                r.addReportPeriodDays(dayCal);
+                try {
+                    Calendar dayCal = Calendar.getInstance();
+                    dayCal.setTime(DATE_FORMAT.parse(day));
+                    r.addReportPeriodDays(dayCal);
+                } catch (ParseException e) {
+                    // ignore
+                }
             }
+
+            r.setStart(Collections.min(r.getReportPeriodDays()));
+            r.setEnd(Collections.max(r.getReportPeriodDays()));
+
             dao.save(r);
 
-            return String.valueOf(r.getId());
+            model.put("report", r);
+            return new ModelAndView("ajax/new-report", model);
         }
 
         return null;

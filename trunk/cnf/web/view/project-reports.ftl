@@ -21,26 +21,31 @@
     <div id="boxheader">
         <h1 class="top">${project.name}<span class="tip red"></span></h1>
         <span class="position">В проекте трудятся ${project.activities?size} человек</span>
+
         <div id="subnav">
             <ul>
-                <li><a class="selected" href="/project/${project.id}">Информация</a></li>
-                <li><a href="/project/report/${project.id}">Активности</a></li>
-                <li><a href="/edit">Редактировать</a></li>
+                <li><a href="/project/${project.id}">Информация</a></li>
+                <li><a class="selected" href="/project/report/${project.id}">Активности</a></li>
+                <li><a href="/project/edit/${project.id}">Редактировать</a></li>
             </ul>
         </div>
     </div>
 
-    <h1 class="top">Люди проекта<span class="tip red"></span></h1>
-    <table>
+    <h1 class="top">Люди ау!<span class="tip red"></span></h1>
+
+    <ul>
         <#list project.activities?sort_by("id") as position>
-        <tr>
-            <td style="width: 15em; "><@userRef user=position.user/></td>
-            <td>
-            ${position.role.name}
-            <td>
-        </tr>
+        <li class="position"><@userRef user=position.user/> &mdash; ${position.role.name}<br/>
+            <ul>
+                <#list position.reports as report>
+                <li>${report.start.time?date} ~ ${report.end.time?date}:<br/>
+                    ${report.text?html?replace("\n", "<br/>")} </li>
+                </#list>
+            </ul>
+        </li>
         </#list>
-    </table>
+    </ul>
+
 </div>
 <@foot/>
 </body>

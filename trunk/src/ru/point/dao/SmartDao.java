@@ -3,20 +3,16 @@ package ru.point.dao;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.Property;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Component;
+import ru.point.model.Report;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
-
-import ru.point.model.Report;
 
 /**
  * @author: Mikhail Sedov [06.03.2009]
@@ -52,7 +48,7 @@ public class SmartDao extends HibernateDaoSupport {
     public Map<String, Long> stat(String queryString, Map<String, Object> param) {
         List queryResult = createQuery(queryString, param).list();
         //
-        Map <String, Long> result = new HashMap<String, Long>();
+        Map<String, Long> result = new HashMap<String, Long>();
         for (Object o : queryResult) {
             Object[] row = (Object[]) o;
             result.put((String) row[0], ((Number) row[1]).longValue());
@@ -94,10 +90,9 @@ public class SmartDao extends HibernateDaoSupport {
     }
 
     public List<Report> listReportsForUser(long userId) {
-        Property prop = Property.forName("reportForActivity");
-        return getSession(false).createCriteria(Report.class)
-                .createAlias("reportForActivity","activity")
-                .add(Restrictions.eq("activity.user.id", userId))
+        return getSession(false)
+                .createQuery("from Report as report where report.reportForActivity.user = :user order by report.id desc ")
+                .setLong("user", userId)
                 .list();
     }
 }

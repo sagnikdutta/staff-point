@@ -3,7 +3,6 @@ package ru.point.model;
 import org.hibernate.annotations.CollectionOfElements;
 
 import javax.persistence.*;
-import java.util.Set;
 import java.util.Collection;
 import java.util.Calendar;
 import java.util.TreeSet;
@@ -12,7 +11,7 @@ import java.util.TreeSet;
  * @author: Mikhail Sedov [06.03.2009]
  */
 @Entity
-@Table(name = "report")
+@Table(name = "report_")
 public class Report {
 
     @Id
@@ -26,8 +25,14 @@ public class Report {
     @Column(name = "text")
     private String text;
 
-    @CollectionOfElements(fetch = FetchType.EAGER)
+    @CollectionOfElements(fetch = FetchType.LAZY)
     private Collection<Calendar> reportPeriodDays = new TreeSet<Calendar>();
+
+    @Column(name = "cachedStart")
+    private Calendar start;
+
+    @Column(name = "cachedEnd")
+    private Calendar end;
 
     public Report() {
     }
@@ -62,5 +67,21 @@ public class Report {
 
     public void addReportPeriodDays(Calendar dayCal) {
         reportPeriodDays.add(dayCal);
+    }
+
+    public Calendar getStart() {
+        return start;
+    }
+
+    public void setStart(Calendar start) {
+        this.start = start;
+    }
+
+    public Calendar getEnd() {
+        return end;
+    }
+
+    public void setEnd(Calendar end) {
+        this.end = end;
     }
 }

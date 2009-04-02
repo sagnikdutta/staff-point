@@ -1,21 +1,22 @@
 package ru.point.control;
 
 import org.hibernate.Hibernate;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import ru.point.model.*;
 import ru.point.utils.Utils;
+import ru.point.view.Message;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author: Mikhail Sedov [12.03.2009]
@@ -124,12 +125,10 @@ public class PeopleController extends AbstractController {
     }
 
     @RequestMapping("/user/edit/{userId}")
-    public ModelAndView editUser(@CookieValue(required = false) Cookie session, @PathVariable("userId") long userId, ModelMap model) {
+    public ModelAndView editUser(@CookieValue(required = false) Cookie session, @PathVariable("userId") long userId, Message message, ModelMap model) {
 
         User user = dao.get(User.class, userId);
         Hibernate.initialize(user.getMainActivity());
-        Hibernate.initialize(user.getProfile().getContacts());
-        Hibernate.initialize(user.getProfile().getSocial());
 
         if (!isAllowedForCurrentUser(session, user)) {
             model.put("user", user);
@@ -139,11 +138,12 @@ public class PeopleController extends AbstractController {
         model.put("user", user);
         model.put("contactKeys", merge(Profile.CONTACT_KEYS, user.getProfile().getContacts().keySet()));
         model.put("socialKeys", merge(Profile.SOCIAL_KEYS, user.getProfile().getSocial().keySet()));
+        model.put("message", message);
         // session
         putCookie(session, model);
         return new ModelAndView("user-edit", model);
     }
-    
+
     private String[] merge(String[] one, Collection<String> two) {
         Set<String> result = new TreeSet<String>();
         result.addAll(Arrays.asList(one));
@@ -152,8 +152,8 @@ public class PeopleController extends AbstractController {
     }
 
     @RequestMapping(value = "/user/edit/{userId}", method = RequestMethod.POST)
-    public String saveUser(@CookieValue(required = false) Cookie session, @PathVariable("userId") long userId,
-                           HttpServletRequest request, ModelMap model) throws UnsupportedEncodingException {
+    public ModelAndView saveUser(@CookieValue(required = false) Cookie session, @PathVariable("userId") long userId,
+                                 HttpServletRequest request, ModelMap model) throws UnsupportedEncodingException {
         // russian
         request.setCharacterEncoding("CP1251");
         User user = dao.get(User.class, userId);
@@ -191,7 +191,27 @@ public class PeopleController extends AbstractController {
         }
 
         dao.save(user);
-        return "redirect:/user/" + userId;
+
+        return editUser(session, userId, new Message("Контактная информация обновлена"), model);
+    }
+
+    @RequestMapping(value = "/user/edit/password/{userId}", method = RequestMethod.POST)
+    public ModelAndView saveUserPassword(@CookieValue(required = false) Cookie session,
+                                         @PathVariable("userId") long userId,
+                                         @RequestParam("old") String old,
+                                         @RequestParam("new") String newPassword,
+                                         @RequestParam("again") String newPasswordAgain,
+                                         ModelMap model) throws UnsupportedEncodingException {
+
+        if (!newPassword.equals(newPasswordAgain)) {
+            return editUser(session, userId, new Message("Новые пароли не одинаковые, Вы уж определитесь!", false), model);
+        }
+
+        if (newPassword.length() < 4) {
+            return editUser(session, userId, new Message("Новые пароль слишком короткий", false), model);
+        }
+
+        return editUser(session, userId, new Message("Пароль кагбэ обновлен"), model);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

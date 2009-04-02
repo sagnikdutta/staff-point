@@ -64,67 +64,67 @@ public class InitialData {
 
         Role seo = new Role();
         seo.setName("SEO");
-        seo.setGroupPolicy(GroupPolicy.SEO);
+        seo.setGroupPolicy(Role.SEO_POLICY);
         dao.save(seo);
 
         Role sd = new Role();
         sd.setName("Software Designer");
-        sd.setGroupPolicy(GroupPolicy.DESIGNER);
+        sd.setGroupPolicy(Role.DESIGNER_POLICY);
         dao.save(sd);
 
         Role ssd = new Role();
         ssd.setName("Senior Software Designer");
-        ssd.setGroupPolicy(GroupPolicy.DESIGNER);
+        ssd.setGroupPolicy(Role.DESIGNER_POLICY);
         dao.save(ssd);
 
         Role jsd = new Role();
         jsd.setName("Java Software Designer");
-        jsd.setGroupPolicy(GroupPolicy.DESIGNER);
+        jsd.setGroupPolicy(Role.DESIGNER_POLICY);
         dao.save(jsd);
 
         Role nsd = new Role();
         nsd.setName(".NET Software Designer");
-        nsd.setGroupPolicy(GroupPolicy.DESIGNER);
+        nsd.setGroupPolicy(Role.DESIGNER_POLICY);
         dao.save(nsd);
 
         Role pm = new Role();
         pm.setName("Project Manager");
-        pm.setGroupPolicy(GroupPolicy.DESIGNER);
+        pm.setGroupPolicy(Role.MANAGER_POLICY);
         dao.save(pm);
 
         Role sm = new Role();
         sm.setName("Senior Manager");
-        sm.setGroupPolicy(GroupPolicy.MANAGER);
+        sm.setGroupPolicy(Role.MANAGER_POLICY);
         dao.save(sm);
 
         Role st = new Role();
         st.setName("Software Tester");
-        st.setGroupPolicy(GroupPolicy.DESIGNER);
+        st.setGroupPolicy(Role.DESIGNER_POLICY);
         dao.save(st);
 
         Role sst = new Role();
         sst.setName("Senior Software Tester");
-        sst.setGroupPolicy(GroupPolicy.DESIGNER);
+        sst.setGroupPolicy(Role.DESIGNER_POLICY);
         dao.save(sst);
 
         Role tl = new Role();
         tl.setName("Test Leader");
-        tl.setGroupPolicy(GroupPolicy.DESIGNER);
+        tl.setGroupPolicy(Role.DESIGNER_POLICY);
         dao.save(tl);
 
         Role tml = new Role();
         tml.setName("Team Leader");
-        tml.setGroupPolicy(GroupPolicy.DESIGNER);
+        tml.setGroupPolicy(Role.DESIGNER_POLICY);
         dao.save(tml);
 
         Role tc = new Role();
         tc.setName("Technical Coordinator");
-        tc.setGroupPolicy(GroupPolicy.DESIGNER);
+        tc.setGroupPolicy(Role.DESIGNER_POLICY);
         dao.save(tc);
 
         Role pa = new Role();
         pa.setName("Project Assistant");
-        pa.setGroupPolicy(GroupPolicy.DESIGNER);
+        pa.setGroupPolicy(Role.DESIGNER_POLICY);
         dao.save(pa);
 
         int idx = 0;

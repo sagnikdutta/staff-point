@@ -3,9 +3,6 @@
 <link type="text/css" rel="stylesheet" href="/css/reset.css"/>
 <link type="text/css" rel="stylesheet" href="/css/main.css"/>
 <script type="text/javascript" src="/js/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="/js/cufon.js"></script>
-<script type="text/javascript" src="/js/AZGillSansC_400.font.js"></script>
-<script type="text/javascript" src="/js/Artemius_SN_Light_200.font.js"></script>
 <script type="text/javascript" src="/js/qms.js"></script>
 </#macro>
 
