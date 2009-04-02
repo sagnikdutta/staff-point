@@ -32,9 +32,14 @@
     </div>
 
     <h1 class="top">Люди проекта<span class="tip red"></span></h1>
+    <h4 class="position">
+        <a href="#">По алфавиту&darr;</a>&nbsp;
+        <a href="#">По роли&darr;</a>&nbsp;
+        <a href="#">По дате рождения&darr;</a>&nbsp;
+    </h4>
 
     <#assign middle = project.activities?size/2>
-    <ul class="people left">
+    <ul class="people">
         <#list 1..middle as idx>
         <li>
             <span><a href="/user/${project.activities[idx].user.id}"><img src="/user/image/s/${project.activities[idx].user.id}"/></a></span>
