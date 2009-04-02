@@ -7,9 +7,11 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Component;
+import ru.point.model.Activity;
 import ru.point.model.Report;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +95,13 @@ public class SmartDao extends HibernateDaoSupport {
         return getSession(false)
                 .createQuery("from Report as report where report.reportForActivity.user = :user order by report.id desc ")
                 .setLong("user", userId)
+                .list();
+    }
+
+    public Collection<Activity> getProjectActivitiesByBirthday(long projectId) {
+        return getSession(false)
+                .createQuery("from Activity as activity where activity.project = :project order by activity.user.profile.birthDay")
+                .setLong("project", projectId)
                 .list();
     }
 }

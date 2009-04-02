@@ -23,14 +23,15 @@
 <div class="box">
 
     <div id="boxheader">
-        <h1 class="top"><#if session?? && user.id = session.user.id>Я, </#if>${user.fullName}<span class="tip red"></span></h1>
+        <h1 class="top"><#if session?? && user.id = session.user.id>Я, </#if>${user.fullName}<span
+                class="tip red"></span></h1>
         <span class="position">${user.mainActivity.role.name}
             <#if user.mainActivity.project??>
             в <@projectRef project=user.mainActivity.project/>
             </#if>
         </span>
 
-        <div id="subnav">
+        <div id="subnav" class="nav">
             <ul>
                 <li><a class="selected" href="/user/${user.id}">Инфомация</a></li>
                 <li><a href="/user/report/${user.id}">Активности</a></li>
@@ -48,7 +49,8 @@
         <table class="contacts">
             <tr>
                 <th>День рожденья:</th>
-                <td>${user.profile.birthDay.time?date?string.long}<span>(до него еще ${user.profile.daysTillBirthday} дня)</span></td>
+                <td>${user.profile.birthDay.time?date?string.long}<span>(до него еще ${user.profile.daysTillBirthday} дня)</span>
+                </td>
             </tr>
             <tr>
                 <th>E-Mail:</th>

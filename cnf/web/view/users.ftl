@@ -9,7 +9,7 @@
         <span>
             <a href="/">Главная</a> &rarr; Поиск
         </span>
-<@search/>
+    <@search/>
     <@loginForm session=session/>
 </div>
 <div class="contol">
@@ -18,16 +18,17 @@
 <div class="box">
 
     <div id="boxheader">
-		<h1 class="top">Поиск Людей<span class="tip red"></span></h1>
+        <h1 class="top">Поиск Людей<span class="tip red"></span></h1>
         <span class="position">По вашему запросу найдено ${users?size} людей</span>
-		<div id="subnav">
-			<ul>
-				<li><a href="#">По алфавиту</a></li>
-				<li><a href="#">По роли</a></li>
-				<li><a href="#">По проектам</a></li>
-			</ul>
-		</div>
-	</div>
+
+        <div id="subnav" class="nav">
+            <ul>
+                <li><a href="#">По алфавиту</a></li>
+                <li><a href="#">По роли</a></li>
+                <li><a href="#">По проектам</a></li>
+            </ul>
+        </div>
+    </div>
 
     <h1>Результаты<span class="tip red"></span></h1>
 

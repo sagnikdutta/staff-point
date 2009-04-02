@@ -22,7 +22,7 @@
         <h1 class="top">${project.name}<span class="tip red"></span></h1>
         <span class="position">В проекте трудятся ${project.activities?size} человек</span>
 
-        <div id="subnav">
+        <div id="subnav" class="nav">
             <ul>
                 <li><a href="/project/${project.id}">Информация</a></li>
                 <li><a class="selected" href="/project/report/${project.id}">Активности</a></li>

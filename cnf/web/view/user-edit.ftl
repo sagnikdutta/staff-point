@@ -26,14 +26,15 @@
 <div class="box">
 
     <div id="boxheader">
-        <h1 class="top"><#if session?? && user.id = session.user.id>Я, </#if>${user.fullName}<span class="tip red"></span></h1>
+        <h1 class="top"><#if session?? && user.id = session.user.id>Я, </#if>${user.fullName}<span
+                class="tip red"></span></h1>
         <span class="position">${user.mainActivity.role.name}
             <#if user.mainActivity.project??>
             в <@projectRef project=user.mainActivity.project/>
             </#if>
         </span>
 
-        <div id="subnav">
+        <div id="subnav" class="nav">
             <ul>
                 <li><a href="/user/${user.id}">Инфомация</a></li>
                 <li><a href="/user/report/${user.id}">Активности</a></li>
@@ -46,14 +47,14 @@
     </div>
 
     <#if message?? && message.text?has_content>
-        <div class="message <#if message.success>success</#if>">
-            ${message.text}
-            <ul>
-                <#list message.list as line>
-                    <li>${line}</li>
-                </#list>
-            </ul>
-        </div>
+    <div class="message <#if message.success>success</#if>">
+        ${message.text}
+        <ul>
+            <#list message.list as line>
+            <li>${line}</li>
+            </#list>
+        </ul>
+    </div>
     </#if>
 
     <h1>Имя, контакты<span class="tip blue"></span></h1>
@@ -115,7 +116,7 @@
             </tr>
         </table>
 
-         <a class="action submit" href="#">Обновить фото</a>
+        <a class="action submit" href="#">Обновить фото</a>
     </form>
 
     <h1>Пароль<span class="tip blue"></span></h1>
@@ -137,7 +138,7 @@
             </tr>
         </table>
 
-         <a class="action submit" href="#">Сохранить новый пароль</a>
+        <a class="action submit" href="#">Сохранить новый пароль</a>
 
     </form>
 
