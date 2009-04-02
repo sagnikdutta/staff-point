@@ -23,8 +23,7 @@
 <div class="box">
 
     <div id="boxheader">
-        <h1 class="top"><#if session?? && user.id = session.user.id>ß, </#if>${user.fullName}<span
-                class="tip red"></span></h1>
+        <h1 class="top"><#if session?? && user.id = session.user.id>ß, </#if>${user.fullName}<span class="tip red"></span></h1>
         <span class="position">${user.mainActivity.role.name}
             <#if user.mainActivity.project??>
             â <@projectRef project=user.mainActivity.project/>
@@ -76,7 +75,7 @@
         </table>
     </div>
 
-    <div class="right"><img src="/user/image/${user.id}"/></div>
+    <div class="right"><a href="/user/image/o/${user.id}"><img src="/user/image/m/${user.id}"/></a></div>
 </div>
 <@foot/>
 </body>

@@ -8,6 +8,11 @@ import java.util.LinkedList;
  */
 public class Message {
 
+    public static final String PASSWORD_OLD_WRONG = "Хм,.. старый пароль не тот";
+    public static final String PASSWORD_NOT_MATCH = "Новые пароли не совпадают";
+    public static final String PASSWORD_UPDATED = "Пароль обновлен";
+    public static final String PASSWORD_TOO_SHORT = "Новый пароль слишком короткий";
+
     private boolean isSuccess;
     private String text;
     private List<String> list = new LinkedList<String>();

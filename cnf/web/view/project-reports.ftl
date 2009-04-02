@@ -34,7 +34,7 @@
     <h1 class="top">Ћюди ау!<span class="tip red"></span></h1>
 
     <ul>
-        <#list project.activities?sort_by("id") as position>
+        <#list project.activities as position>
         <li class="position"><@userRef user=position.user/> &mdash; ${position.role.name}<br/>
             <ul>
                 <#list position.reports as report>

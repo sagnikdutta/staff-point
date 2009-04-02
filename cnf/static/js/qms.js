@@ -52,8 +52,10 @@ function updateDatepickHighlight() {
         $(this).toggleClass('selected');
     });
 
-    $('.week').click(function() {
-        $(this).parent().find(".day").toggleClass('selected');
+    $('.week').toggle(function() {
+        $(this).parent().find(".day").addClass('selected');
+    }, function() {
+        $(this).parent().find(".day").removeClass('selected');
     });
 }
 
@@ -105,17 +107,15 @@ $(document).ready(function() {
         });
 
         $('#reportSubmit').text("Сохраняем...");
-        $('#reportSubmit').attr("href", "");
 
         $.ajax({
             type: "POST",
             url: '/report/activity/' + $(this).attr("rel"),
             data: { text : $('#reportText').val(), selected : ids},
             success: function(data) {
-                    $('#reportSubmit').text("Ещё?");
-                    $('#reportSubmit').attr("href", "#");
-                    $('#reportList').prepend(data);
-                }
+                $('#reportSubmit').text("Ещё?");
+                $('#reportList').prepend(data);
+            }
         });
     });
 });

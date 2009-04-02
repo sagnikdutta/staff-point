@@ -24,8 +24,7 @@
 <div class="box">
 
     <div id="boxheader">
-        <h1 class="top"><#if session?? && user.id = session.user.id>ß, </#if>${user.fullName}<span
-                class="tip red"></span></h1>
+        <h1 class="top"><#if session?? && user.id = session.user.id>ß, </#if>${user.fullName}<span class="tip red"></span></h1>
         <span class="position">${user.mainActivity.role.name}
             <#if user.mainActivity.project??>
             â <@projectRef project=user.mainActivity.project/>

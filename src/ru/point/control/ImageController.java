@@ -3,22 +3,23 @@ package ru.point.control;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.ui.ModelMap;
-import ru.point.dao.SmartDao;
 import ru.point.model.User;
+import ru.point.utils.Images;
 import ru.point.view.Message;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
-import java.nio.channels.Channels;
-import java.net.URL;
 
 
 /**
@@ -53,22 +54,33 @@ public class ImageController extends AbstractController {
     @Autowired
     private PeopleController peopleController;
 
-    @RequestMapping(value = "/user/image/{userId}", method = RequestMethod.GET)
-    public void getUserFace(@PathVariable long userId, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/user/image/{size}/{userId}", method = RequestMethod.GET)
+    public void getUserFace(@PathVariable long userId, @PathVariable String size, HttpServletResponse response) throws IOException {
         User u = dao.get(User.class, userId);
-        if (u.getProfile().getFacePath() != null) {
-            if (new File(u.getProfile().getFacePath()).exists()) {
-
-                ReadableByteChannel inputChannel = Channels.newChannel(new FileInputStream(u.getProfile().getFacePath()));
-                WritableByteChannel outputChannel = Channels.newChannel(response.getOutputStream());
-
-                fastChannelCopy(inputChannel, outputChannel);
-                
-                return;
+        File userLocalStorage = new File(LOCAL_IMG + u.getLogin());
+        if (!userLocalStorage.exists()) {
+            if ("s".equals(size)) {
+                response.sendRedirect("/i/user.png");
+            } else {
+                response.sendRedirect("/i/user-128.png");
             }
+            return;
         }
 
-        response.sendRedirect("/i/user-128.png");
+        File face = new File(userLocalStorage, size);
+        if (!face.exists()) {
+            if ("s".equals(size)) {
+                response.sendRedirect("/i/user.png");
+            } else {
+                response.sendRedirect("/i/user-128.png");
+            }
+            return;
+        }
+
+        ReadableByteChannel inputChannel = Channels.newChannel(new FileInputStream(face));
+        WritableByteChannel outputChannel = Channels.newChannel(response.getOutputStream());
+
+        fastChannelCopy(inputChannel, outputChannel);
     }
 
     @RequestMapping(value = "/user/image/{userId}", method = RequestMethod.POST)
@@ -81,13 +93,12 @@ public class ImageController extends AbstractController {
             peopleController.editUser(session, userId, new Message("Странный какой-то файл", false), model);
         }
 
-
         File userLocalStorage = new File(LOCAL_IMG + u.getLogin());
         if (!userLocalStorage.exists()) {
             userLocalStorage.mkdir();
         }
 
-        File face = new File(userLocalStorage, "face.jpg");
+        File face = new File(userLocalStorage, "o");
         u.getProfile().setFacePath(face.getAbsolutePath());
 
         InputStream in = f.getInputStream();
@@ -101,6 +112,25 @@ public class ImageController extends AbstractController {
         inputChannel.close();
         outputChannel.close();
 
+        // resize original
+        try {
+            BufferedImage original = ImageIO.read(face);
+            // small
+            BufferedImage s = Images.resize(original, 90, original.getHeight() * 90 / original.getWidth());
+            ImageIO.write(s, "jpg", new File(userLocalStorage, "s"));
+            // medium
+            if (original.getWidth() > 240) {
+                BufferedImage m = Images.resize(original, 240, original.getHeight() * 240 / original.getWidth());
+                ImageIO.write(m, "jpg", new File(userLocalStorage, "m"));
+            } else {
+                ImageIO.write(original, "jpg", new File(userLocalStorage, "m"));
+            }
+        } catch (Exception e) {
+            return peopleController.editUser(session, userId, new Message("Лицо мне ваше не мило, " + e.getMessage(), false), model);
+        }
+
         return peopleController.editUser(session, userId, new Message("Лицо принято"), model);
     }
+
+
 }

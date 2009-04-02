@@ -25,6 +25,7 @@ public class Activity {
     private Project project;
 
     @OneToMany(mappedBy = "reportTo", fetch = FetchType.LAZY)
+    @OrderBy("id")
     private Set<Activity> reportFrom = new TreeSet<Activity>();
 
     @ManyToOne
@@ -40,6 +41,7 @@ public class Activity {
     private boolean isMain;
 
     @OneToMany(mappedBy = "reportForActivity", fetch = FetchType.LAZY)
+    @OrderBy("end desc")
     private List<Report> reports = new LinkedList<Report>();
 
     public Activity() {
