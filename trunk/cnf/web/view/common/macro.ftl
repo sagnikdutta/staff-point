@@ -50,12 +50,10 @@
 </#macro>
 
 <#macro logout session>
-<label><@userRef user=session.user />&bull;&nbsp;<a href="/logout">Выйти</a></label>
+<label><@userRef user=session.user/>&nbsp;|&nbsp;<a href="/logout">Выйти</a></label>
 </#macro>
 
-<#macro userRef user>
-<a class="user" href="/user/${user.id}">${user.fullName}</a>
-</#macro>
+<#macro userRef user><a class="user" href="/user/${user.id}">${user.fullName}</a></#macro>
 
 <#macro projectRef project>
 <a href="/project/${project.id}">${project.name}</a>
@@ -72,6 +70,27 @@
     </#list>
 </ul>
 </#if>
+</#macro>
+
+<#macro peopleTwoColumns activities groupby="">
+<div class="people">
+    <#list activities as activity>
+    <div class="person">
+        <span><a href="/user/${activity.user.id}"><img src="/user/image/s/${activity.user.id}"/></a></span>
+        <h4><@userRef user=activity.user/></h4>
+
+        <p class="picture-note">
+            <#if groupby?has_content>
+            <#if groupby == "birthday">
+            ${activity.user.profile.birthDay.time?date}
+            </#if>
+            <#else>
+            ${activity.role.name}
+            </#if>
+        </p>
+    </div>
+    </#list>
+</div>
 </#macro>
 
         <#assign gen = "ru.point.utils.russian.DeclensionFreeMarkerDirective"?new(0)/>

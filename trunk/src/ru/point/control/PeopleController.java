@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.point.model.*;
 import ru.point.utils.Utils;
+import ru.point.view.Group;
 import ru.point.view.Message;
 
 import javax.servlet.http.Cookie;
@@ -238,9 +239,88 @@ public class PeopleController extends AbstractController {
         Project project = dao.get(Project.class, projectId);
         Hibernate.initialize(project.getActivities());
         model.put("project", project);
+
+        List<Group<Activity>> groups = new LinkedList<Group<Activity>>();
+        groups.add(new Group<Activity>("", project.getActivities()));
+
+        model.put("groups", groups);
         putCookie(session, model);
         return new ModelAndView("project", model);
     }
 
+    @RequestMapping("/project/{projectId}/by/role")
+    public ModelAndView getProjectByRole(@CookieValue(required = false) Cookie session, @PathVariable("projectId") long projectId, ModelMap model) {
+        Project project = dao.get(Project.class, projectId);
+        Hibernate.initialize(project.getActivities());
+        model.put("project", project);
 
+        Set<String> roles = new HashSet<String>();
+        for (Activity activity : project.getActivities()) {
+            roles.add(activity.getRole().getName());
+        }
+
+        List<Group<Activity>> groups = new LinkedList<Group<Activity>>();
+
+        for (String role : roles) {
+            List<Activity> activities = null;
+            for (Activity activity : project.getActivities()) {
+                if (activity.getRole().getName().equals(role)) {
+                    if (activities == null) {
+                        activities = new LinkedList<Activity>();
+                    }
+                    activities.add(activity);
+                }
+            }
+            if (activities != null) {
+                groups.add(new Group<Activity>(role, activities));
+            }
+        }
+
+        model.put("groups", groups);
+        putCookie(session, model);
+        return new ModelAndView("project", model);
+    }
+
+    @RequestMapping("/project/{projectId}/by/name")
+    public ModelAndView getProjectByName(@CookieValue(required = false) Cookie session, @PathVariable("projectId") long projectId, ModelMap model) {
+        Project project = dao.get(Project.class, projectId);
+        Hibernate.initialize(project.getActivities());
+        model.put("project", project);
+
+        List<Group<Activity>> groups = new LinkedList<Group<Activity>>();
+
+        for (String first : new String[]{"À", "Á", "Â", "Ã", "Ä", "Å", "¨", "Æ", "Ç", "È", "É", "Ê", "Ë", "Ì", "Í", "Î", "Ï", "Ð", "Ñ", "Ò", "Ó", "Ô", "Õ", "Ö", "×", "Ø", "Ù", "Ü", "Û", "Ú", "Ý", "Þ", "ß",}) {
+            List<Activity> activities = null;
+            for (Activity activity : project.getActivities()) {
+                if (activity.getUser().getProfile().getSecondName().startsWith(first)) {
+                    if (activities == null) {
+                        activities = new LinkedList<Activity>();
+                    }
+                    activities.add(activity);
+                }
+            }
+            if (activities != null) {
+                groups.add(new Group<Activity>(first, activities));
+            }
+        }
+
+        model.put("groups", groups);
+        putCookie(session, model);
+        return new ModelAndView("project", model);
+    }
+
+    @RequestMapping("/project/{projectId}/by/birthday")
+    public ModelAndView getProjectByBirthday(@CookieValue(required = false) Cookie session, @PathVariable("projectId") long projectId, ModelMap model) {
+        Project project = dao.get(Project.class, projectId);
+        Hibernate.initialize(project.getActivities());
+        model.put("project", project);
+
+        List<Group<Activity>> groups = new LinkedList<Group<Activity>>();
+        groups.add(new Group<Activity>("", dao.getProjectActivitiesByBirthday(projectId)));
+
+        model.put("groups", groups);
+        model.put("groupby", "birthday");
+        putCookie(session, model);
+        return new ModelAndView("project", model);
+    }
 }

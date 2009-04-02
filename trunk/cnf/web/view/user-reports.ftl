@@ -22,10 +22,11 @@
 <div class="box">
 
     <div id="boxheader">
-        <h1 class="top"><#if session?? && user.id = session.user.id>Я, </#if>${user.fullName}<span class="tip red"></span></h1>
+        <h1 class="top"><#if session?? && user.id = session.user.id>Я, </#if>${user.fullName}<span
+                class="tip red"></span></h1>
         <span class="position">Конструктор отчётов</span>
 
-        <div id="subnav">
+        <div id="subnav" class="nav">
             <ul>
                 <li><a href="/user/${user.id}">Инфомация</a></li>
                 <li><a class="selected" href="/user/report/${user.id}">Активности</a></li>
@@ -38,9 +39,9 @@
     </div>
 
     <#if session?? && user.id = session.user.id>
-    <h1>Новый отчёт<span class="tip red"></span></h1>
+    <h1><a href="#datepick" class="toggle" rel="datepick">Добавить новый отчет<span class="tip red"></span></a></h1>
 
-    <div class="datepick">
+    <div id="datepick" class="datepick">
         <div class="row days">
             <div class="column">Период отчёта</div>
             <div class="column">Понедельник</div>
@@ -56,7 +57,8 @@
         <span class="position">Текст отчёта</span>
         <textarea id="reportText" cols="60" rows="10"></textarea>
         <select>
-            <option value="${user.mainActivity.id}">${user.mainActivity.role.name} в ${user.mainActivity.project.name}</option>
+            <option value="${user.mainActivity.id}">${user.mainActivity.role.name}
+                в ${user.mainActivity.project.name}</option>
             <#if (user.activities?size > 1) >
             <optgroup label="Все активности">
                 <#list user.activities as activity>

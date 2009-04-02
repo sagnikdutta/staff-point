@@ -1,3 +1,5 @@
+<#-- @ftlvariable name="groupby" type="String" -->
+<#-- @ftlvariable name="groups" type="java.util.List<ru.point.view.Group<ru.point.model.Activity>>" -->
 <#-- @ftlvariable name="session" type="ru.point.model.Session" -->
 <#-- @ftlvariable name="project" type="ru.point.model.Project" -->
 <#include "common/macro.ftl">
@@ -22,7 +24,7 @@
         <h1 class="top">${project.name}<span class="tip red"></span></h1>
         <span class="position">В проекте трудятся ${project.activities?size} человек</span>
 
-        <div id="subnav">
+        <div id="subnav" class="nav">
             <ul>
                 <li><a class="selected" href="/project/${project.id}">Информация</a></li>
                 <li><a href="/project/report/${project.id}">Активности</a></li>
@@ -32,33 +34,21 @@
     </div>
 
     <h1 class="top">Люди проекта<span class="tip red"></span></h1>
-    <h4 class="position">
-        <a href="#">По алфавиту&darr;</a>&nbsp;
-        <a href="#">По роли&darr;</a>&nbsp;
-        <a href="#">По дате рождения&darr;</a>&nbsp;
-    </h4>
 
-    <#assign middle = project.activities?size/2>
-    <ul class="people">
-        <#list 1..middle as idx>
-        <li>
-            <span><a href="/user/${project.activities[idx].user.id}"><img src="/user/image/s/${project.activities[idx].user.id}"/></a></span>
-            <h4><@userRef user=project.activities[idx].user/></h4>
+    <div id="peopleSort" class="nav">
+        <ul>
+            <li><a href="/project/${project.id}/by/name">По алфавиту&darr;</a></li>
+            <li><a href="/project/${project.id}/by/role">По роли&darr;</a>
+            <li>
+            <li><a href="/project/${project.id}/by/birthday">По дате рождения&darr;</a></li>
+        </ul>
+    </div>
 
-            <p class="picture-note">${project.activities[idx].role.name}</p>
-        </li>
-        </#list>
-    </ul>
-    <ul class="people left">
-        <#list middle+1..project.activities?size-1 as idx>
-        <li>
-            <span><a href="/user/${project.activities[idx].user.id}"><img src="/user/image/s/${project.activities[idx].user.id}"/></a></span>
-            <h4><@userRef user=project.activities[idx].user/></h4>
+    <#list groups as group>
+    <#if (groups?size > 1) ><h3>${group.name}</h3></#if>
+    <@peopleTwoColumns activities=group.elements groupby=groupby/>
+    </#list>
 
-            <p class="picture-note">${project.activities[idx].role.name}</p>
-        </li>
-        </#list>
-    </ul>
 </div>
 <@foot/>
 </body>

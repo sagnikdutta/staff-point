@@ -29,7 +29,7 @@ import java.nio.channels.WritableByteChannel;
 @Transactional
 public class ImageController extends AbstractController {
 
-    private static final String LOCAL_IMG = "d:/web/point/";
+    private static final String LOCAL_IMG = "c:/web/db/point/";
 
     static {
         File dir = new File(LOCAL_IMG);
@@ -116,8 +116,13 @@ public class ImageController extends AbstractController {
         try {
             BufferedImage original = ImageIO.read(face);
             // small
-            BufferedImage s = Images.resize(original, 90, original.getHeight() * 90 / original.getWidth());
-            ImageIO.write(s, "jpg", new File(userLocalStorage, "s"));
+            if (original.getHeight() > original.getWidth()) {
+                BufferedImage s = Images.resize(original, original.getWidth() * 90 / original.getHeight(), 90);
+                ImageIO.write(s, "jpg", new File(userLocalStorage, "s"));
+            } else {
+                BufferedImage s = Images.resize(original, 90, original.getHeight() * 90 / original.getWidth());
+                ImageIO.write(s, "jpg", new File(userLocalStorage, "s"));
+            }
             // medium
             if (original.getWidth() > 240) {
                 BufferedImage m = Images.resize(original, 240, original.getHeight() * 240 / original.getWidth());
