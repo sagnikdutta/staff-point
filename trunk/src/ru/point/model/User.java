@@ -29,6 +29,7 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OrderBy("id")
     private Set<Activity> activities = new TreeSet<Activity>();
 
     @Column(name = "hireDay")

@@ -22,7 +22,7 @@
 <div class="box">
 
     <div id="boxheader">
-        <h1 class="top">Время &mdash; Деньги<span class="tip red"></span></h1>
+        <h1 class="top"><#if session?? && user.id = session.user.id>Я, </#if>${user.fullName}<span class="tip red"></span></h1>
         <span class="position">Конструктор отчётов</span>
 
         <div id="subnav">
@@ -38,21 +38,22 @@
     </div>
 
     <#if session?? && user.id = session.user.id>
-    <h1>Выбор периода<span class="tip red"></span></h1>
+    <h1>Новый отчёт<span class="tip red"></span></h1>
 
     <div class="datepick">
         <div class="row days">
-            <div class="column">Week</div>
-            <div class="column">Monday</div>
-            <div class="column">Tuesday</div>
-            <div class="column">Wednesday</div>
-            <div class="column">Thursday</div>
-            <div class="column">Friday</div>
+            <div class="column">Период отчёта</div>
+            <div class="column">Понедельник</div>
+            <div class="column">Вторник</div>
+            <div class="column">Среда</div>
+            <div class="column">Четверг</div>
+            <div class="column">Пятница</div>
         </div>
     </div>
     <a id="newWeek" class="action right" href="#">Ещё неделя &darr;</a>
 
     <div class="reportText">
+        <span class="position">Текст отчёта</span>
         <textarea id="reportText" cols="60" rows="10"></textarea>
         <select>
             <option value="${user.mainActivity.id}">${user.mainActivity.role.name} в ${user.mainActivity.project.name}</option>
@@ -64,7 +65,7 @@
             </optgroup>
             </#if>
         </select>
-        <a id="reportSubmit" class="action right" href="#past" rel="${user.mainActivity.id}">Отправить</a>
+        <a id="reportSubmit" class="action right" href="#" rel="${user.mainActivity.id}">Отправить</a>
     </div>
 
     </#if>

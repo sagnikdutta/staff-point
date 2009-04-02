@@ -21,6 +21,7 @@
     <div id="boxheader">
         <h1 class="top">${project.name}<span class="tip red"></span></h1>
         <span class="position">В проекте трудятся ${project.activities?size} человек</span>
+
         <div id="subnav">
             <ul>
                 <li><a class="selected" href="/project/${project.id}">Информация</a></li>
@@ -31,16 +32,28 @@
     </div>
 
     <h1 class="top">Люди проекта<span class="tip red"></span></h1>
-    <table>
-        <#list project.activities?sort_by("id") as position>
-        <tr>
-            <td style="width: 15em; "><@userRef user=position.user/></td>
-            <td>
-            ${position.role.name}
-            <td>
-        </tr>
+
+    <#assign middle = project.activities?size/2>
+    <ul class="people left">
+        <#list 1..middle as idx>
+        <li>
+            <span><a href="/user/${project.activities[idx].user.id}"><img src="/user/image/s/${project.activities[idx].user.id}"/></a></span>
+            <h4><@userRef user=project.activities[idx].user/></h4>
+
+            <p class="picture-note">${project.activities[idx].role.name}</p>
+        </li>
         </#list>
-    </table>
+    </ul>
+    <ul class="people left">
+        <#list middle+1..project.activities?size-1 as idx>
+        <li>
+            <span><a href="/user/${project.activities[idx].user.id}"><img src="/user/image/s/${project.activities[idx].user.id}"/></a></span>
+            <h4><@userRef user=project.activities[idx].user/></h4>
+
+            <p class="picture-note">${project.activities[idx].role.name}</p>
+        </li>
+        </#list>
+    </ul>
 </div>
 <@foot/>
 </body>

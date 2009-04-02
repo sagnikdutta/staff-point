@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import ru.point.model.*;
 import ru.point.utils.Utils;
 import ru.point.view.Message;
@@ -131,8 +132,7 @@ public class PeopleController extends AbstractController {
         Hibernate.initialize(user.getMainActivity());
 
         if (!isAllowedForCurrentUser(session, user)) {
-            model.put("user", user);
-            return new ModelAndView("user-info", model);
+            return new ModelAndView(new RedirectView("/user/" + userId));
         }
 
         model.put("user", user);
@@ -203,15 +203,25 @@ public class PeopleController extends AbstractController {
                                          @RequestParam("again") String newPasswordAgain,
                                          ModelMap model) throws UnsupportedEncodingException {
 
+        User user = dao.get(User.class, userId);
+
+        if (!user.getPassword().equals(Utils.md5(old))) {
+            return editUser(session, userId, new Message(Message.PASSWORD_OLD_WRONG, false), model);
+        }
+
         if (!newPassword.equals(newPasswordAgain)) {
-            return editUser(session, userId, new Message("Новые пароли не одинаковые, Вы уж определитесь!", false), model);
+            return editUser(session, userId, new Message(Message.PASSWORD_NOT_MATCH, false), model);
         }
 
         if (newPassword.length() < 4) {
-            return editUser(session, userId, new Message("Новые пароль слишком короткий", false), model);
+            return editUser(session, userId, new Message(Message.PASSWORD_TOO_SHORT, false), model);
         }
 
-        return editUser(session, userId, new Message("Пароль кагбэ обновлен"), model);
+
+        user.setPassword(Utils.md5(newPassword));
+        dao.save(user);
+
+        return editUser(session, userId, new Message(Message.PASSWORD_UPDATED), model);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

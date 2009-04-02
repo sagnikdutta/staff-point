@@ -26,7 +26,7 @@ public class Project {
     private Set<Project> children = new TreeSet<Project>();
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
-    @OrderBy
+    @OrderBy("id")
     private Set<Activity> activities = new TreeSet<Activity>();
 
     public Project() {
