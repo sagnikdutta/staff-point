@@ -73,8 +73,8 @@
                 <th>Пол:</th>
                 <td>
                     <select name="sex">
-                        <option <#if user.sex>selected="selected"</#if> value="true">женский</option>
-                        <option <#if !user.sex>selected="selected"</#if> value="false">мужской</option>
+                        <option <#if user.female>selected="selected"</#if> value="true">женский</option>
+                        <option <#if !user.female>selected="selected"</#if> value="false">мужской</option>
                     </select>
                 </td>
             </tr>

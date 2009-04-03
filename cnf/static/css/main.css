@@ -14,7 +14,7 @@ a, a:visited {
 }
 
 a img {
-    border: 0;
+    border: 0 !important;
 }
 
 td, p {

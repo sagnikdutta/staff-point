@@ -29,7 +29,7 @@ import java.nio.channels.WritableByteChannel;
 @Transactional
 public class ImageController extends AbstractController {
 
-    private static final String LOCAL_IMG = "c:/web/db/point/";
+    private static final String LOCAL_IMG = "d:/web/point/";
 
     static {
         File dir = new File(LOCAL_IMG);
@@ -59,21 +59,13 @@ public class ImageController extends AbstractController {
         User u = dao.get(User.class, userId);
         File userLocalStorage = new File(LOCAL_IMG + u.getLogin());
         if (!userLocalStorage.exists()) {
-            if ("s".equals(size)) {
-                response.sendRedirect("/i/user.png");
-            } else {
-                response.sendRedirect("/i/user-128.png");
-            }
+            redirectToDefault(u.isFemale(), size, response);
             return;
         }
 
         File face = new File(userLocalStorage, size);
         if (!face.exists()) {
-            if ("s".equals(size)) {
-                response.sendRedirect("/i/user.png");
-            } else {
-                response.sendRedirect("/i/user-128.png");
-            }
+            redirectToDefault(u.isFemale(), size, response);
             return;
         }
 
@@ -83,6 +75,19 @@ public class ImageController extends AbstractController {
         fastChannelCopy(inputChannel, outputChannel);
     }
 
+    private void redirectToDefault(boolean isFemale, String size, HttpServletResponse response) throws IOException {
+        String url = "/i/cristal/user_male_128.png";
+        if (isFemale && "s".equals(size)) {
+            url = "/i/cristal/user_female_64.png";
+        } else if (isFemale) {
+            url = "/i/cristal/user_female_128.png";
+        } else if ("s".equals(size)) {
+            url = "/i/cristal/user_male_64.png";
+        }
+
+        response.sendRedirect(url);
+    }
+
     @RequestMapping(value = "/user/image/{userId}", method = RequestMethod.POST)
     public ModelAndView saveUserFace(@CookieValue(required = false) Cookie session,
                                      @PathVariable long userId, @RequestParam("image") MultipartFile f, ModelMap model) throws IOException {
@@ -90,7 +95,7 @@ public class ImageController extends AbstractController {
         User u = dao.get(User.class, userId);
 
         if (f == null || f.getSize() == 0) {
-            peopleController.editUser(session, userId, new Message("Странный какой-то файл", false), model);
+            return peopleController.editUser(session, userId, new Message("Странный какой-то файл", false), model);
         }
 
         File userLocalStorage = new File(LOCAL_IMG + u.getLogin());
