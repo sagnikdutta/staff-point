@@ -51,13 +51,13 @@
     <p>
         В проекте <@projectRef project=activity.project/> работает под началом
         <a class="user"
-           href="/user/team/${activity.reportTo.user.id}"><@gen sex=activity.reportTo.user.sex>${activity.reportTo.user.fullName}</@gen></a>
+           href="/user/team/${activity.reportTo.user.id}"><@gen sex=activity.reportTo.user.female>${activity.reportTo.user.fullName}</@gen></a>
     </p>
     </#if>
 
     <#if activity.reportFrom?has_content >
     <p>
-        <strong>В команде <@gen sex=user.sex>${user.profile.firstName}</@gen> работают:</strong>
+        <strong>В команде <@gen sex=user.female>${user.profile.firstName}</@gen> работают:</strong>
     </p>
 
     <ul class="users squared">

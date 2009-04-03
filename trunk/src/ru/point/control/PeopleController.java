@@ -167,7 +167,7 @@ public class PeopleController extends AbstractController {
             } else if (key.equals("secondName")) {
                 user.getProfile().setSecondName(value);
             } else if (key.equals("sex")) {
-                user.setSex(Boolean.parseBoolean(value));
+                user.setFemale(Boolean.parseBoolean(value));
             } else if (key.equals("birthday")) {
                 try {
                     Calendar birthday = Calendar.getInstance();

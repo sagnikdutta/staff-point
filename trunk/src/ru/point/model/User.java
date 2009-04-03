@@ -36,7 +36,7 @@ public class User {
     private Calendar hireDay;
 
     @Column(name = "sex")
-    private boolean sex;
+    private boolean isFemale;
 
     public User() {
     }
@@ -89,12 +89,12 @@ public class User {
         this.hireDay = hireDay;
     }
 
-    public boolean isSex() {
-        return sex;
+    public boolean isFemale() {
+        return isFemale;
     }
 
-    public void setSex(boolean sex) {
-        this.sex = sex;
+    public void setFemale(boolean female) {
+        this.isFemale = female;
     }
 
     public Activity getMainActivity() {
