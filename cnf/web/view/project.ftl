@@ -26,7 +26,16 @@
 
         <div id="subnav" class="nav">
             <ul>
-                <li><a class="selected" href="/project/${project.id}">Информация</a></li>
+                <li><a class="selected" href="/project/${project.id}">Люди</a><a class="arrow toggle" rel="sorting" href="#" onclick="return false;"><img src="/i/menu_arrow.png" alt=""></a>
+                    <div id="sorting" class="menu hidden">
+                        <h3>Сортировать по:</h3>
+                        <ul>
+                            <li><a href="/project/${project.id}/by/name">алфавиту</a></li>
+                            <li><a href="/project/${project.id}/by/role">роли</a></li>
+                            <li><a href="/project/${project.id}/by/birthday">дате рождения</a></li>
+                        </ul>
+                    </div>
+                </li>
                 <li><a href="/project/report/${project.id}">Активности</a></li>
                 <li><a href="/edit">Редактировать</a></li>
             </ul>
@@ -34,15 +43,6 @@
     </div>
 
     <h1 class="top">Люди проекта<span class="tip red"></span></h1>
-
-    <div id="peopleSort" class="nav">
-        <ul>
-            <li><a href="/project/${project.id}/by/name">По алфавиту&darr;</a></li>
-            <li><a href="/project/${project.id}/by/role">По роли&darr;</a>
-            <li>
-            <li><a href="/project/${project.id}/by/birthday">По дате рождения&darr;</a></li>
-        </ul>
-    </div>
 
     <#list groups as group>
     <#if (groups?size > 1) ><h3>${group.name}</h3></#if>
