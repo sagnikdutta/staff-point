@@ -37,7 +37,7 @@
                     </div>
                 </li>
                 <li><a href="/project/report/${project.id}">Активности</a></li>
-                <li><a href="/edit">Редактировать</a></li>
+                <li><a href="/project/edit/${project.id}">Редактировать</a></li>
             </ul>
         </div>
     </div>

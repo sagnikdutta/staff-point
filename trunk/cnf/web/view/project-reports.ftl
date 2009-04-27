@@ -24,19 +24,18 @@
 
         <div id="subnav">
             <ul class="nav">
-                <li><a href="/project/${project.id}">Люди</a>
-                    <a class="arrow toggle" rel="sorting" href="#" onclick="return false;"><img src="/i/menu_arrow.gif" alt=""/></a>
-
+                <li><a href="/project/${project.id}">Люди</a><a class="arrow toggle" rel="sorting" href="#" onclick="return false;"><img src="/i/menu_arrow.png" alt=""></a>
                     <div id="sorting" class="menu hidden">
+                        <h3>Сортировать по:</h3>
                         <ul>
-                            <li><a href="/project/${project.id}/by/name">По алфавиту</a></li>
-                            <li><a href="/project/${project.id}/by/role">По роли</a></li>
-                            <li><a href="/project/${project.id}/by/birthday">По дате рождения</a></li>
+                            <li><a href="/project/${project.id}/by/name">алфавиту</a></li>
+                            <li><a href="/project/${project.id}/by/role">роли</a></li>
+                            <li><a href="/project/${project.id}/by/birthday">дате рождения</a></li>
                         </ul>
                     </div>
                 </li>
                 <li><a class="selected" href="/project/report/${project.id}">Активности</a></li>
-                <li><a href="/edit">Редактировать</a></li>
+                <li><a href="/project/edit/${project.id}">Редактировать</a></li>
             </ul>
         </div>
     </div>
