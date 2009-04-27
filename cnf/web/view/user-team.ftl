@@ -32,8 +32,8 @@
             </#if>
         </span>
 
-        <div id="subnav" class="nav">
-            <ul>
+        <div id="subnav">
+            <ul class="nav">
                 <li><a href="/user/${user.id}">Инфомация</a></li>
                 <li><a href="/user/report/${user.id}">Активности</a></li>
                 <li><a class="selected" href="/user/team/${user.id}">Команда</a></li>

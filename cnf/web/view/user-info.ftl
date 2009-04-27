@@ -9,7 +9,7 @@
 <div class="header">
         <span>
             <a href="/">Главная</a>
-            <#if user.mainActivity.project??>
+            <#if user.mainActivity?? && user.mainActivity.project??>
             &rarr; <@projectRef project=user.mainActivity.project />
             </#if>
             &rarr; <@userRef user=user />
@@ -25,17 +25,21 @@
     <div id="boxheader">
         <h1 class="top"><#if session?? && user.id = session.user.id>Я, </#if>${user.fullName}<span
                 class="tip red"></span></h1>
-        <span class="position">${user.mainActivity.role.name}
-            <#if user.mainActivity.project??>
-            в <@projectRef project=user.mainActivity.project/>
-            </#if>
-        </span>
+        <#if user.mainActivity?? && user.mainActivity.project??>
+            <span class="position">${user.mainActivity.role.name}
+            в <@projectRef project=user.mainActivity.project/></span>
+        <#else>
+            <span class="position">Нет активностей</span>    
+        </#if>
 
-        <div id="subnav" class="nav">
-            <ul>
+
+        <div id="subnav" >
+            <ul class="nav">
                 <li><a class="selected" href="/user/${user.id}">Инфомация</a></li>
+                <#if (user.activities?? && user.activities?size > 0) >
                 <li><a href="/user/report/${user.id}">Активности</a></li>
                 <li><a href="/user/team/${user.id}">Команда</a></li>
+                </#if>
                 <#if session?? && user.id = session.user.id>
                 <li><a href="/user/edit/${user.id}">Редактировать</a></li>
                 </#if>
@@ -47,15 +51,12 @@
 
     <div class="left">
         <table class="contacts">
-            <tr>
-                <th>День рожденья:</th>
-                <td>${user.profile.birthDay.time?date?string.long}<span>(до него еще ${user.profile.daysTillBirthday} дня)</span>
-                </td>
-            </tr>
-            <tr>
-                <th>E-Mail:</th>
-                <td>${user.profile.contacts["e-mail"]}</td>
-            </tr>
+            <#if user.profile.birthDay??>
+                <tr>
+                    <th>День рожденья:</th>
+                    <td>${user.profile.birthDay.time?date?string.long}<span>(до него еще ${user.profile.daysTillBirthday} дня)</span></td>
+                </tr>
+            </#if>
         </table>
 
         <table class="contacts">

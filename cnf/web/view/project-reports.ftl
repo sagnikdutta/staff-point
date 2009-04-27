@@ -22,8 +22,8 @@
         <h1 class="top">${project.name}<span class="tip red"></span></h1>
         <span class="position">В проекте трудятся ${project.activities?size} человек</span>
 
-        <div id="subnav" class="nav">
-            <ul>
+        <div id="subnav">
+            <ul class="nav">
                 <li><a href="/project/${project.id}">Люди</a>
                     <a class="arrow toggle" rel="sorting" href="#" onclick="return false;"><img src="/i/menu_arrow.gif" alt=""/></a>
 
@@ -46,12 +46,12 @@
     <ul>
         <#list project.activities as position>
         <li class="position"><@userRef user=position.user/> &mdash; ${position.role.name}<br/>
-            <ul>
-                <#list position.reports as report>
-                <li>${report.start.time?date} ~ ${report.end.time?date}:<br/>
-                    ${report.text?html?replace("\n", "<br/>")} </li>
-                </#list>
-            </ul>
+            <#if position.lastReport?? >
+                <ul class="report">
+                    <li><@period report=position.lastReport />
+                        ${position.lastReport.text?html?replace("\n", "<br/>")} </li>
+                </ul>
+            </#if>
         </li>
         </#list>
     </ul>

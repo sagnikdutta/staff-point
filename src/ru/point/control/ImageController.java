@@ -89,7 +89,7 @@ public class ImageController extends AbstractController {
     }
 
     @RequestMapping(value = "/user/image/{userId}", method = RequestMethod.POST)
-    public ModelAndView saveUserFace(@CookieValue(required = false) Cookie session,
+    public String saveUserFace(@CookieValue(required = false) Cookie session,
                                      @PathVariable long userId, @RequestParam("image") MultipartFile f, ModelMap model) throws IOException {
 
         User u = dao.get(User.class, userId);

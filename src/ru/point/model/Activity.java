@@ -123,6 +123,10 @@ public class Activity {
         return reports;
     }
 
+    public Report getLastReport() {
+        return reports.isEmpty() ? null : reports.get(0);
+    }
+
     @Override
     public String toString() {
         return role.getName() + "#" + id;
