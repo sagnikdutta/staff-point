@@ -12,7 +12,7 @@
 <div class="header">
         <span>
             <a href="/">Главная</a>
-            <#if user.mainActivity.project??>
+            <#if user.mainActivity?? && user.mainActivity.project??>
             &rarr; <@projectRef project=user.mainActivity.project />
             </#if>
             &rarr; <@userRef user=user />
@@ -28,17 +28,21 @@
     <div id="boxheader">
         <h1 class="top"><#if session?? && user.id = session.user.id>Я, </#if>${user.fullName}<span
                 class="tip red"></span></h1>
-        <span class="position">${user.mainActivity.role.name}
-            <#if user.mainActivity.project??>
-            в <@projectRef project=user.mainActivity.project/>
-            </#if>
-        </span>
+        <#if user.mainActivity?? && user.mainActivity.project??>
+            <span class="position">${user.mainActivity.role.name}
+            в <@projectRef project=user.mainActivity.project/></span>
+        <#else>
+            <span class="position">Нет активностей</span>
+        </#if>
 
-        <div id="subnav" class="nav">
-            <ul>
+
+        <div id="subnav">
+            <ul class="nav">
                 <li><a href="/user/${user.id}">Инфомация</a></li>
+                <#if (user.activities?? && user.activities?size > 0) >
                 <li><a href="/user/report/${user.id}">Активности</a></li>
                 <li><a href="/user/team/${user.id}">Команда</a></li>
+                </#if>
                 <#if session?? && user.id = session.user.id>
                 <li><a class="selected" href="/user/edit/${user.id}">Редактировать</a></li>
                 </#if>
@@ -59,7 +63,9 @@
 
     <h1>Имя, контакты<span class="tip blue"></span></h1>
 
-    <form action="/user/edit/${user.id}" method="post">
+    <div id="contactFormMessage"> </div>
+
+    <form id="contactForm" action="/user/edit/${user.id}" method="post">
         <table class="contacts">
             <tr>
                 <th>Имя:</th>
@@ -81,7 +87,7 @@
 
             <tr>
                 <th>День рожденья (дд/мм/гггг):</th>
-                <td><input name="birthday" type="text" value="${user.profile.birthDay.time?date?string.short}"/></td>
+                <td><input name="birthday" type="text" value="<#if user.profile.birthDay??>${user.profile.birthDay.time?date?string.short}</#if>"/></td>
             </tr>
         </table>
 
@@ -103,7 +109,7 @@
             </#list>
         </table>
 
-        <a class="action submit" href="#">Сохранить</a>
+        <a id="contactFormSubmit" class="action submit" href="#contactForm" onclick="return false;">Сохранить</a>
     </form>
 
     <h1>Фотография<span class="tip blue"></span></h1>
@@ -121,12 +127,14 @@
 
     <h1>Пароль<span class="tip blue"></span></h1>
 
-    <form action="/user/edit/password/${user.id}" method="post">
+    <div id="passwordFormMessage"> </div>
+
+    <form id="passwordForm" action="/user/edit/password/${user.id}" method="post">
 
         <table class="contacts">
             <tr>
                 <th>Старый пароль:</th>
-                <td><input name="old" type="password" value="${user.password}"/></td>
+                <td><input name="old" type="password"/></td>
             </tr>
             <tr>
                 <th>Новый:</th>
@@ -138,7 +146,7 @@
             </tr>
         </table>
 
-        <a class="action submit" href="#">Сохранить новый пароль</a>
+        <a id="passwordFormSubmit" class="action submit" href="#passwordForm" onclick="return false;">Сохранить новый пароль</a>
 
     </form>
 

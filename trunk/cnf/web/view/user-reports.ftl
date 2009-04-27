@@ -26,8 +26,8 @@
                 class="tip red"></span></h1>
         <span class="position">Конструктор отчётов</span>
 
-        <div id="subnav" class="nav">
-            <ul>
+        <div id="subnav">
+            <ul class="nav">
                 <li><a href="/user/${user.id}">Инфомация</a></li>
                 <li><a class="selected" href="/user/report/${user.id}">Активности</a></li>
                 <li><a href="/user/team/${user.id}">Команда</a></li>
@@ -39,7 +39,7 @@
     </div>
 
     <#if session?? && user.id = session.user.id>
-    <h1><a href="#datepick" class="toggle" rel="datepick">Добавить новый отчет<span class="tip red"></span></a></h1>
+    <h1>Добавить новый отчет<span class="tip red"></span></h1>
 
     <div id="datepick" class="datepick">
         <div class="row days">
@@ -51,7 +51,8 @@
             <div class="column">Пятница</div>
         </div>
     </div>
-    <a id="newWeek" class="action right" href="#">Ещё неделя &darr;</a>
+    <a id="newWeek" class="action right" href="#" onclick="return false;">Ещё неделя &darr;</a>
+    <a id="clearReport" class="action right" href="#" rel="${user.mainActivity.id}" onclick="return false;">Очистить</a>
 
     <div class="reportText">
         <span class="position">Текст отчёта</span>
@@ -76,9 +77,9 @@
 
         <h1 id="past">Прошлые отчёты<span class="tip red"></span></h1>
 
-        <ul id="reportList">
+        <ul id="reportList" class="report">
             <#list reports as report>
-            <li>${report.start.time?date} ~ ${report.end.time?date}:<br/>
+            <li><@period report=report />
                 ${report.text?html?replace("\n", "<br/>")} </li>
             </#list>
         </ul>

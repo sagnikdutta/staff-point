@@ -42,7 +42,10 @@ h2 {
 }
 
 h3 {
-    font: 1.125em "Trebuchet MS", Tahoma, Arial, sans-serif;
+    font: bold 1.125em / 2em "Trebuchet MS", Tahoma, Arial, sans-serif;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    color: #555;
 }
 
 h4 {
@@ -74,6 +77,7 @@ th {
 
 .right {
     float: right;
+    margin-left: 2em;
 }
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
@@ -95,14 +99,14 @@ th {
     top: 7em;
 }
 
-.nav ul li {
+ul.nav > li {
     background: none;
     display: inline;
     float: left;
     padding: 4px 0 0 15px;
 }
 
-.nav ul li a {
+ul.nav > li > a {
     color: #333;
     letter-spacing: 0.4px;
     margin: 0 5px 4px 0;
@@ -112,31 +116,31 @@ th {
     border-bottom: 0;
 }
 
-.nav ul li a:hover {
+ul.nav > li > a:hover {
     border-bottom: 2px solid #DDDDDD;
     color: #666666;
 }
 
-.nav ul li a.selected {
+ul.nav > li > a.selected {
     border-bottom: 2px solid #1A7ECA;
     color: #0865AC;
 }
 
-.nav ul li.selected a:hover {
+ul.nav > li.selected > a:hover {
     border-bottom: 2px solid #DDDDDD;
 }
 
-.nav ul li a:hover {
+ul.nav > li > a:hover {
     border-bottom: 2px solid #DDDDDD;
     color: #666666;
 }
 
-.nav ul li a.arrow {
+ul.nav > li > a.arrow {
     border-bottom: 0;
     margin-left: 5px;
 }
 
-.nav ul li div.menu {
+ul.nav > li > div.menu {
     background-color: #fff;
     border: 1px solid #eee;
     position: absolute;
@@ -146,21 +150,8 @@ th {
     padding: 10px;
 }
 
-.nav ul li div.menu ul {
-    margin-left: 0;
-}
-
-.nav ul li div.menu ul li {
-    display: block;
-    float: none;
-}
-
-.nav ul li div.menu ul li a {
-    text-transform: none;
-}
-
-.nav ul li div.menu ul li a:hover {
-    border: 0;
+div.menu a {
+    font-size: 0.8em;
 }
 
 .header, .footer, .box {
@@ -168,7 +159,7 @@ th {
     background-color: #fff;
     width: 64em;
     padding: 1em 2em;
-    border: 1px solid #ccc;
+    border: 1px solid #D7DADD;
     border-bottom-width: 3px;
     position: relative;
 }
@@ -186,7 +177,7 @@ th {
 }
 
 .contol a {
-    font: 0.8em Tahoma, "Trebuchet MS", Arial, sans-serif;
+    font: 0.7em Tahoma, "Trebuchet MS", Arial, sans-serif;
     color: #333 !important;
 }
 
@@ -377,6 +368,10 @@ div.people div.person p {
     background-color: #F7F7F7;
 }
 
+.datepick .column.day.today {
+    background-color: #ddddff !important;       \
+}
+
 .datepick .column.day.highlight {
     background-color: #ffffed !important;
 }
@@ -397,8 +392,8 @@ div.people div.person p {
 }
 
 .reportText select {
-    font: 0.7333em "Lucida Grande", "Lucida Sans Unicode", Verdana, sans-serif;
-    width: 20em;
+    font: 0.8em "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
+    width: 50em;
 }
 
 .justAdded {
@@ -420,7 +415,7 @@ div.message {
     padding: 2em 5em;
     font: 0.65em / 1.8em "Lucida Sans Unicode", sans-serif;
     text-transform: uppercase;
-
+    margin-bottom: 1em;
 }
 
 div.message.success {
@@ -455,4 +450,23 @@ td a, td a:visited {
     border-bottom: 1px solid #D7E1E9;
     color: #0061A6;
     text-decoration: none;
+}
+
+ul.report {
+    padding: 0 1em;
+}
+
+ul.report li {
+    border-bottom: 1px solid #D7DADD;
+    padding: 0.6em;
+    color: #000;
+    font: 0.7em / 1.5em "Tahoma", "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
+}
+
+ul.report li h3.current {
+    background-color: #e6ebff;
+}
+
+ul.report li h3 {
+    padding-bottom: 0;
 }

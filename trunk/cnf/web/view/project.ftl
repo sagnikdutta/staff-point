@@ -24,8 +24,8 @@
         <h1 class="top">${project.name}<span class="tip red"></span></h1>
         <span class="position">В проекте трудятся ${project.activities?size} человек</span>
 
-        <div id="subnav" class="nav">
-            <ul>
+        <div id="subnav">
+            <ul class="nav">
                 <li><a class="selected" href="/project/${project.id}">Люди</a><a class="arrow toggle" rel="sorting" href="#" onclick="return false;"><img src="/i/menu_arrow.png" alt=""></a>
                     <div id="sorting" class="menu hidden">
                         <h3>Сортировать по:</h3>
@@ -46,7 +46,7 @@
 
     <#list groups as group>
     <#if (groups?size > 1) ><h3>${group.name}</h3></#if>
-    <@peopleTwoColumns activities=group.elements groupby=groupby/>
+    <@activitiesTwoColumns activities=group.elements groupby=groupby/>
     </#list>
 
 </div>
