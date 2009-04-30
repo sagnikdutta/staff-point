@@ -1,6 +1,7 @@
 package ru.point.view;
 
 import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * @author Mikhail Sedov {02.04.2009}
@@ -11,6 +12,7 @@ public class Group<Bean> {
     private Collection<Bean> elements;
 
     public Group() {
+        elements = new LinkedList<Bean>();
     }
 
     public Group(String name, Collection<Bean> elements) {
