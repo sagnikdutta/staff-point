@@ -77,11 +77,18 @@ public class PeopleController extends AbstractController {
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public String listUsers(@CookieValue(required = false) Cookie session, ModelMap model) {
+
+        Group<User> group = new Group<User>();
+
         List<User> users = dao.findAll(User.class);
+
         for (User user : users) {
             Hibernate.initialize(user.getActivities());
+            group.getElements().add(user);
         }
-        model.put("users", users);
+
+        model.put("groups", Arrays.asList(group));
+        model.put("amount", users.size());
         putCookie(session, model);
 
         return "users";

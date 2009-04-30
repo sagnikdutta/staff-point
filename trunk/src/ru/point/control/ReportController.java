@@ -34,18 +34,30 @@ public class ReportController extends AbstractController {
     private static String PROJECT_REPORTS = "from Report where reportForActivity = ':activity' and " +
             "((reportPeriodStart between ':start' and ':end') or (reportPeriodEnd between ':start' and ':end'))";
 
+    private static final int ITEMS_PER_PAGE = 20;
+
 
     @RequestMapping("/user/report/{userId}")
     public ModelAndView listUserActivityReport(@CookieValue(required = false) Cookie session,
                                            @PathVariable long userId,
                                            ModelMap model) {
+        return listUserActivityReport(session, userId, 0, model);
+    }
 
+    @RequestMapping("/user/report/{userId}/page/{pageNo}")
+    public ModelAndView listUserActivityReport(@CookieValue(required = false) Cookie session,
+                                           @PathVariable long userId,
+                                           @PathVariable int pageNo,
+                                           ModelMap model) {
         User user = dao.get(User.class, userId);
         Hibernate.initialize(user.getMainActivity());
         model.put("user", user);
 
-        model.put("reports", dao.listReportsForUser(userId));
-        
+        model.put("reports", dao.listReportsForUser(userId, pageNo, ITEMS_PER_PAGE));
+        model.put("amount", dao.countReportsForUser(userId));
+        model.put("itemsPerPage", ITEMS_PER_PAGE);
+        model.put("pageNo", pageNo);
+
         putCookie(session, model);
         return new ModelAndView("user-reports", model);
     }
@@ -163,6 +175,13 @@ public class ReportController extends AbstractController {
         }
 
         return null;
+    }
+
+    @RequestMapping(value = "/report/delete/{reportId}", method = RequestMethod.GET)
+    public String deleteActivityReport(@CookieValue(required = false) Cookie session,
+                                     @PathVariable long reportId) {
+        dao.delete(Report.class, reportId);
+        return "ajax/zero";
     }
 
     @RequestMapping(value = "/report/activity/{activityId}/year/{year}/week/{weekNo}", method = RequestMethod.POST)

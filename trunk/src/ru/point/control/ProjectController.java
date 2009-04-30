@@ -3,6 +3,7 @@ package ru.point.control;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.ui.ModelMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,7 @@ import javax.servlet.http.Cookie;
 
 import ru.point.model.Project;
 import ru.point.model.Activity;
+import ru.point.model.Role;
 import ru.point.view.Group;
 
 import java.util.List;
@@ -51,6 +53,11 @@ public class ProjectController extends AbstractController {
         return "project";
     }
 
+    @RequestMapping(value = "/project/activity/delete/{activityId}", method = RequestMethod.GET)
+    public String deleteActivity(@CookieValue(required = false) Cookie session, @PathVariable("activityId") long activityId, ModelMap model) {
+        return "ajax/zero";
+    }
+
     @RequestMapping("/project/edit/{projectId}")
     public String editProject(@CookieValue(required = false) Cookie session, @PathVariable("projectId") long projectId, ModelMap model) {
         Project project = dao.get(Project.class, projectId);
@@ -61,6 +68,7 @@ public class ProjectController extends AbstractController {
         groups.add(new Group<Activity>("", project.getActivities()));
 
         model.put("groups", groups);
+        model.put("roles", dao.findAll(Role.class));
         putCookie(session, model);
 
         return "project-edit";

@@ -2,8 +2,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
 <link type="text/css" rel="stylesheet" href="/css/reset.css"/>
 <link type="text/css" rel="stylesheet" href="/css/main.css"/>
+<link type="text/css" rel="stylesheet" href="/css/jquery.autocomplete.css"/>
 <script type="text/javascript" src="/js/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="/js/jquery.form-2.24.js"></script>
+<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
 <script type="text/javascript" src="/js/qms.js"></script>
 </#macro>
 
@@ -117,7 +119,8 @@
 </#macro>
 
 <#macro period report>
-    <h3>${report.start.time?date} ~ ${report.end.time?date}:</h3>
+    <h3>${report.start.time?date} ~ ${report.end.time?date}:
+            <span <#if report.old>class="old"</#if>>${report.passed}</span></h3>
 </#macro>
 
 <#assign gen = "ru.point.utils.russian.DeclensionFreeMarkerDirective"?new(0)/>
