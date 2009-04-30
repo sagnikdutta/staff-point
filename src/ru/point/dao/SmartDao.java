@@ -47,6 +47,12 @@ public class SmartDao extends HibernateDaoSupport {
         return filter(type, query, null);
     }
 
+    public <T> List<T> filter(Class<T> type, String query, int maxResult) {
+        return (List<T>) createQuery(query, null)
+                .setMaxResults(maxResult)
+                .list();
+    }
+
     public Map<String, Long> stat(String queryString, Map<String, Object> param) {
         List queryResult = createQuery(queryString, param).list();
         //
@@ -91,11 +97,20 @@ public class SmartDao extends HibernateDaoSupport {
         return query;
     }
 
-    public List<Report> listReportsForUser(long userId) {
+    public List<Report> listReportsForUser(long userId, int pageNo, int itemsPerPage) {
         return getSession(false)
-                .createQuery("from Report as report where report.reportForActivity.user = :user order by report.id desc ")
+                .createQuery("from Report as report where report.reportForActivity.user = :user order by report.end desc ")
                 .setLong("user", userId)
+                .setMaxResults(itemsPerPage)
+                .setFirstResult(pageNo * itemsPerPage)
                 .list();
+    }
+
+    public long countReportsForUser(long userId) {
+        return (Long) getSession(false)
+                .createQuery("select count(*) from Report as report where report.reportForActivity.user = :user order by report.end desc ")
+                .setLong("user", userId)
+                .uniqueResult();
     }
 
     public Collection<Activity> getProjectActivitiesByBirthday(long projectId) {

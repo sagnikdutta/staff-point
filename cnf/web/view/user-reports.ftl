@@ -1,3 +1,6 @@
+<#-- @ftlvariable name="amount" type="int" -->
+<#-- @ftlvariable name="itemsPerPage" type="int" -->
+<#-- @ftlvariable name="pageNo" type="int" -->
 <#-- @ftlvariable name="reports" type="java.util.List<ru.point.model.Report>" -->
 <#-- @ftlvariable name="session" type="ru.point.model.Session" -->
 <#-- @ftlvariable name="user" type="ru.point.model.User" -->
@@ -5,7 +8,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<@head></@head>
+<@head>${user.fullName}</@head>
 <body>
 <div class="header">
         <span>
@@ -38,7 +41,7 @@
         </div>
     </div>
 
-    <#if session?? && user.id = session.user.id>
+    <#if session?? && user.id = session.user.id && pageNo == 0 >
     <h1>Добавить новый отчет<span class="tip red"></span></h1>
 
     <div id="datepick" class="datepick">
@@ -75,14 +78,25 @@
 
     <div>
 
-        <h1 id="past">Прошлые отчёты<span class="tip red"></span></h1>
+        <h1 id="past">Прошлые отчёты  <span class="tip red"></span></h1>
 
         <ul id="reportList" class="report">
             <#list reports as report>
-            <li><@period report=report />
-                ${report.text?html?replace("\n", "<br/>")} </li>
+            <li <#if session?? && user.id = session.user.id>class="hasHidden"</#if>><@period report=report />
+                ${report.text?html?replace("\n", "<br/>")}
+                <a href="#" class="hidden pseudo delete right" rel="/report/delete/${report.id}" onclick="return false;">удалить</a></li>
             </#list>
         </ul>
+
+        <h3>&nbsp;</h3>
+
+        <#if (pageNo > 0)>
+            <a class="action" href="/user/report/${user.id}/page/${pageNo - 1}">&larr;&nbsp;более свежие&nbsp;</a>
+        </#if>
+
+        <#if (amount > (pageNo + 1) * itemsPerPage)>
+            <a class="action right" href="/user/report/${user.id}/page/${pageNo + 1}">&nbsp;менее свежие&nbsp;&rarr;</a>
+        </#if>
     </div>
     <@foot/>
 </body>

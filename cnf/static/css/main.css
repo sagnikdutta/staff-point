@@ -13,6 +13,17 @@ a, a:visited {
     text-decoration: none;
 }
 
+a.pseudo {
+    font: 11px Tahoma, "Trebuchet MS", Arial, sans-serif;
+    border-bottom: 1px dashed #cccccc !important;
+    color: #999999 !important;
+}
+
+a.pseudo:hover {
+    border-bottom: 1px dashed #CC0000 !important;
+    color: #CC0000 !important;
+}
+
 td, p {
     font: 0.75em / 1.5em Tahoma, "Trebuchet MS", Arial, sans-serif;
     padding-bottom: 0.2em;
@@ -295,7 +306,7 @@ table.contacts td {
     padding-top: 3px;
 }
 
-table.contacts td input {
+table.contacts td input, table.contacts td select {
     width: 36em;
 }
 
@@ -369,7 +380,8 @@ div.people div.person p {
 }
 
 .datepick .column.day.today {
-    background-color: #ddddff !important;       \
+    background-color: #ddddff !important;
+\
 }
 
 .datepick .column.day.highlight {
@@ -469,4 +481,75 @@ ul.report li h3.current {
 
 ul.report li h3 {
     padding-bottom: 0;
+}
+
+.file {
+    background: no-repeat left 3px;
+    margin: 1em 0;
+    padding: 0 0 0 39px;
+}
+
+.file a {
+    font: 0.7em / 1.5em "Tahoma", "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
+    position: relative;
+}
+
+.file a img {
+    height: 32px;
+    left: -40px;
+    position: absolute;
+    top: 0;
+    width: 32px;
+}
+
+.pdf img {
+    background-image: url(../i/pdf.png);
+}
+
+.xls img {
+    background-image: url(../i/xls.png);
+}
+
+.file span {
+    color: #C2C2C2;
+    display: block;
+    font-size: 0.76em;
+    margin: 2px 0 0;
+    text-transform: uppercase;
+}
+
+ul.edit {
+    width: 30em;
+    margin-bottom: 2em;
+}
+
+ul.edit li {
+    border-bottom: 1px solid #eee;
+    padding: 0.3em 1em;
+}
+
+ul.edit li span {
+    font: 11px "Tahoma", "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
+}
+
+#newActivity {
+    width: 100%;
+    margin-bottom: 2em;
+}
+
+#newActivity td input, #newActivity td select {
+    width: 36em;
+}
+
+h3 span {
+    font: 0.7333em "Lucida Grande", "Lucida Sans Unicode", Verdana, sans-serif;
+    padding: 0.3em 0.7em;
+    background-color: #ccffcc;
+    text-transform: lowercase;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+
+h3 span.old {
+    background-color: #ffd2d2;
 }

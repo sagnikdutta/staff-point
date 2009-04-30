@@ -3,8 +3,9 @@ package ru.point.model;
 import org.hibernate.annotations.CollectionOfElements;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
 import java.util.TreeSet;
 
 /**
@@ -33,6 +34,9 @@ public class Report {
 
     @Column(name = "cachedEnd")
     private Calendar end;
+
+    @Transient
+    private long diff = Long.MIN_VALUE;
 
     public Report() {
     }
@@ -83,5 +87,29 @@ public class Report {
 
     public void setEnd(Calendar end) {
         this.end = end;
+    }
+
+    public boolean isOld() {
+        checkDiff();
+        return diff > 5;
+    }
+
+    public String getPassed() {
+        checkDiff();
+        if (diff <= 0) {
+            return "свежак";
+        } else if (diff % 10 == 1) {
+            return diff + " день назад";
+        } else if (diff % 10 < 5 && diff % 10 != 0) {
+            return diff + " дня назад";
+        } else {
+            return diff + " дней назад";
+        }
+    }
+
+    private void checkDiff() {
+        if (diff == Long.MIN_VALUE) {
+            diff = (new Date().getTime() - end.getTime().getTime()) / 1000 / 60 / 60 / 24;
+        }
     }
 }

@@ -2,10 +2,10 @@ var today = new Date();
 var activityStart = new Date();
 
 function getWeek(activityStart) {
-    var target  = new Date(activityStart);
-    var dayNr   = (target.getDay() + 6) % 7;
+    var target = new Date(activityStart);
+    var dayNr = (target.getDay() + 6) % 7;
     target.setDate(target.getDate() - dayNr + 3);
-    var jan4    = new Date(target.getFullYear(), 0, 4);
+    var jan4 = new Date(target.getFullYear(), 0, 4);
     var dayDiff = (target - jan4) / 86400000;
     return weekNr = 1 + Math.ceil(dayDiff / 7);
 }
@@ -28,16 +28,15 @@ function addRowToDatepick() {
     });
 
     arrow.toggle(function() {
-       arrow.parent().find(".day").addClass('selected');
+        arrow.parent().find(".day").addClass('selected');
     }, function() {
-       arrow.parent().find(".day").removeClass('selected');
+        arrow.parent().find(".day").removeClass('selected');
     });
 
     row.appendTo('.datepick');
 
     activityStart.setDate(activityStart.getDate() - 12);
 }
-
 
 
 function addDayToRow(date, row) {
@@ -140,6 +139,28 @@ $(document).ready(function() {
             success: function(data) {
                 $('#reportSubmit').text("Åù¸?");
                 $('#reportList').prepend(data);
+                $('#reportList li:first').mouseover(function() {
+                    $(this).css("border-right", "3px solid #fcc");
+                    $('.hidden', this).toggle();
+                }).mouseout(function() {
+                    $(this).css("border-right", "0");
+                    $('.hidden', this).toggle();
+                });
+                $('#reportList li:first .delete').click(function() {
+
+                    var link = $(this);
+                    var row = $(this).parent();
+
+                    $.ajax({
+                        url: $(this).attr("rel"),
+                        success: function() {
+                            row.fadeTo(500, 0);
+                            setTimeout(function() {
+                                row.remove();
+                            }, 700);
+                        }
+                    });
+                });
             }
         });
     });
@@ -173,4 +194,31 @@ $(document).ready(function() {
             }, 3000);
         }
     });
+
+    $('.delete').click(function() {
+
+        var link = $(this);
+        var row = $(this).parent();
+
+        $.ajax({
+            url: $(this).attr("rel"),
+            success: function() {
+                row.fadeTo(500, 0);
+                setTimeout(function() {
+                    row.remove();
+                }, 700);
+            }
+        });
+    });
+
+    $('.hasHidden').mouseover(function() {
+        $(this).css("border-right", "3px solid #fcc");
+        $('.hidden', this).toggle();
+    }).mouseout(function() {
+        $(this).css("border-right", "0");
+        $('.hidden', this).toggle();
+    });
+
+    $('.usersAutocomplete').autocomplete("/ajax/users");
+    $('.projectUsersAutocomplete').autocomplete("/ajax/users");
 });

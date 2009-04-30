@@ -24,7 +24,9 @@
 
         <div id="subnav">
             <ul class="nav">
-                <li><a href="/project/${project.id}">Ћюди</a><a class="arrow toggle" rel="sorting" href="#" onclick="return false;"><img src="/i/menu_arrow.png" alt=""></a>
+                <li><a href="/project/${project.id}">Ћюди</a><a class="arrow toggle" rel="sorting" href="#" onclick="return false;"><img
+                        src="/i/menu_arrow.png" alt=""></a>
+
                     <div id="sorting" class="menu hidden">
                         <h3>—ортировать по:</h3>
                         <ul>
@@ -40,20 +42,42 @@
         </div>
     </div>
 
-    <h1 class="top">Ћюди ау!<span class="tip red"></span></h1>
+    <h1 class="top"><span class="tip red"></span></h1>
 
     <ul>
         <#list project.activities as position>
         <li class="position"><@userRef user=position.user/> &mdash; ${position.role.name}<br/>
             <#if position.lastReport?? >
-                <ul class="report">
-                    <li><@period report=position.lastReport />
-                        ${position.lastReport.text?html?replace("\n", "<br/>")} </li>
-                </ul>
+            <ul class="report">
+                <li><@period report=position.lastReport />
+                    ${position.lastReport.text?html?replace("\n", "<br/>")}</li>
+            </ul>
             </#if>
         </li>
         </#list>
     </ul>
+
+    <h1 class="top">Ёкспорт<span class="tip red"></span></h1>
+
+    <div class="file pdf ">
+        <a href="/"><img src="/i/0.gif"/>—генерировать недельный PDF отчЄт</a>
+        <span class="size">pdf, application/pdf</span>
+    </div>
+
+    <div class="file pdf ">
+        <a href="/"><img src="/i/0.gif"/>—генерировать мес€чный PDF отчЄт</a>
+        <span class="size">pdf, application/pdf</span>
+    </div>
+
+    <div class="file pdf ">
+        <a href="/"><img src="/i/0.gif"/>—генерировать PDF отчЄт по выбранным датам</a>
+        <span class="size">pdf, application/pdf</span>
+    </div>
+
+    <div class="file xls ">
+        <a href="/"><img src="/i/0.gif"/>—водна€ таблица Excel по выбранным датам</a>
+        <span class="size">xls, application/excel</span>
+    </div>
 
 </div>
 <@foot/>
