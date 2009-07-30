@@ -4,7 +4,10 @@ html {
 
 body {
     background: #EEEEE9 url(../i/bgr.gif) repeat-x scroll center top;
-    font: 1em / 1.125em "Trebuchet MS", Tahoma, Arial, sans-serif;
+    font-size: 1em;
+    line-height: 1.125em;
+    letter-spacing: 0.01em;
+    font-family: "Trebuchet MS", Tahoma, Arial, sans-serif;
 }
 
 a, a:visited {
@@ -25,7 +28,9 @@ a.pseudo:hover {
 }
 
 td, p {
-    font: 0.75em / 1.5em Tahoma, "Trebuchet MS", Arial, sans-serif;
+    font-size: 0.75em;
+    line-height: 1.5em;
+    font-family: Tahoma, "Trebuchet MS", Arial, sans-serif;
     padding-bottom: 0.2em;
 }
 
@@ -80,10 +85,6 @@ input, select {
 input[type=submit] {
     background-color: #fff;
     color: #000;
-}
-
-th {
-    font-weight: normal;
 }
 
 .right {
@@ -194,9 +195,9 @@ div.menu a {
 
 .header div.form {
     position: absolute;
+    margin-top: 4px;
     top: 0.5em;
     right: 1em;
-    width: 25em;
     text-align: right;
 }
 
@@ -254,6 +255,21 @@ div.menu a {
     border-bottom-style: dashed;
 }
 
+#searchform {
+    background: #FFFFFF;
+    border: 1px solid #ECE6E4;
+}
+
+#query {
+    background: #FFF;
+    border: 0;
+}
+
+#searchsubmit {
+    border: 0;
+    vertical-align: middle;
+}
+
 /*//////*/
 
 .tip {
@@ -293,7 +309,6 @@ table th {
     font-weight: bold;
     color: #aaa;
     text-align: left;
-    vertical-align: text-top;
     width: 15em;
 }
 
