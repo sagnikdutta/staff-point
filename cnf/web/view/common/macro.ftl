@@ -22,9 +22,9 @@
 
 <#macro search>
 <div id="search" class="form">
-    <form action="/search" method="post">
-        <input class="cleanOnFocus" type="text" value="искать" name="query">
-        <a href="#" class="action submit">Искать</a>
+    <form action="/search" id="searchform" method="get">
+        <input id="query" class="cleanOnFocus" type="text" value="искать" name="query"/>
+        <input type="image" id="searchsubmit" src="/i/magnify.gif"/>
     </form>
 </div>
 </#macro>
@@ -119,8 +119,8 @@
 </#macro>
 
 <#macro period report>
-    <h3>${report.start.time?date} ~ ${report.end.time?date}:
-            <span <#if report.old>class="old"</#if>>${report.passed}</span></h3>
+<h3>${report.start.time?date} ~ ${report.end.time?date}:
+    <span <#if report.old>class="old"</#if>>${report.passed}</span></h3>
 </#macro>
 
-<#assign gen = "ru.point.utils.russian.DeclensionFreeMarkerDirective"?new(0)/>
+        <#assign gen = "ru.point.utils.russian.DeclensionFreeMarkerDirective"?new(0)/>

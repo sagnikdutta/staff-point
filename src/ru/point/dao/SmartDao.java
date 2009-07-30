@@ -108,7 +108,7 @@ public class SmartDao extends HibernateDaoSupport {
 
     public long countReportsForUser(long userId) {
         return (Long) getSession(false)
-                .createQuery("select count(*) from Report as report where report.reportForActivity.user = :user order by report.end desc ")
+                .createQuery("select count(*) from Report as report where report.reportForActivity.user = :user")
                 .setLong("user", userId)
                 .uniqueResult();
     }
