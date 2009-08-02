@@ -47,7 +47,7 @@
     </form>
 
     <h1><a class="toggle" rel="newUserForm">Зарегистрироваться</a><span class="tip blue"></span></h1>
-    <span class="position">Логин и 2 раза пароль, тут всё просто</span>
+    <span class="position">Логин и 2 раза пароль, всё просто</span>
 
     <form id="newUserForm" class="hidden" action="/user" method="post">
         <table class="contacts">
