@@ -82,7 +82,8 @@
         </table>
     </div>
 
-    <div class="right"><a href="/user/image/o/${user.id}"><img src="/user/image/m/${user.id}"/></a></div>
+    <div class="right"><a class="noborder" href="/user/image/o/${user.id}"><img src="/user/image/m/${user.id}"/></a>
+    </div>
 </div>
 <@foot/>
 </body>

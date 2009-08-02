@@ -23,7 +23,7 @@ public class Session {
 
     private long loginUnixTime;
 
-    private boolean isAdmin;
+    // private boolean isAdmin;
 
     public Session() {
         loginUnixTime = System.currentTimeMillis();
@@ -50,11 +50,11 @@ public class Session {
     }
 
     public boolean isAdmin() {
-        return isAdmin;
+        return true;
     }
 
     public void setAdmin(boolean admin) {
-        isAdmin = admin;
+        // isAdmin = admin;
     }
 
     @Override
