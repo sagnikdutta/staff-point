@@ -16,7 +16,6 @@
             &rarr; <@userRef user=user />
         </span>
     <@search/>
-    <@loginForm session=session/>
 </div>
 <div class="contol">
     <@inout session=session/>

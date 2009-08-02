@@ -38,19 +38,7 @@
 </#macro>
 
 <#macro login>
-<label><a id="searchToggle" href="#">Войти</a> | <a href="/signup">Зарегистрироваться</a> </label>
-</#macro>
-
-<#macro loginForm session="">
-<#if !session?has_content>
-<div id="login" class="form hidden">
-    <form action="/login" method="post">
-        <input class="cleanOnFocus" type="text" value="логин" name="login">&nbsp;
-        <input class="cleanOnFocus" type="password" value="пароль" name="password">&nbsp;
-        <a href="#" class="action submit">&rarr;</a>
-    </form>
-</div>
-</#if>
+<label><a href="/welcome">Кто ты?</a></label>
 </#macro>
 
 <#macro logout session>
@@ -68,7 +56,7 @@
 <ul>
     <#list projects as project>
     <li>
-        <@projectRef project=project />
+        <@projectRef project=project /><span class="qty">${project.activities?size}</span>
         <@projectTree projects=project.children/>
     </li>
     </#list>

@@ -6,12 +6,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <@head>Главная</@head>
 <body>
+
+<div id="highlight"/>
+
 <div class="header">
         <span>
             <a href="/">Главная</a>
         </span>
     <@search/>
-    <@loginForm session=session/>
 </div>
 <div class="contol">
     <@inout session=session/>

@@ -17,7 +17,6 @@
             <@userRef user=user />
         </span>
     <@search/>
-    <@loginForm session=session/>
 </div>
 <div class="contol">
     <@inout session=session/>
@@ -78,24 +77,25 @@
 
     <div>
 
-        <h1 id="past">Прошлые отчёты  <span class="tip red"></span></h1>
+        <h1 id="past">Прошлые отчёты <span class="tip red"></span></h1>
 
         <ul id="reportList" class="report">
             <#list reports as report>
             <li <#if session?? && user.id = session.user.id>class="hasHidden"</#if>><@period report=report />
                 ${report.text?html?replace("\n", "<br/>")}
-                <a href="#" class="hidden pseudo delete right" rel="/report/delete/${report.id}" onclick="return false;">удалить</a></li>
+                <a href="#" class="hidden pseudo delete right" rel="/report/delete/${report.id}"
+                   onclick="return false;">удалить</a></li>
             </#list>
         </ul>
 
         <h3>&nbsp;</h3>
 
         <#if (pageNo > 0)>
-            <a class="action" href="/user/report/${user.id}/page/${pageNo - 1}">&larr;&nbsp;более свежие&nbsp;</a>
+        <a class="action" href="/user/report/${user.id}/page/${pageNo - 1}">&larr;&nbsp;более свежие&nbsp;</a>
         </#if>
 
         <#if (amount > (pageNo + 1) * itemsPerPage)>
-            <a class="action right" href="/user/report/${user.id}/page/${pageNo + 1}">&nbsp;менее свежие&nbsp;&rarr;</a>
+        <a class="action right" href="/user/report/${user.id}/page/${pageNo + 1}">&nbsp;менее свежие&nbsp;&rarr;</a>
         </#if>
     </div>
     <@foot/>

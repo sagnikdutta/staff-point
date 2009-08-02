@@ -23,9 +23,10 @@ public class Project {
     private Project parent;
 
     @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
+    @OrderBy("id")
     private Set<Project> children = new TreeSet<Project>();
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
     @OrderBy("id")
     private Set<Activity> activities = new TreeSet<Activity>();
 

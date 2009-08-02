@@ -18,7 +18,6 @@
             &rarr; <@userRef user=user />
         </span>
     <@search/>
-    <@loginForm session=session/>
 </div>
 <div class="contol">
     <@inout session=session/>
@@ -32,7 +31,7 @@
             <span class="position">${user.mainActivity.role.name}
             в <@projectRef project=user.mainActivity.project/></span>
         <#else>
-            <span class="position">Нет активностей</span>
+        <span class="position">Нет активностей</span>
         </#if>
 
 
@@ -63,7 +62,7 @@
 
     <h1>Имя, контакты<span class="tip blue"></span></h1>
 
-    <div id="contactFormMessage"> </div>
+    <div id="contactFormMessage"></div>
 
     <form id="contactForm" action="/user/edit/${user.id}" method="post">
         <table class="contacts">
@@ -87,7 +86,9 @@
 
             <tr>
                 <th>День рожденья (дд/мм/гггг):</th>
-                <td><input name="birthday" type="text" value="<#if user.profile.birthDay??>${user.profile.birthDay.time?date?string.short}</#if>"/></td>
+                <td><input name="birthday" type="text"
+                           value="<#if user.profile.birthDay??>${user.profile.birthDay.time?date?string.short}</#if>"/>
+                </td>
             </tr>
         </table>
 
@@ -127,7 +128,7 @@
 
     <h1>Пароль<span class="tip blue"></span></h1>
 
-    <div id="passwordFormMessage"> </div>
+    <div id="passwordFormMessage"></div>
 
     <form id="passwordForm" action="/user/edit/password/${user.id}" method="post">
 
@@ -146,7 +147,8 @@
             </tr>
         </table>
 
-        <a id="passwordFormSubmit" class="action submit" href="#passwordForm" onclick="return false;">Сохранить новый пароль</a>
+        <a id="passwordFormSubmit" class="action submit" href="#passwordForm" onclick="return false;">Сохранить новый
+            пароль</a>
 
     </form>
 

@@ -5,7 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import ru.point.model.*;
+import ru.point.model.Activity;
+import ru.point.model.Profile;
+import ru.point.model.Session;
+import ru.point.model.User;
 import ru.point.utils.Utils;
 import ru.point.view.Group;
 import ru.point.view.Message;
@@ -124,7 +127,7 @@ public class PeopleController extends AbstractController {
         user = new User();
         user.setLogin(email);
         user.setPassword(Utils.md5(password));
-        
+
         user.setProfile(new Profile());
         user.getProfile().setFirstName(name);
         user.getProfile().setSecondName(surname);
@@ -135,7 +138,7 @@ public class PeopleController extends AbstractController {
         return loginUser(response, email, password, model);
     }
 
-    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+    @RequestMapping(value = "/welcome", method = RequestMethod.GET)
     public String signup(@CookieValue(required = false) Cookie session, String email, Message message, ModelMap model) {
         model.put("message", message);
         model.put("email", email);

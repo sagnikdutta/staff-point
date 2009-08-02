@@ -12,7 +12,6 @@
             <a href="/">√лавна€</a>
         </span>
     <@search/>
-    <@loginForm session=session/>
 </div>
 <div class="contol">
     <@inout session=session/>
@@ -37,7 +36,7 @@
 
     <h1>я &mdash; Point, а ты?<span class="tip blue"></span></h1>
 
-    <div id="contactFormMessage"> </div>
+    <div id="contactFormMessage"></div>
 
     <form id="newUserForm" action="/user" method="post">
         <table class="contacts">
