@@ -7,6 +7,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <@head>Регистрация</@head>
 <body>
+
+<div id="highlight">
+</div>
+
 <div class="header">
         <span>
             <a href="/">Главная</a>
@@ -19,40 +23,36 @@
 <div class="box">
 
     <div id="boxheader">
-        <h1 class="top">Регистрация<span class="tip red"></span></h1>
-        <span class="position">Совсем нестрашно!</span>
+        <h1 class="top">Добро пожаловать<span class="tip red"></span></h1>
+        <span class="position">Будем знакомы!</span>
     </div>
 
-    <#if message?? && message.text?has_content>
-    <div class="message <#if message.success>success</#if>">
-        ${message.text}
-        <ul>
-            <#list message.list as line>
-            <li>${line}</li>
-            </#list>
-        </ul>
-    </div>
-    </#if>
 
-    <h1>Я &mdash; Point, а ты?<span class="tip blue"></span></h1>
+    <h1>Войти<span class="tip blue"></span></h1>
+    <span class="position">Уже с нами?</span>
 
-    <div id="contactFormMessage"></div>
-
-    <form id="newUserForm" action="/user" method="post">
+    <form id="loginForm" action="/login" method="post">
         <table class="contacts">
             <tr>
-                <th>Имя:</th>
-                <td><input name="name" type="text"/></td>
+                <th>E-Mail (логин):</th>
+                <td><input name="login" type="text"/></td>
             </tr>
             <tr>
-                <th>Фамилия:</th>
-                <td><input name="surname" type="text"/></td>
+                <th>Пароль:</th>
+                <td><input name="password" type="password"/></td>
             </tr>
+        </table>
+
+        <a class="action submit" href="#">Войти</a>
+    </form>
+
+    <h1><a class="toggle" rel="newUserForm">Зарегистрироваться</a><span class="tip blue"></span></h1>
+    <span class="position">Логин и 2 раза пароль, тут всё просто</span>
+
+    <form id="newUserForm" class="hidden" action="/user" method="post">
+        <table class="contacts">
             <tr>
-                <th>&nbsp;</th>
-            </tr>
-            <tr>
-                <th>E-Mail (по совместительству логин):</th>
+                <th>E-Mail (логин):</th>
                 <td><input name="email" type="text" value="${email!""}"/></td>
             </tr>
             <tr>
@@ -69,6 +69,34 @@
         </table>
 
         <a class="action submit" href="#">Зарегистрироваться</a>
+    </form>
+
+    <h1><a class="toggle" rel="inviteForm ">Пригласить</a><span class="tip blue"></span></h1>
+    <span class="position">Новый сотрудник? Пригласите его</span>
+
+    <form id="inviteForm" class="hidden" action="/user" method="post">
+        <table class="contacts">
+            <tr>
+                <th>E-Mail (логин):</th>
+                <td><input name="email" type="text" value="${email!""}"/></td>
+            </tr>
+        </table>
+
+        <a class="action submit" href="#">Пригласить</a>
+    </form>
+
+    <h1><a class="toggle" rel="adminForm">Администирование</a><span class="tip blue"></span></h1>
+    <span class="position">Добавить или удалить новый проект? Сменился руководитель?</span>
+
+    <form id="adminForm" class="hidden" action="/user" method="post">
+        <table class="contacts">
+            <tr>
+                <th>Я знаю пароль:</th>
+                <td><input name="email" type="password"/></td>
+            </tr>
+        </table>
+
+        <a class="action submit" href="#">Я осознаю что я делаю!</a>
     </form>
 
 </div>

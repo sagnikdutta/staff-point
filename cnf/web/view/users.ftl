@@ -6,6 +6,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <@head>Поиск, ${amount} найдено</@head>
 <body>
+
+<div id="highlight">
+</div>
+
 <div class="header">
         <span>
             <a href="/">Главная</a> &rarr; Поиск
@@ -19,7 +23,7 @@
 
     <div id="boxheader">
         <h1 class="top">Поиск Людей<span class="tip red"></span></h1>
-        <span class="position">По вашему запросу найдено ${amount} людей</span>
+
 
         <div id="subnav">
             <ul class="nav">
@@ -31,6 +35,7 @@
     </div>
 
     <h1>Результаты<span class="tip red"></span></h1>
+    <span class="position">По вашему запросу найдено ${amount} людей</span>
 
     <#list groups as group>
     <#if (groups?size > 1) ><h3>${group.name}</h3></#if>

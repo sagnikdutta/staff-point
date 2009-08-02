@@ -7,7 +7,8 @@
 <@head>Главная</@head>
 <body>
 
-<div id="highlight"/>
+<div id="highlight">
+</div>
 
 <div class="header">
         <span>
