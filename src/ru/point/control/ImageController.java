@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import ru.point.model.User;
 import ru.point.utils.Images;
 import ru.point.view.Message;
@@ -90,7 +89,7 @@ public class ImageController extends AbstractController {
 
     @RequestMapping(value = "/user/image/{userId}", method = RequestMethod.POST)
     public String saveUserFace(@CookieValue(required = false) Cookie session,
-                                     @PathVariable long userId, @RequestParam("image") MultipartFile f, ModelMap model) throws IOException {
+                               @PathVariable long userId, @RequestParam("image") MultipartFile f, ModelMap model) throws IOException {
 
         User u = dao.get(User.class, userId);
 

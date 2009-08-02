@@ -12,7 +12,6 @@
             <@projectRef project=project />
         </span>
     <@search/>
-    <@loginForm session=session/>
 </div>
 <div class="contol">
     <@inout session=session/>
@@ -24,7 +23,8 @@
 
         <div id="subnav">
             <ul class="nav">
-                <li><a href="/project/${project.id}">Люди</a><a class="arrow toggle" rel="sorting" href="#" onclick="return false;"><img
+                <li><a href="/project/${project.id}">Люди</a><a class="arrow toggle" rel="sorting" href="#"
+                                                                onclick="return false;"><img
                         src="/i/menu_arrow.png" alt=""></a>
 
                     <div id="sorting" class="menu hidden">

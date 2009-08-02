@@ -11,7 +11,6 @@
             <a href="/">Главная</a> &rarr; Поиск
         </span>
     <@search/>
-    <@loginForm session=session/>
 </div>
 <div class="contol">
     <@inout session=session/>

@@ -15,7 +15,6 @@
             &rarr; <@userRef user=user />
         </span>
     <@search/>
-    <@loginForm session=session/>
 </div>
 <div class="contol">
     <@inout session=session/>
@@ -29,11 +28,11 @@
             <span class="position">${user.mainActivity.role.name}
             в <@projectRef project=user.mainActivity.project/></span>
         <#else>
-            <span class="position">Нет активностей</span>    
+        <span class="position">Нет активностей</span>
         </#if>
 
 
-        <div id="subnav" >
+        <div id="subnav">
             <ul class="nav">
                 <li><a class="selected" href="/user/${user.id}">Инфомация</a></li>
                 <#if (user.activities?? && user.activities?size > 0) >
@@ -52,10 +51,11 @@
     <div class="left">
         <table class="contacts">
             <#if user.profile.birthDay??>
-                <tr>
-                    <th>День рожденья:</th>
-                    <td>${user.profile.birthDay.time?date?string.long}<span>(до него еще ${user.profile.daysTillBirthday} дня)</span></td>
-                </tr>
+            <tr>
+                <th>День рожденья:</th>
+                <td>${user.profile.birthDay.time?date?string.long}<span>(до него еще ${user.profile.daysTillBirthday} дня)</span>
+                </td>
+            </tr>
             </#if>
         </table>
 
