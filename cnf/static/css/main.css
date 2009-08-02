@@ -101,6 +101,10 @@ input[type=submit] {
     cursor: pointer;
 }
 
+.noborder {
+    border: 0 !important;
+}
+
 /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 #highlight {
@@ -371,13 +375,13 @@ div.people div.person {
 }
 
 div.people div.person span {
-    background-color: #FFF;
-    border: 1px solid #eee;
+    background-color: #f3f3f3;
+    border: 5px solid #ddd;
     float: left;
-    margin-top: 2px;
-    padding: 4px;
-    width: 100px;
+    margin: 2px 0 10px;
+    padding: 15px 10px;
     text-align: center;
+    width: 100px;
 }
 
 div.people div.person span a {
@@ -387,8 +391,8 @@ div.people div.person span a {
 div.people div.person h4 {
     font-size: 0.8em;
     font-weight: normal;
-    line-height: 1.5em;
-    margin-left: 120px;
+    line-height: 2.5em;
+    margin-left: 160px;
     text-align: left;
 }
 
@@ -397,7 +401,7 @@ div.people div.person p {
     color: #999999;
     font-size: 0.7em;
     font-style: italic;
-    margin-left: 120px;
+    margin-left: 160px;
     line-height: 1.5em;
     text-align: left;
 }

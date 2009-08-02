@@ -28,7 +28,7 @@ import java.nio.channels.WritableByteChannel;
 @Transactional
 public class ImageController extends AbstractController {
 
-    private static final String LOCAL_IMG = "d:/web/point/";
+    private static final String LOCAL_IMG = "c:/web/point-files/";
 
     static {
         File dir = new File(LOCAL_IMG);

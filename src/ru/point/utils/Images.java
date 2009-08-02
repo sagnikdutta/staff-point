@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
- * @author: Mikhail Sedov [02.04.2009]
+ * @author Mikhail Sedov [02.04.2009]
  */
 public class Images {
 
