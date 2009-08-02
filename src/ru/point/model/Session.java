@@ -14,15 +14,16 @@ public class Session {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "id")
     private String id;
 
     @ManyToOne
     private User user;
 
-    @Column(name = "loginUnixTime")
     private long loginUnixTime;
+
+    private boolean isAdmin;
 
     public Session() {
         loginUnixTime = System.currentTimeMillis();
@@ -46,6 +47,14 @@ public class Session {
 
     public long getLoginUnixTime() {
         return loginUnixTime;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     @Override

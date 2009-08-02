@@ -6,9 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Date;
 
 /**
  * @author: Mikhail Sedov [12.01.2009]
@@ -51,7 +51,7 @@ public class Profile {
     private Map<String, String> social = new HashMap<String, String>();
 
     public String getFirstName() {
-        return firstName;
+        return firstName == null ? "?" : firstName;
     }
 
     public void setFirstName(String firstName) {
@@ -59,7 +59,7 @@ public class Profile {
     }
 
     public String getSecondName() {
-        return secondName;
+        return secondName == null ? "" : secondName;
     }
 
     public void setSecondName(String secondName) {
