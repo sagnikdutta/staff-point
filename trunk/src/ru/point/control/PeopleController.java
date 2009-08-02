@@ -62,6 +62,10 @@ public class PeopleController extends AbstractController {
         Cookie cookie = new Cookie("session", session.getId());
         response.addCookie(cookie);
 
+        if (user.getProfile().getFirstName() == null || user.getProfile().getSecondName() == null) {
+            editUser(cookie, user.getId(), null, map);
+        }
+
         return getUser(cookie, user.getId(), map);
     }
 
@@ -101,8 +105,6 @@ public class PeopleController extends AbstractController {
     public String registerUser(HttpServletResponse response,
                                @CookieValue(required = false) Cookie session,
                                @RequestParam("email") String email,
-                               @RequestParam("name") String name,
-                               @RequestParam("surname") String surname,
                                @RequestParam("password") String password,
                                @RequestParam("again") String again,
                                ModelMap model) {
@@ -116,21 +118,11 @@ public class PeopleController extends AbstractController {
             return signup(session, email, new Message("Пароли не совпадают", false), model);
         }
 
-        if (name == null || name.length() == 0) {
-            name = "John";
-        }
-
-        if (surname == null || surname.length() == 0) {
-            surname = "Doe";
-        }
-
         user = new User();
         user.setLogin(email);
         user.setPassword(Utils.md5(password));
 
         user.setProfile(new Profile());
-        user.getProfile().setFirstName(name);
-        user.getProfile().setSecondName(surname);
         user.getProfile().getContacts().put("e-mail", email);
 
         dao.save(user);
@@ -143,7 +135,7 @@ public class PeopleController extends AbstractController {
         model.put("message", message);
         model.put("email", email);
         putCookie(session, model);
-        return "signup";
+        return "welcome";
     }
 
     @RequestMapping("/user/by/role")

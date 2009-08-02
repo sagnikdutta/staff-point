@@ -7,6 +7,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <@head>${user.fullName}</@head>
 <body>
+
+<div id="highlight">
+</div>
+
 <div class="header">
         <span>
             <a href="/">Главная</a>

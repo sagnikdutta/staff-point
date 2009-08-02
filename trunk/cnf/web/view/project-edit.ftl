@@ -9,6 +9,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <@head>${project.name}</@head>
 <body>
+
+<div id="highlight">
+</div>
+
 <div class="header">
         <span>
             <a href="/">Главная</a> &rarr;

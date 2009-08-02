@@ -44,7 +44,7 @@ li {
 }
 
 h1 {
-    font: 2em 'Constantia', 'palatino linotype', palatino, Georgia, sans-serif;
+    font: 2em 'Lucida Sans Unicode', 'Constantia', 'palatino linotype', palatino, Georgia, sans-serif;
     margin-top: 1em;
     letter-spacing: -0.05em;
 }
@@ -69,11 +69,15 @@ h4 {
 }
 
 span.position {
-    font-variant: small-caps;
+    font: small-caps 1em Tahoma, Arial, sans-serif;
 }
 
 ul {
     margin-left: 1em;
+}
+
+ol, ul, li {
+    list-style: none outside none;
 }
 
 input, select {
@@ -90,6 +94,11 @@ input[type=submit] {
 .right {
     float: right;
     margin-left: 2em;
+}
+
+.toggle {
+    border-bottom: 1px dashed !important;
+    cursor: pointer;
 }
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
@@ -184,15 +193,33 @@ div.menu a {
 }
 
 .contol {
-    margin: 0 auto;
+    margin: 2em auto;
     text-align: right;
     width: 68em;
     padding: 0;
 }
 
+.control ul.right {
+    float: right;
+}
+
+ul.right li {
+    float: left;
+    position: relative;
+    margin: 0 0 0 10px;
+    padding: 5px 10px;
+    background: #333 url("/i/alpha.png");
+    border: 1px #ddd solid;
+    border-bottom: 0;
+}
+
+ul.right li:hover {
+    background: #ccc url("/i/alpha.png");
+}
+
 .contol a {
-    font: 0.7em Tahoma, "Trebuchet MS", Arial, sans-serif;
-    color: #333 !important;
+    border-bottom: 2px #0865AC dotted !important;
+    font: bold 0.7em Tahoma, "Trebuchet MS", Arial, sans-serif;
 }
 
 .header div.form {
@@ -220,9 +247,9 @@ div.menu a {
 }
 
 .box {
-    margin-top: 2em;
+    margin-top: 5em;
     width: 60em;
-    padding: 0 4em 4em 4em;
+    padding: 1em 4em 4em 4em;
     overflow: hidden;
 }
 
@@ -321,7 +348,7 @@ table th {
 }
 
 table.contacts {
-    margin-bottom: 1em;
+    margin: 1em 0;
 }
 
 table.contacts td {
@@ -335,6 +362,7 @@ table.contacts td input, table.contacts td select {
 
 div.people {
     overflow: hidden;
+    margin: 2em;
 }
 
 div.people div.person {
@@ -386,9 +414,10 @@ div.people div.person p {
 }
 
 .datepick .row .column {
-    width: 14em;
+    width: 13em;
     border-bottom: 1px solid #CCCCCC;
     border-right: 1px solid #CCCCCC;
+    background-color: #fff;
     float: left;
     height: 2em;
     position: relative;

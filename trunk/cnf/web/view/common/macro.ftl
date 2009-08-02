@@ -30,19 +30,14 @@
 </#macro>
 
 <#macro inout session="">
-<#if session?has_content>
-<@logout session/>
-<#else>
-<@login />
-</#if>
-</#macro>
-
-<#macro login>
-<label><a href="/welcome">Кто ты?</a></label>
-</#macro>
-
-<#macro logout session>
-<label><@userRef user=session.user/>&nbsp;|&nbsp;<a href="/logout">Выйти</a></label>
+<ul class="right">
+    <#if session?has_content>
+    <li><@userRef user=session.user/></li>
+    <li><a href="/logout">Выйти</a></li>
+    <#else>
+    <li><a href="/welcome">Кто ты?</a></li>
+    </#if>
+</ul>
 </#macro>
 
 <#macro userRef user><a class="user" href="/user/${user.id}">${user.fullName!"null"}</a></#macro>

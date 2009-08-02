@@ -8,6 +8,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <@head>${project.name}</@head>
 <body>
+
+<div id="highlight">
+</div>
+
 <div class="header">
         <span>
             <a href="/">Главная</a> &rarr;
@@ -21,7 +25,6 @@
 <div class="box one">
     <div id="boxheader">
         <h1 class="top">${project.name}<span class="tip red"></span></h1>
-        <span class="position">В проекте трудятся ${project.activities?size} человек</span>
 
         <div id="subnav">
             <ul class="nav">
@@ -45,6 +48,7 @@
     </div>
 
     <h1 class="top">Люди проекта<span class="tip red"></span></h1>
+    <span class="position">В проекте трудятся ${project.activities?size} человек</span>
 
     <#list groups as group>
     <#if (groups?size > 1) ><h3>${group.name}</h3></#if>

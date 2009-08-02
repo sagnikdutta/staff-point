@@ -3,7 +3,6 @@ package ru.point.dao.impl;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import ru.point.dao.GenericDao;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,8 +12,7 @@ import java.util.Map;
  * @author Mikhail Sedov {07.04.2009}
  */
 public class BaseDao<Type, Key extends Serializable>
-        extends HibernateDaoSupport
-        implements GenericDao<Type, Key> {
+        extends HibernateDaoSupport {
 
     private Class<Type> clazz;
 
