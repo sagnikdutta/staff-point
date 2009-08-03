@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * @author: Mikhail Sedov [09.01.2009]
+ * @author Mikhail Sedov [09.01.2009]
  */
 @Entity
 @Table(name = "user_", uniqueConstraints = {

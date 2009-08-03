@@ -11,7 +11,7 @@ import ru.point.model.Project;
 import javax.servlet.http.Cookie;
 
 /**
- * @author: Mikhail Sedov [25.03.2009]
+ * @author Mikhail Sedov [25.03.2009]
  */
 @Controller
 @Transactional

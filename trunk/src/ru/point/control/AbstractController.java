@@ -5,14 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import ru.point.dao.SmartDao;
+import ru.point.model.Role;
 import ru.point.model.Session;
 import ru.point.model.User;
-import ru.point.model.Role;
 
 import javax.servlet.http.Cookie;
 
 /**
- * @author: Mikhail Sedov [25.03.2009]
+ * @author Mikhail Sedov [25.03.2009]
  */
 public class AbstractController {
 
@@ -32,13 +32,13 @@ public class AbstractController {
     protected boolean isAllowedForCurrentUser(Cookie sessionCookie, User user) {
         if (sessionCookie != null) {
             Session session = dao.get(Session.class, sessionCookie.getValue());
-             if (session != null) {
-                 if (session.getUser().getId() == user.getId()) { // seft edit
-                     return true;
-                 } else if (session.getUser().getMainActivity().getRole().getGroupPolicy() == Role.SEO_POLICY) {
-                     return true;
-                 }
-             }
+            if (session != null) {
+                if (session.getUser().getId() == user.getId()) { // seft edit
+                    return true;
+                } else if (session.getUser().getMainActivity().getRole().getGroupPolicy() == Role.SEO_POLICY) {
+                    return true;
+                }
+            }
         }
         return false;
     }

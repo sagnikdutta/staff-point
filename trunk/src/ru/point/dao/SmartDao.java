@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author: Mikhail Sedov [06.03.2009]
+ * @author Mikhail Sedov [06.03.2009]
  */
 @Component
 public class SmartDao extends HibernateDaoSupport {

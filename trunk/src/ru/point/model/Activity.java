@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.*;
 
 /**
- * @author: Mikhail Sedov [12.01.2009]
+ * @author Mikhail Sedov [12.01.2009]
  */
 @Entity
 @Table(name = "activity_")

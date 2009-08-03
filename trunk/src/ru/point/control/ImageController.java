@@ -22,7 +22,7 @@ import java.nio.channels.WritableByteChannel;
 
 
 /**
- * @author: Mikhail Sedov [02.04.2009]
+ * @author Mikhail Sedov [02.04.2009]
  */
 @Controller
 @Transactional

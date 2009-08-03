@@ -1,28 +1,26 @@
 package ru.point.control;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.ui.ModelMap;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.hibernate.Hibernate;
-
-import javax.servlet.http.Cookie;
-
-import ru.point.model.Project;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import ru.point.model.Activity;
+import ru.point.model.Project;
 import ru.point.model.Role;
 import ru.point.view.Group;
 
-import java.util.List;
-import java.util.LinkedList;
-import java.util.Set;
+import javax.servlet.http.Cookie;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 /**
- * @author: Mikhail Sedov [27.04.2009]
+ * @author Mikhail Sedov [27.04.2009]
  */
 @Controller
 @Transactional

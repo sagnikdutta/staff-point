@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * @author: Mikhail Sedov [12.03.2009]
+ * @author Mikhail Sedov [12.03.2009]
  */
 @Controller
 @Transactional
