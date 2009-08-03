@@ -12,7 +12,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
- * @author: Mikhail Sedov [28.04.2009]
+ * @author Mikhail Sedov [28.04.2009]
  */
 @Controller
 @Transactional

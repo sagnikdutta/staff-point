@@ -3,7 +3,7 @@ package ru.point.model;
 import javax.persistence.*;
 
 /**
- * @author: Mikhail Sedov [25.03.2009]
+ * @author Mikhail Sedov [25.03.2009]
  */
 @Entity
 @Table(name = "role_")

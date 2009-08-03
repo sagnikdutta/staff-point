@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.TreeSet;
 
 /**
- * @author: Mikhail Sedov [06.03.2009]
+ * @author Mikhail Sedov [06.03.2009]
  */
 @Entity
 @Table(name = "report_")

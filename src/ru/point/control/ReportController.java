@@ -1,26 +1,29 @@
 package ru.point.control;
 
+import org.hibernate.Hibernate;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.hibernate.Hibernate;
 import ru.point.model.Activity;
+import ru.point.model.Project;
 import ru.point.model.Report;
 import ru.point.model.User;
-import ru.point.model.Project;
 import ru.point.utils.Utils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * @author: Mikhail Sedov [25.03.2009]
+ * @author Mikhail Sedov [25.03.2009]
  */
 @Controller
 @Transactional
@@ -39,16 +42,16 @@ public class ReportController extends AbstractController {
 
     @RequestMapping("/user/report/{userId}")
     public ModelAndView listUserActivityReport(@CookieValue(required = false) Cookie session,
-                                           @PathVariable long userId,
-                                           ModelMap model) {
+                                               @PathVariable long userId,
+                                               ModelMap model) {
         return listUserActivityReport(session, userId, 0, model);
     }
 
     @RequestMapping("/user/report/{userId}/page/{pageNo}")
     public ModelAndView listUserActivityReport(@CookieValue(required = false) Cookie session,
-                                           @PathVariable long userId,
-                                           @PathVariable int pageNo,
-                                           ModelMap model) {
+                                               @PathVariable long userId,
+                                               @PathVariable int pageNo,
+                                               ModelMap model) {
         User user = dao.get(User.class, userId);
         Hibernate.initialize(user.getMainActivity());
         model.put("user", user);
@@ -64,8 +67,8 @@ public class ReportController extends AbstractController {
 
     @RequestMapping("/project/report/{projectId}")
     public ModelAndView listProjectActivityReport(@CookieValue(required = false) Cookie session,
-                                           @PathVariable long projectId,
-                                           ModelMap model) {
+                                                  @PathVariable long projectId,
+                                                  ModelMap model) {
 
         Project project = dao.get(Project.class, projectId);
         Hibernate.initialize(project.getActivities());
@@ -141,9 +144,9 @@ public class ReportController extends AbstractController {
 
     @RequestMapping(value = "/report/activity/{activityId}", method = RequestMethod.POST)
     public ModelAndView postActivityReport(@CookieValue(required = false) Cookie session,
-                                     @PathVariable long activityId,
-                                     HttpServletRequest request,
-                                     ModelMap model) throws UnsupportedEncodingException, ParseException {
+                                           @PathVariable long activityId,
+                                           HttpServletRequest request,
+                                           ModelMap model) throws UnsupportedEncodingException, ParseException {
 
         request.setCharacterEncoding("UTF8");
 
@@ -179,7 +182,7 @@ public class ReportController extends AbstractController {
 
     @RequestMapping(value = "/report/delete/{reportId}", method = RequestMethod.GET)
     public String deleteActivityReport(@CookieValue(required = false) Cookie session,
-                                     @PathVariable long reportId) {
+                                       @PathVariable long reportId) {
         dao.delete(Report.class, reportId);
         return "ajax/zero";
     }

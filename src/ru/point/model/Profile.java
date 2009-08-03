@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author: Mikhail Sedov [12.01.2009]
+ * @author Mikhail Sedov [12.01.2009]
  */
 @Embeddable
 public class Profile {

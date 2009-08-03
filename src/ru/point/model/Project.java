@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * @author: Mikhail Sedov [12.01.2009]
+ * @author Mikhail Sedov [12.01.2009]
  */
 @Entity
 @Table(name = "project_")
