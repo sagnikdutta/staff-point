@@ -15,6 +15,9 @@ public class Activity {
     @Column(name = "id")
     private long id;
 
+    @Column(name = "name")
+    private String name;
+
     @ManyToOne
     private Role role;
 
@@ -53,6 +56,10 @@ public class Activity {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name == null ? "?" : name;
     }
 
     public Role getRole() {

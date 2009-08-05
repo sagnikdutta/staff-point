@@ -1,0 +1,44 @@
+
+body {
+    font: 1em / 1.125em "Trebuchet MS", Tahoma, Arial, sans-serif;
+}
+
+a, a:visited {
+    border-bottom: 1px solid #d7e1e9;
+    color: #0061a6;
+    text-decoration: none;
+}
+
+td, p {
+    font: 0.75em / 1.5em Tahoma, "Trebuchet MS", Arial, sans-serif;
+    padding-bottom: 0.2em;
+}
+
+li {
+    line-height: 1.5em;
+}
+
+h1 {
+    font: 2em 'Constantia', 'palatino linotype', palatino, Georgia, sans-serif;
+    margin-top: 1em;
+    letter-spacing: -0.05em;
+}
+
+h2 {
+    font: 1.5em Georgia, Helvetica, "Lucida Sans Unicode", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+}
+
+h3 {
+    font: bold 1.125em / 2em "Trebuchet MS", Tahoma, Arial, sans-serif;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    color: #555;
+}
+
+h4 {
+    font-size: 0.875em;
+}
+
+ul {
+    margin-left: 1em;
+}
