@@ -1,29 +1,26 @@
 package ru.point.control;
 
-import org.hibernate.Hibernate;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.hibernate.Hibernate;
 import ru.point.model.Activity;
-import ru.point.model.Project;
 import ru.point.model.Report;
 import ru.point.model.User;
+import ru.point.model.Project;
 import ru.point.utils.Utils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.ParseException;
 
 /**
- * @author Mikhail Sedov [25.03.2009]
+ * @author: Mikhail Sedov [25.03.2009]
  */
 @Controller
 @Transactional
@@ -220,5 +217,21 @@ public class ReportController extends AbstractController {
                                @PathVariable("reportId") long reportId) {
         dao.delete(Report.class, reportId);
         return "redirect:/";
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @RequestMapping("/project/report/print/{projectId}")
+    public String printReport(@CookieValue(required = false) Cookie session,
+                              @PathVariable long projectId,
+                              ModelMap model) {
+
+        Project project = dao.get(Project.class, projectId);
+        List<Report> reports = dao.listReportForProject(projectId);
+
+        model.put("project", project);
+        model.put("reports", reports);
+
+        return "project-reports-print";
     }
 }

@@ -366,7 +366,7 @@ table.contacts td input, table.contacts td select {
 
 div.people {
     overflow: hidden;
-    margin: 2em;
+    margin: 1em 2em;
 }
 
 div.people div.person {

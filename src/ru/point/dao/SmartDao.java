@@ -119,4 +119,11 @@ public class SmartDao extends HibernateDaoSupport {
                 .setLong("project", projectId)
                 .list();
     }
+
+    public List<Report> listReportForProject(long projectId) {
+        return getSession(false)
+                .createQuery("from Report as report where report.reportForActivity.project = :project")
+                .setLong("project", projectId)
+                .list();
+    }
 }
