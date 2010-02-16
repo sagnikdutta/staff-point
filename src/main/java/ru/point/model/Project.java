@@ -1,6 +1,8 @@
 package ru.point.model;
 
-import javax.persistence.*;
+import com.sleepycat.persist.model.Entity;
+import com.sleepycat.persist.model.PrimaryKey;
+
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -8,26 +10,17 @@ import java.util.TreeSet;
  * @author Mikhail Sedov [12.01.2009]
  */
 @Entity
-@Table(name = "project_")
 public class Project {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
+    @PrimaryKey(sequence = "id")
     private long id;
 
-    @Column(name = "name")
     private String name;
 
-    @ManyToOne
     private Project parent;
 
-    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
-    @OrderBy("id")
     private Set<Project> children = new TreeSet<Project>();
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
-    @OrderBy("id")
     private Set<Activity> activities = new TreeSet<Activity>();
 
     public Project() {

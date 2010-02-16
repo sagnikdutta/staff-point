@@ -1,8 +1,8 @@
 package ru.point.model;
 
-import org.hibernate.annotations.CollectionOfElements;
+import com.sleepycat.persist.model.Entity;
+import com.sleepycat.persist.model.PrimaryKey;
 
-import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -12,30 +12,21 @@ import java.util.TreeSet;
  * @author Mikhail Sedov [06.03.2009]
  */
 @Entity
-@Table(name = "report_")
 public class Report {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
+    @PrimaryKey(sequence = "id")
     private long id;
 
-    @ManyToOne
     private Activity reportForActivity;
 
-    @Column(name = "text")
     private String text;
 
-    @CollectionOfElements(fetch = FetchType.LAZY)
     private Collection<Calendar> reportPeriodDays = new TreeSet<Calendar>();
 
-    @Column(name = "cachedStart")
     private Calendar start;
 
-    @Column(name = "cachedEnd")
     private Calendar end;
 
-    @Transient
     private long diff = Long.MIN_VALUE;
 
     public Report() {

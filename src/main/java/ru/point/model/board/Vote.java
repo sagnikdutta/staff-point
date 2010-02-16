@@ -1,36 +1,28 @@
 package ru.point.model.board;
 
+import com.sleepycat.persist.model.Entity;
+import com.sleepycat.persist.model.PrimaryKey;
 import ru.point.model.User;
 
-import javax.persistence.*;
 import java.util.Calendar;
 
 /**
  * @author: Mikhail Sedov [06.03.2009]
  */
 @Entity
-@Table(name = "vote")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Vote {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
+    @PrimaryKey(sequence = "id")
     private long id;
 
-    @OneToOne
     private Option option;
 
-    @OneToOne
     private Topic topic;
 
-    @OneToOne
     private User user;
 
-    @Column(name = "time")
     private Calendar time;
 
-    @Column(name = "updateTime")
     private Calendar updateTime;
 
     public Vote() {

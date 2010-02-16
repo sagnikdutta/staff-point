@@ -1,6 +1,10 @@
 package ru.point.model;
 
-import javax.persistence.*;
+import com.sleepycat.persist.model.Entity;
+import com.sleepycat.persist.model.PrimaryKey;
+import com.sleepycat.persist.model.Relationship;
+import com.sleepycat.persist.model.SecondaryKey;
+
 import java.util.Calendar;
 import java.util.Set;
 import java.util.TreeSet;
@@ -9,33 +13,20 @@ import java.util.TreeSet;
  * @author Mikhail Sedov [09.01.2009]
  */
 @Entity
-@Table(name = "user_", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"login"})
-})
 public class User {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
+    @PrimaryKey(sequence = "id")
     private long id;
 
-    @Embedded
     private Profile profile;
 
-    @Column(name = "login")
+    @SecondaryKey(relate = Relationship.ONE_TO_ONE)
     private String login;
-
-    @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    @OrderBy("id")
     private Set<Activity> activities = new TreeSet<Activity>();
 
-    @Column(name = "hireDay")
     private Calendar hireDay;
-
-    @Column(name = "sex")
     private boolean isFemale;
 
     public User() {

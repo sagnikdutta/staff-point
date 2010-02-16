@@ -1,50 +1,37 @@
 package ru.point.model;
 
-import javax.persistence.*;
+import com.sleepycat.persist.model.Entity;
+import com.sleepycat.persist.model.PrimaryKey;
+
 import java.util.*;
 
 /**
  * @author Mikhail Sedov [12.01.2009]
  */
 @Entity
-@Table(name = "activity_")
 public class Activity {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
+    @PrimaryKey(sequence = "id")
     private long id;
 
-    @Column(name = "name")
     private String name;
 
-    @ManyToOne
     private Role role;
 
-    @ManyToOne
     private User user;
 
-    @ManyToOne
     private Project project;
 
-    @OneToMany(mappedBy = "reportTo", fetch = FetchType.LAZY)
-    @OrderBy("id")
     private Set<Activity> reportFrom = new TreeSet<Activity>();
 
-    @ManyToOne
     private Activity reportTo;
 
-    @Column(name = "startDate")
     private Calendar start;
 
-    @Column(name = "endDate")
     private Calendar end;
 
-    @Column(name = "isMain")
     private boolean isMain;
 
-    @OneToMany(mappedBy = "reportForActivity", fetch = FetchType.LAZY)
-    @OrderBy("end desc")
     private List<Report> reports = new LinkedList<Report>();
 
     public Activity() {

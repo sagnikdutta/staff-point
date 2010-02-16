@@ -1,12 +1,13 @@
 package ru.point.model;
 
-import javax.persistence.*;
+import com.sleepycat.persist.model.Entity;
+import com.sleepycat.persist.model.PrimaryKey;
+
 
 /**
  * @author Mikhail Sedov [25.03.2009]
  */
 @Entity
-@Table(name = "role_")
 public class Role {
 
     public static int DESIGNER_POLICY = 1;
@@ -14,15 +15,11 @@ public class Role {
     public static int SEO_POLICY = 3;
     public static int HR_POLICY = 4;
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
+    @PrimaryKey(sequence = "id")
     private long id;
 
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "groupPolicy")
     private int groupPolicy;
 
     public Role() {
