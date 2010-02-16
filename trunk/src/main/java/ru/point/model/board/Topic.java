@@ -1,6 +1,8 @@
 package ru.point.model.board;
 
-import javax.persistence.*;
+import com.sleepycat.persist.model.Entity;
+import com.sleepycat.persist.model.PrimaryKey;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -8,24 +10,16 @@ import java.util.List;
  * @author: Mikhail Sedov [06.03.2009]
  */
 @Entity
-@Table(name = "thread")
 public class Topic {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
+    @PrimaryKey(sequence = "id")
     private long id;
 
-    @Column(name = "title")
     private String title;
 
-    @Column(name = "topicStart")
     private Calendar topicStartTime;
-
-    @Column(name = "lastActivity")
     private Calendar lastActivity;
 
-    @OneToMany(mappedBy = "topic", fetch = FetchType.LAZY)
     private List<Option> options;
 
     public Topic() {

@@ -1,21 +1,16 @@
 package ru.point.model.board;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
+import com.sleepycat.persist.model.Entity;
+
 
 /**
  * @author: Mikhail Sedov [06.03.2009]
  */
 @Entity
-@Table(name = "post")
 public class Post extends Vote {
 
-    @ManyToOne
     private Vote replyToPost;
 
-    @Column(name = "text")
     private String text;
 
     public Post() {

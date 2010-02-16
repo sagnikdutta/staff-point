@@ -1,10 +1,7 @@
 package ru.point.model;
 
-import org.hibernate.annotations.CollectionOfElements;
+import com.sleepycat.persist.model.Persistent;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.FetchType;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,7 +10,7 @@ import java.util.Map;
 /**
  * @author Mikhail Sedov [12.01.2009]
  */
-@Embeddable
+@Persistent
 public class Profile {
 
     public static final String[] CONTACT_KEYS = {
@@ -32,22 +29,14 @@ public class Profile {
             "FriendFeed",
     };
 
-    @Column(name = "firstName")
     private String firstName;
-
-    @Column(name = "secondName")
     private String secondName;
 
-    @Column(name = "birthDay")
     private Calendar birthDay;
 
-    @Column(name = "facePath")
     private String facePath;
 
-    @CollectionOfElements(fetch = FetchType.LAZY)
     private Map<String, String> contacts = new HashMap<String, String>();
-
-    @CollectionOfElements(fetch = FetchType.LAZY)
     private Map<String, String> social = new HashMap<String, String>();
 
     public String getFirstName() {

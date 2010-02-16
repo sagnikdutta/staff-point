@@ -1,26 +1,21 @@
 package ru.point.model.board;
 
-import javax.persistence.*;
+import com.sleepycat.persist.model.Entity;
+import com.sleepycat.persist.model.PrimaryKey;
 
 /**
  * @author: Mikhail Sedov [06.03.2009]
  */
 @Entity
-@Table(name = "option")
 public class Option {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
+    @PrimaryKey(sequence = "id")
     private long id;
 
-    @ManyToOne
     private Topic topic;
 
-    @Column(name = "description")
     private String description;
 
-    @Column(name = "hint")
     private String hint;
 
     public Option() {

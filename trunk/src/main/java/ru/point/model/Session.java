@@ -1,29 +1,22 @@
 package ru.point.model;
 
-import org.hibernate.annotations.GenericGenerator;
+import com.sleepycat.persist.model.Entity;
+import com.sleepycat.persist.model.PrimaryKey;
 
-import javax.persistence.*;
 import java.util.Date;
 
 /**
  * @author Mikhail Sedov [06.03.2009]
  */
 @Entity
-@Table(name = "session_")
 public class Session {
 
-    @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "id")
+    @PrimaryKey
     private String id;
 
-    @ManyToOne
     private User user;
 
     private long loginUnixTime;
-
-    // private boolean isAdmin;
 
     public Session() {
         loginUnixTime = System.currentTimeMillis();
