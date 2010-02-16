@@ -7,6 +7,8 @@ import ru.point.model.User;
 import ru.point.utils.Utils;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Mikhail Sedov [16.02.2010]
@@ -20,9 +22,7 @@ public class UserDao extends BaseDaoImpl<Long, User> {
         super(Long.class, User.class);
     }
 
-    @PostConstruct
-    public void init() {
-        super.init();
+    public void initSecondaryIndex() {
         userByLogin = getStore().getSecondaryIndex(entitiesById, String.class, "login");
     }
 

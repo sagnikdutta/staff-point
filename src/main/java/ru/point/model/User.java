@@ -4,8 +4,11 @@ import com.sleepycat.persist.model.Entity;
 import com.sleepycat.persist.model.PrimaryKey;
 import com.sleepycat.persist.model.Relationship;
 import com.sleepycat.persist.model.SecondaryKey;
+import org.joda.time.LocalDate;
+import ru.point.utils.Utils;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -26,7 +29,9 @@ public class User {
 
     private Set<Activity> activities = new TreeSet<Activity>();
 
-    private Calendar hireDay;
+    @SecondaryKey(relate = Relationship.MANY_TO_ONE)
+    private long hireDate;
+    
     private boolean isFemale;
 
     public User() {
@@ -69,15 +74,15 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = Utils.md5(password);
     }
 
-    public Calendar getHireDay() {
-        return hireDay;
+    public long getHireDate() {
+        return hireDate;
     }
 
-    public void setHireDay(Calendar hireDay) {
-        this.hireDay = hireDay;
+    public void setHireDate(long hireDate) {
+        this.hireDate = hireDate;
     }
 
     public boolean isFemale() {

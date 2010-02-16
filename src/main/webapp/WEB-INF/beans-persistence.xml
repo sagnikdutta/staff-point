@@ -5,67 +5,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 			http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
-    <bean id="localDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost/point"/>
-        <property name="username" value="root"/>
-        <property name="password" value="root"/>
-    </bean>
-
-    <bean id="hsqlDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
-        <property name="url" value="jdbc:hsqldb:file:/web/db/point;type=cached;shutdown=true"/>
-        <property name="username" value="sa"/>
-        <property name="password" value=""/>
-    </bean>
-
-    <!--<bean id="qmsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">-->
-    <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"/>-->
-    <!--<property name="url" value="jdbc:mysql://localhost/qms"/>-->
-    <!--<property name="username" value="sedovmik"/>-->
-    <!--<property name="password" value="Strannik3792"/>-->
-    <!--</bean>-->
-
-    <bean id="hibernateProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-        <property name="properties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
-
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
-                <prop key="hibernate.show_sql">false</prop>
-                <prop key="hibernate.format_sql">true</prop>
-
-                <prop key="hibernate.cache.provider_class">com.opensymphony.oscache.hibernate.OSCacheProvider</prop>
-
-                <prop key="connection.pool_size">5</prop>
-                <prop key="connection.characterEncoding">UTF-8</prop>
-            </props>
-        </property>
-    </bean>
-
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <property name="dataSource" ref="hsqlDataSource"/>
-        <property name="hibernateProperties" ref="hibernateProperties"/>
-        <property name="annotatedClasses">
-            <list>
-                <value>ru.point.model.User</value>
-                <value>ru.point.model.Activity</value>
-                <value>ru.point.model.Role</value>
-                <value>ru.point.model.Project</value>
-                <value>ru.point.model.Report</value>
-                <value>ru.point.model.Session</value>
-                <value>ru.point.model.board.Vote</value>
-                <value>ru.point.model.board.Option</value>
-                <value>ru.point.model.board.Post</value>
-                <value>ru.point.model.board.Topic</value>
-            </list>
-        </property>
-    </bean>
-
-    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-
-    <tx:annotation-driven transaction-manager="transactionManager" order="50"/>
+    
 
 </beans>

@@ -1,6 +1,7 @@
 package ru.point.model;
 
 import com.sleepycat.persist.model.Persistent;
+import org.joda.time.LocalDate;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -32,7 +33,7 @@ public class Profile {
     private String firstName;
     private String secondName;
 
-    private Calendar birthDay;
+    private long birthDay;
 
     private String facePath;
 
@@ -63,11 +64,11 @@ public class Profile {
         this.contacts = contacts;
     }
 
-    public Calendar getBirthDay() {
+    public long getBirthDay() {
         return birthDay;
     }
 
-    public void setBirthDay(Calendar birthDay) {
+    public void setBirthDay(long birthDay) {
         this.birthDay = birthDay;
     }
 
@@ -88,8 +89,8 @@ public class Profile {
         Date today = new Date();
 
         Calendar nextBirthday = Calendar.getInstance();
-        nextBirthday.set(Calendar.DATE, birthDay.get(Calendar.DATE));
-        nextBirthday.set(Calendar.MONTH, birthDay.get(Calendar.MONTH));
+//        nextBirthday.set(Calendar.DATE, birthDay.get(Calendar.DATE));
+//        nextBirthday.set(Calendar.MONTH, birthDay.get(Calendar.MONTH));
         if (today.compareTo(nextBirthday.getTime()) >= 0) {
             nextBirthday.add(Calendar.YEAR, 1);
         }

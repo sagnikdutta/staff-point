@@ -1,10 +1,15 @@
 package ru.point.dao.impl;
 
 import com.sleepycat.je.DatabaseException;
+import com.sleepycat.persist.EntityCursor;
 import com.sleepycat.persist.EntityStore;
 import com.sleepycat.persist.PrimaryIndex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Mikhail Sedov [23.01.2010]
@@ -29,8 +34,17 @@ public abstract class BaseDaoImpl<PK, E> implements BaseDao<PK, E> {
         return dbManager.getEntityStore();
     }
 
-    public void init() throws DatabaseException {
+    @PostConstruct
+    public void init() {
+        initPrimaryIndex();
+        initSecondaryIndex();
+    }
+
+    public void initPrimaryIndex() throws DatabaseException {
         entitiesById = getStore().getPrimaryIndex(keyClazz, entityClazz);
+    }
+
+    protected void initSecondaryIndex() {
     }
 
     @Override
@@ -48,8 +62,25 @@ public abstract class BaseDaoImpl<PK, E> implements BaseDao<PK, E> {
         return entitiesById.get(entity);
     }
 
+    public Map<PK, E> retrieveAll() {
+        return entitiesById.map();
+    }
+
     @Override
     public boolean delete(PK entity) {
         return entitiesById.delete(entity);
     }
+
+    public void deleteAll() {
+        EntityCursor<E> ec = entitiesById.entities();
+        try {
+            for (E entity : ec) {
+                ec.delete();
+            }
+        } finally {
+            ec.close();
+        }
+    }
+
+
 }
