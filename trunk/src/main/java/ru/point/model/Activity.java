@@ -2,6 +2,8 @@ package ru.point.model;
 
 import com.sleepycat.persist.model.Entity;
 import com.sleepycat.persist.model.PrimaryKey;
+import com.sleepycat.persist.model.Relationship;
+import com.sleepycat.persist.model.SecondaryKey;
 
 import java.util.*;
 
@@ -18,6 +20,7 @@ public class Activity {
 
     private Role role;
 
+    @SecondaryKey(relate = Relationship.MANY_TO_ONE)
     private User user;
 
     private Project project;
@@ -26,9 +29,8 @@ public class Activity {
 
     private Activity reportTo;
 
-    private Calendar start;
-
-    private Calendar end;
+    private long start;
+    private long end;
 
     private boolean isMain;
 
@@ -85,24 +87,24 @@ public class Activity {
         this.project = project;
     }
 
-    public Calendar getStart() {
+    public long getStart() {
         return start;
     }
 
-    public void setStart(Calendar start) {
+    public void setStart(long start) {
         this.start = start;
     }
 
-    public Calendar getEnd() {
+    public long getEnd() {
         return end;
     }
 
-    public void setEnd(Calendar end) {
+    public void setEnd(long end) {
         this.end = end;
     }
 
     public boolean isActive() {
-        return end == null;
+        return end == 0;
     }
 
     public boolean isMain() {

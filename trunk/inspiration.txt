@@ -1,2 +1,2 @@
-http://code.google.com/p/swiftdao/source/browse/trunk/src/core/org/swiftdao/#swiftdao/pojo
-http://code.google.com/p/trillian-goodies/source/browse/trunk/src/main/java/se/trillian/goodies/spring/jpa/GenericJpaDaoSupport.java
+
+http://www.google.com/codesearch/p?hl=en#BRWL7l1dTVI/trunk/server/src/main/java/com/teknavo/sample/ts/server/persistence/DAO.java&q=%22import%20com.sleepycat.persist%22&d=10
