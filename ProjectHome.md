@@ -1,0 +1,1 @@
+Human resources portal with employee page (contacts, current activities), project page, board, report generation
